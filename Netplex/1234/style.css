@@ -2082,17 +2082,9 @@ background-color: #0296cc; /* Darker green on hover */
 
 
 /* DISABLE ADS */
-/* Hide common ad elements */
-.ads, .ad-container, [id*="ad"], .sponsored, .popunder {
+iframe, .ads, .ad-container, [id*="ad"] {
     display: none !important;
     pointer-events: none !important;
-}
-
-/* Ensure video player remains visible */
-video, iframe[src*="vidsrc"] {
-    display: block !important;
-    pointer-events: auto !important;
-    visibility: visible !important;
 }
 
 
