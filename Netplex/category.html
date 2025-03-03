@@ -1,0 +1,147 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NETPLEX</title>
+    <link rel="stylesheet" href="1234/category.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- Google Adsense Start -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8187798540230740"
+     crossorigin="anonymous"></script>
+<!-- Google Adsense End --> 
+    
+</head> 
+    
+<body>
+
+<!-- Google tag (gtag.js) -->
+
+  
+<!-- FOR RESPONSIVE NAVIGATION BAR START -->  
+<nav>
+    <!-- Logo -->
+    <img id="logo" src="https://netplex.pages.dev/img/netplex.png" alt="NETPLEX">
+
+    <!-- Menu Button (visible only on mobile) -->
+    <span class="menu-btn" id="menu-btn">Menu</span>
+
+    <!-- Navigation Menu -->
+    <ul id="menu">
+      <li><a href="index.html">HOME <i class="fa-solid fa-house" style="color: #0296cc;"></i></a></li>
+      <li><a href="movies.html">MOVIES <i class="fa-solid fa-film" style="color: #0296cc;"></i></a></li>
+      <li><a href="tvshows_page.html">TV-SHOWS <i class="fa-solid fa-tv" style="color: #0296cc;"></i></a></li>
+      <li><a href="category.html">CATEGORY <i class="fa-solid fa-layer-group" style="color: #0296cc;"></i></a></li>
+      <li><a href="search.html">SEARCH <i class="fa-solid fa-magnifying-glass" style="color: #0296cc;"></i></a></li>
+      <li><a href="/download/Netplex.apk">DOWNLOAD APP <i class="fa-solid fa-download" style="color: #0296cc;"></i></a></li>
+    </ul>
+  </nav> 
+ <!-- FOR RESPONSIVE NAVIGATION BAR END --> 
+
+    <div class="container">
+        <h1>CATEGORY</h1>
+        
+        <!-- Try Random Button -->
+        <button onclick="getRandomizedContent()" class="get-random-btn">Try Random Movies / TV Shows</button>
+
+        <!-- Flex container for the dropdowns -->
+        <div class="dropdown-container">
+            <!-- Dropdown for selecting content type (Movies or TV Shows) -->
+            <div class="dropdown">
+                <label for="contentType"></label>
+                <select id="contentType" onchange="onContentTypeChange()">
+                    <option value="both">Both Movies & TV Shows</option>
+                    <option value="movies">Movies</option>
+                    <option value="tvShows">TV Shows</option>
+                </select>
+            </div>
+
+            <!-- Dropdown for selecting genre -->
+            <div class="dropdown">
+                <label for="genreSelect"></label>
+                <select id="genreSelect" onchange="onGenreChange()">
+                    <option value="all">All Genres</option>
+                    <!-- Genres will be populated dynamically here -->
+                </select>
+            </div>
+
+            <!-- Dropdown for selecting release year -->
+            <div class="dropdown">
+                <label for="yearSelect"></label>
+                <select id="yearSelect" onchange="onYearChange()">
+                    <option value="all">All Years</option>
+                    <!-- Years will be populated dynamically here -->
+                </select>
+            </div>
+
+            <!-- Dropdown for Category -->
+            <div class="dropdown">
+                <label for="sortSelect"></label>
+                <select id="sortSelect" onchange="onSortChange()">
+                    <option value="popularity.desc">Popularity (Descending-Ascending)</option>
+                    <option value="release_date.desc">Release Date (Newest to Oldest)</option>
+                    <option value="vote_average.desc">Rating (Descending-Ascending)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid" id="movie-grid">
+            <!-- Movies and TV Shows will be injected here -->
+        </div>
+    </div>
+
+    <script src="1234/category.js"></script>
+
+<!-- JavaScript for Go Back functionality -->
+<script>
+
+        // JavaScript function for the "Get Randomized Movies / TV Shows" button
+        function getRandomizedContent() {
+            // Redirect to collection.html (randomized movies or TV shows will be handled in that page)
+            window.location.href = 'collection.html';
+        }
+ </script>
+
+    
+
+<!--SCRIPT to Disable Right-Click function and redirect to another page if checking Developers Tools START-->
+<script>  
+// Disable Right-Click
+document.addEventListener('contextmenu', function (event) {
+    event.preventDefault();
+});
+
+// Disable Keyboard Shortcuts (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U)
+document.addEventListener('keydown', function (event) {
+    if (event.key === "F12" || 
+        (event.ctrlKey && event.shiftKey && event.key === "I") || 
+        (event.ctrlKey && event.shiftKey && event.key === "J") || 
+        (event.ctrlKey && event.key === "U")) {
+        event.preventDefault();
+    }
+});
+
+// Redirect to Google if DevTools is Opened
+setInterval(function(){
+    if (window.outerHeight - window.innerHeight > 200 || window.outerWidth - window.innerWidth > 200){
+        window.location.href = "https://www.effectiveratecpm.com/w6gnwauzb?key=4d8f595f0136eea4d9e6431d88f478b5"; // Redirect to Adsterra Ads
+    }
+}, 1000);
+
+// Prevent iFrame Embedding (Clickjacking Protection)
+if (window !== window.top) {
+    window.top.location = window.location;
+}
+
+// Prevent Viewing Page Source
+document.onkeydown = function(e) {
+    if (e.keyCode == 123) { return false; } // F12
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; } // Ctrl+Shift+I
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; } // Ctrl+Shift+J
+    if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; } // Ctrl+U
+}; 
+</script>  
+<!--SCRIPT to Disable Right-Click function and redirect to another page if checking Developers Tools END-->
+
+</body>
+</html>
