@@ -2082,9 +2082,9 @@ background-color: #0296cc; /* Darker green on hover */
 
 
 /* DISABLE ADS */
-.ads, .ad-container, [id*="ad"] {
+
+/* Hide common ad elements */
+.ads, .ad-container, [id*="ad"], .sponsored, .popunder {
     display: none !important;
     pointer-events: none !important;
 }
-
-
