@@ -2082,7 +2082,7 @@ background-color: #0296cc; /* Darker green on hover */
 
 
 /* DISABLE ADS */
-iframe, .ads, .ad-container, [id*="ad"] {
+.ads, .ad-container, [id*="ad"] {
     display: none !important;
     pointer-events: none !important;
 }
