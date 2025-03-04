@@ -610,3 +610,9 @@ document.addEventListener("click", function (event) {
         console.log("Blocked ad click");
     }
 }, true);
+
+
+// 
+const observer = new MutationObserver(() => removeAdEvents());
+observer.observe(document.body, { childList: true, subtree: true });
+
