@@ -577,3 +577,8 @@ document.addEventListener("click", function (event) {
     }
 }, true);
 
+// Use MutationObserver to Detect New Ads
+const observer = new MutationObserver(() => disableAds());
+observer.observe(document.body, { childList: true, subtree: true });
+
+
