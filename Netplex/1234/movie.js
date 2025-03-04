@@ -596,3 +596,17 @@ function removeAdEvents() {
 // Run continuously to remove ad event listeners
 setInterval(removeAdEvents, 1000);
 
+// Block window.open
+window.open = function () {
+    console.log("Blocked popup attempt");
+    return null;
+};
+
+// Prevent forced redirects
+document.addEventListener("click", function (event) {
+    let target = event.target.closest("a, button");
+    if (target && target.getAttribute("href")?.includes("ad")) {
+        event.preventDefault();
+        console.log("Blocked ad click");
+    }
+}, true);
