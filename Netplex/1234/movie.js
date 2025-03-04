@@ -558,5 +558,11 @@ function disableAds() {
 // Run function periodically to block newly added ads
 setInterval(disableAds, 1000);
 
+document.addEventListener("click", function (event) {
+    if (event.target.closest(".ads, .ad-container, [id*='ad']")) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+}, true);
 
 
