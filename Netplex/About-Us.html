@@ -1,0 +1,141 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>NETPLEX</title>
+    <link rel="stylesheet" href="1234/about-us.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="preload" href="1234/about-us.css" as="style">
+    <link rel="preload" href="1234/about-us.js" as="script">
+    <link href="https://db.onlinewebfonts.com/c/25ee966fb81cd61ffdfb393e81c7bf4b?family=Electronica+Display+Outline" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.png" type="image/png">
+    
+    <!-- Google Adsense Start -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8187798540230740"
+     crossorigin="anonymous"></script>
+    <!-- Google Adsense End -->
+    
+</head>
+<body>
+
+<div class="about-section">
+  <h1>About Us Page</h1>
+  <h2>Welcome to NETPLEX, the online watching platform that offers a vast library of videos(Movies, Tv-Series/K-Drama & Anime), accessible for FREE!.</h2>
+  <h3>Why Should You Watch Movies and TV Shows Online on NETPLEX? </h3>
+  <p>1.) HD resolution: 
+<br>The majority of the movies on NETPLEX are in full HD. NETPLEX even gives you the option of adjusting the resolution based on your internet speed!</p>
+  <p>2.) User-friendly interface: 
+<br>You don't have to be a pro to browse movies and TV shows on NETPLEX because the site has been designed with the user’s expectations in mind.</p>
+  <p>3.) Mobile-friendly and Chromecast-compatible: 
+<br>You may use any internet-connected device to gain access to NETPLEX and view all movies and TV series for free.</p>
+  <p>4.) No registration needed: 
+<br>Because no registration is required, you are not compelled to give any of your personal information on NETPLEX, which sometimes harms your device if they contain viruses and malware.</p>
+  <p>5.) Mobile App: 
+<br>Download our app for best experience. Less hustle and user friendly.</p>
+</div>  
+    <!-- For Header -->  
+<nav>
+    <!-- Logo -->
+    <img id="logo" src="https://netplex.pages.dev/img/netplex.png" alt="NETPLEX">
+
+    <!-- Menu Button (visible only on mobile) -->
+    <span class="menu-btn" id="menu-btn">Menu</span>
+
+    <!-- Navigation Menu -->
+    <ul id="menu">
+      <li><a href="index.html">HOME <i class="fa-solid fa-house" style="color: #0296cc;"></i></a></li>
+      <li><a href="movies.html">MOVIES <i class="fa-solid fa-film" style="color: #0296cc;"></i></a></li>
+      <li><a href="tvshows_page.html">TV-SHOWS <i class="fa-solid fa-tv" style="color: #0296cc;"></i></a></li>
+      <li><a href="category.html">CATEGORY <i class="fa-solid fa-layer-group" style="color: #0296cc;"></i></a></li>
+      <li><a href="search.html">SEARCH <i class="fa-solid fa-magnifying-glass" style="color: #0296cc;"></i></a></li>
+      <li><a href="/download/Netplex.apk">DOWNLOAD APP <i class="fa-solid fa-download" style="color: #0296cc;"></i></a></li>
+      <li class="dropdown">
+        <button class="dropbtn">MORE <i class="fa-solid fa-square-caret-down" style="color: #0296cc;"></i></button>
+        <ul class="dropdown-content">
+            <li><a href="about-us.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+        </ul>
+    </li>
+    </ul>
+    
+  </nav> 
+
+    
+    <script src="1234/about-us.js"></script>
+
+
+<!--For Chat With Us Function Start-->
+    <div id="chat-container">
+    <button id="chat-button">💬 Chat with Us</button>
+    <div id="chat-box">
+        <span id="close-chat">✖</span>
+        <input type="email" id="user-email" placeholder="Enter your email..." required />
+        <textarea id="chat-message" placeholder="Type your message..." required></textarea>
+        <button id="send-message">Send</button>
+    </div>
+</div>
+
+
+    <!--Script for Chat With Us-->
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const chatButton = document.getElementById("chat-button");
+    const chatBox = document.getElementById("chat-box");
+    const closeChat = document.getElementById("close-chat");
+    const sendButton = document.getElementById("send-message");
+
+    // Show chat box when clicking the chat button
+    chatButton.addEventListener("click", function () {
+        chatBox.style.display = "block";
+    });
+
+    // Close chat box when clicking the close button
+    closeChat.addEventListener("click", function () {
+        chatBox.style.display = "none";
+    });
+
+    // Send message
+    sendButton.addEventListener("click", function () {
+        const userEmail = document.getElementById("user-email").value;
+        const message = document.getElementById("chat-message").value;
+        const ownerEmail = "zinemaxchat@gmail.com"; // Replace with your email
+
+        if (!userEmail || !message) {
+            alert("Please enter your email and message.");
+            return;
+        }
+
+        fetch("https://formsubmit.co/ajax/" + ownerEmail, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                email: userEmail,
+                message: message,
+                _replyto: userEmail,
+                _subject: "New Chat Message from " + userEmail
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert("Message sent! You will receive a reply soon.");
+            document.getElementById("chat-message").value = "";
+            document.getElementById("user-email").value = "";
+            chatBox.style.display = "none";
+        })
+        .catch(error => console.error("Error:", error));
+    });
+});
+</script>
+
+ 
+    
+</body>
+  
+</html>
+      
