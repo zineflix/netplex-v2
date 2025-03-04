@@ -545,11 +545,30 @@ document.onkeydown = function(e) {
 // SCRIPT TO DISABLE ADS(POPUPS, REDIRECTS ETC.) START //
 document.addEventListener("click", function(event) {
     if (event.target.tagName === "A" && event.target.hasAttribute("href")) {
-        event.preventDefault(); // Prevent opening in a new tab/window
+        event.preventDefault(); // Prevent normal link navigation
         console.log("Link click prevented:", event.target.href);
     }
 });
-//
+
+// Prevent middle mouse button (Mouse Button 2) click
+document.addEventListener("mousedown", function(event) {
+    if (event.button === 1) { // Middle click
+        event.preventDefault();
+        console.log("Middle-click prevented.");
+    }
+});
+
+// Prevent Ctrl+Click, Cmd+Click, and Shift+Click
+document.addEventListener("click", function(event) {
+    if (event.ctrlKey || event.metaKey || event.shiftKey) {
+        event.preventDefault();
+        console.log("Prevented opening link in a new tab/window.");
+    }
+});
+
+// Block window.open() calls
 window.open = function() {
     console.log("Blocked attempt to open a new window.");
+    return null;
 };
+
