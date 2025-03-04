@@ -342,7 +342,7 @@ body {
   text-align: center;
   background-color: #121212;
   color: white;
-  padding-bottom: 50px;
+  padding-bottom: 100px;
 }
 
 h2 {
@@ -364,4 +364,20 @@ p {
   color:   #c6c6c6;
   padding-left: 20px;
 }
+
+@media (max-width: 768px) {
+.about-section {
+  margin-top: 100px;  
+  }
+h2 {
+  font-size: 18px;  
+  }  
+h3 {
+  font-size: 16px;  
+  }
+p {
+  font-size: 16px;  
+  }
+}
+
 /* About Us Section End*/
