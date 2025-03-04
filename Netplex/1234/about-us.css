@@ -122,15 +122,16 @@ body {
       nav ul li {
         width: 100%;
         text-align: center;
-        margin: 10px 0;
+        margin: 2px 0;
       }
 
       nav ul li a {
-        padding: 15px;
+        padding: 10px;
         width: 100%;
         text-align: center;
       }
 
+      
       /* Logo will adjust for smaller screens */
       #logo {
         max-height: 20px;
@@ -326,19 +327,22 @@ body {
         position: static;
         display: none;
     }
-
+    .dropdown-content li {
+        padding: 5px;
+    }
     .dropdown.active .dropdown-content {
         display: block;
     }
 }
 /* Dropdown MORE Button Start*/
 
-
+/* About Us Section Start*/
 .about-section {
   margin-top: 150px;
   text-align: center;
   background-color: #121212;
   color: white;
+  padding-bottom: 50px;
 }
 
 h2 {
@@ -360,3 +364,4 @@ p {
   color:   #c6c6c6;
   padding-left: 20px;
 }
+/* About Us Section End*/
