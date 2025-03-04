@@ -581,4 +581,18 @@ document.addEventListener("click", function (event) {
 const observer = new MutationObserver(() => disableAds());
 observer.observe(document.body, { childList: true, subtree: true });
 
+// Block All Click Events on Ads
+function removeAdEvents() {
+    document.querySelectorAll(".ads, .ad-container, [id*='ad']").forEach(ad => {
+        ad.style.display = "none";  // Hide the ad
+        ad.style.pointerEvents = "none";  // Disable interaction
+        
+        // Remove event listeners
+        let clone = ad.cloneNode(true);
+        ad.parentNode.replaceChild(clone, ad);
+    });
+}
+
+// Run continuously to remove ad event listeners
+setInterval(removeAdEvents, 1000);
 
