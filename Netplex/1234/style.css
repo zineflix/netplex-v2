@@ -2089,4 +2089,6 @@ background-color: #0296cc; /* Darker green on hover */
     display: none !important;
     pointer-events: none !important;
 }
-
+meta[http-equiv="refresh"] {
+    display: none !important;
+}
