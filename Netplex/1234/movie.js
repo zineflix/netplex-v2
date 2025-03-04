@@ -543,6 +543,20 @@ document.onkeydown = function(e) {
 
 
 // SCRIPT TO DISABLE ADS(POPUPS, REDIRECTS ETC.) START //
+function disableAds() {
+    const adSelectors = [".ads", ".ad-container", "[id*='ad']"];
+
+    adSelectors.forEach(selector => {
+        document.querySelectorAll(selector).forEach(ad => {
+            ad.style.display = "none";  // Hide the ad
+            ad.style.pointerEvents = "none";  // Prevent interaction
+            ad.remove();  // Try removing the ad from DOM
+        });
+    });
+}
+
+// Run function periodically to block newly added ads
+setInterval(disableAds, 1000);
 
 
 
