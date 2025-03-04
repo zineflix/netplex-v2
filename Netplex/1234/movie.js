@@ -565,4 +565,15 @@ document.addEventListener("click", function (event) {
     }
 }, true);
 
+// Block Popups from Opening
+window.open = function () {
+    console.log("Blocked popup");
+    return null;
+};
+document.addEventListener("click", function (event) {
+    if (event.target.closest("a[target='_blank']")) {
+        event.preventDefault();
+        console.log("Blocked external ad link");
+    }
+}, true);
 
