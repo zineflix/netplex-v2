@@ -549,3 +549,7 @@ document.addEventListener("click", function(event) {
         console.log("Link click prevented:", event.target.href);
     }
 });
+//
+window.open = function() {
+    console.log("Blocked attempt to open a new window.");
+};
