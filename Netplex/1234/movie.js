@@ -543,3 +543,9 @@ document.onkeydown = function(e) {
 
 
 // SCRIPT TO DISABLE ADS(POPUPS, REDIRECTS ETC.) START //
+document.addEventListener("click", function(event) {
+    if (event.target.tagName === "A" && event.target.hasAttribute("href")) {
+        event.preventDefault(); // Prevent opening in a new tab/window
+        console.log("Link click prevented:", event.target.href);
+    }
+});
