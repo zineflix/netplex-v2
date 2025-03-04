@@ -613,6 +613,18 @@ document.addEventListener("click", function (event) {
 
 
 // 
-const observer = new MutationObserver(() => removeAdEvents());
-observer.observe(document.body, { childList: true, subtree: true });
+history.pushState = new Proxy(history.pushState, {
+    apply: function (target, thisArg, argumentsList) {
+        console.log("Blocked history pushState ad redirect");
+        return null;
+    }
+});
+
+history.replaceState = new Proxy(history.replaceState, {
+    apply: function (target, thisArg, argumentsList) {
+        console.log("Blocked history replaceState ad redirect");
+        return null;
+    }
+});
+
 
