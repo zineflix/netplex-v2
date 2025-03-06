@@ -439,17 +439,29 @@ h1 {
 
 /* Responsive: Stack items in row on small screens */
 @media (max-width: 768px) {
-
+h1 {
+    font-size: 30px;
+    margin-top: 100px;
+  }
+#tv-container {
+  padding: 0px; 
+  }
+#channel-list {
+    width: 15%;
+  }
 .channel-btn {
     padding: 6px;
-    font-size: 12px;
+    font-size: 8px;
 }
-.channel-header h3 {
-    font-size: 14px;
+#channel-header h3 {
+    font-size: 10px;
+    text-align: center;
 }
 #channel-buttons {
     gap: 5px;
+    padding: 5px;
   }  
 }
 
 /* TV Live Streaming End */
+
