@@ -498,3 +498,28 @@ function playM3U8(m3u8Url) {
 
         document.addEventListener('DOMContentLoaded', initPlayer);
 // TV Live Streaming End //
+
+
+// Fullscreen Button Start //
+document.addEventListener("DOMContentLoaded", function () {
+    const video = document.getElementById("video");
+    const fullscreenBtn = document.getElementById("fullscreen-btn");
+
+    fullscreenBtn.addEventListener("click", function () {
+        if (video.requestFullscreen) {
+            video.requestFullscreen();
+        } else if (video.mozRequestFullScreen) {
+            video.mozRequestFullScreen();
+        } else if (video.webkitRequestFullscreen) {
+            video.webkitRequestFullscreen();
+        } else if (video.msRequestFullscreen) {
+            video.msRequestFullscreen();
+        }
+
+        // Force landscape mode on mobile
+        if (screen.orientation && screen.orientation.lock) {
+            screen.orientation.lock("landscape").catch((err) => console.error(err));
+        }
+    });
+});
+// Fullscreen Button End //
