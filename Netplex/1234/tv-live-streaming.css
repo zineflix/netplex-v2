@@ -339,6 +339,14 @@ body {
 
 /* TV Live Streaming Start */
 /* TV Live Streaming Layout */
+h1 {
+  display: flex;
+  justify-content: center;
+  margin-top: 150px;
+  font-size: 50px;
+  font-weight: bold;
+}
+
         #tv-container {
     display: flex;
     justify-content: center; /* Center everything horizontally */
@@ -349,7 +357,8 @@ body {
     margin: auto;
     padding: 20px;
     gap: 20px; /* Space between channel list and video */
-    margin-top: 100px;
+    margin-top: 20px;
+    margin-bottom: 150px;
 }
 
         #channel-list {
