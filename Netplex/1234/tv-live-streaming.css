@@ -339,6 +339,12 @@ body {
 
 /* TV Live Streaming Start */
 /* TV Live Streaming Layout */
+h {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  color: red;
+}
 h1 {
   display: flex;
   justify-content: center;
@@ -357,8 +363,8 @@ h1 {
     margin: auto;
     padding: 10px;
     gap: 20px; /* Space between channel list and video */
-    margin-top: 20px;
-    margin-bottom: 150px;
+    margin-top: 10px;
+    margin-bottom: 100px;
 }
 
         #channel-list {
@@ -463,3 +469,20 @@ h1 {
 
 /* TV Live Streaming End */
 
+#fullscreen-btn {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #0296cc;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+#fullscreen-btn:hover {
+    background-color: #0275a6;
+}
