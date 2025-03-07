@@ -52,31 +52,36 @@ async function fetchMoviesAndTVShows(contentType = 'both', genreId = 'all', year
     try {
         let moviesData = [];
         let tvShowsData = [];
-        let yearQuery = year !== 'all' ? `&primary_release_year=${year}` : ''; // Add year filter if selected
-        const genreQuery = genreId !== 'all' ? `&with_genres=${genreId}` : ''; // Add genre filter if selected
-        const sortQuery = `&sort_by=${sortBy}`; // Add sorting query
+        let yearQuery = year !== 'all' ? `&primary_release_year=${year}` : ''; // Year filter
+        const genreQuery = genreId !== 'all' ? `&with_genres=${genreId}` : ''; // Genre filter
+        const sortQuery = `&sort_by=${sortBy}`; // Sorting
 
-        // Fetch movies if contentType is 'both' or 'movies'
+        // Fetch Movies (Multiple Pages)
         if (contentType === 'both' || contentType === 'movies') {
-            const moviesResponse = await fetch(`${baseUrl}/discover/movie?api_key=${apiKey}&language=en-US&page=${page}${yearQuery}${genreQuery}${sortQuery}`);
-            const moviesDataResponse = await moviesResponse.json();
-            moviesData = moviesDataResponse.results;
+            for (let page = 1; page <= totalPages; page++) {
+                const moviesResponse = await fetch(`${baseUrl}/discover/movie?api_key=${apiKey}&language=en-US&page=${page}${yearQuery}${genreQuery}${sortQuery}`);
+                const moviesDataResponse = await moviesResponse.json();
+                moviesData.push(...moviesDataResponse.results);
+            }
         }
 
-        // Fetch TV shows if contentType is 'both' or 'tvShows'
+        // Fetch TV Shows (Multiple Pages)
         if (contentType === 'both' || contentType === 'tvShows') {
-            const tvShowsResponse = await fetch(`${baseUrl}/discover/tv?api_key=${apiKey}&language=en-US&page=${page}${yearQuery}${genreQuery}${sortQuery}`);
-            const tvShowsDataResponse = await tvShowsResponse.json();
-            tvShowsData = tvShowsDataResponse.results;
+            for (let page = 1; page <= totalPages; page++) {
+                const tvShowsResponse = await fetch(`${baseUrl}/discover/tv?api_key=${apiKey}&language=en-US&page=${page}${yearQuery}${genreQuery}${sortQuery}`);
+                const tvShowsDataResponse = await tvShowsResponse.json();
+                tvShowsData.push(...tvShowsDataResponse.results);
+            }
         }
 
-        // Combine the fetched data
+        // Combine Movies & TV Shows
         const combinedData = [...moviesData, ...tvShowsData];
         displayItems(combinedData);
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 }
+
 
 function displayItems(items) {
     movieGrid.innerHTML = ''; // Clear the grid before displaying new items
