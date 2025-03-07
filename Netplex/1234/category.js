@@ -48,40 +48,35 @@ function populateYearDropdown() {
 }
 
 // Fetching movies and TV shows with genre, year filter, and sorting
-async function fetchMoviesAndTVShows(contentType = 'both', genreId = 'all', year = 'all', sortBy = 'popularity.desc', totalPages = 3) {
+async function fetchMoviesAndTVShows(contentType = 'both', genreId = 'all', year = 'all', sortBy = 'popularity.desc') {
     try {
         let moviesData = [];
         let tvShowsData = [];
-        let yearQuery = year !== 'all' ? `&primary_release_year=${year}` : ''; // Year filter
-        const genreQuery = genreId !== 'all' ? `&with_genres=${genreId}` : ''; // Genre filter
-        const sortQuery = `&sort_by=${sortBy}`; // Sorting
+        let yearQuery = year !== 'all' ? `&primary_release_year=${year}` : ''; // Add year filter if selected
+        const genreQuery = genreId !== 'all' ? `&with_genres=${genreId}` : ''; // Add genre filter if selected
+        const sortQuery = `&sort_by=${sortBy}`; // Add sorting query
 
-        // Fetch Movies (Multiple Pages)
+        // Fetch movies if contentType is 'both' or 'movies'
         if (contentType === 'both' || contentType === 'movies') {
-            for (let page = 1; page <= totalPages; page++) {
-                const moviesResponse = await fetch(`${baseUrl}/discover/movie?api_key=${apiKey}&language=en-US&page=${page}${yearQuery}${genreQuery}${sortQuery}`);
-                const moviesDataResponse = await moviesResponse.json();
-                moviesData.push(...moviesDataResponse.results);
-            }
+            const moviesResponse = await fetch(`${baseUrl}/discover/movie?api_key=${apiKey}&language=en-US&page=1${yearQuery}${genreQuery}${sortQuery}`);
+            const moviesDataResponse = await moviesResponse.json();
+            moviesData = moviesDataResponse.results;
         }
 
-        // Fetch TV Shows (Multiple Pages)
+        // Fetch TV shows if contentType is 'both' or 'tvShows'
         if (contentType === 'both' || contentType === 'tvShows') {
-            for (let page = 1; page <= totalPages; page++) {
-                const tvShowsResponse = await fetch(`${baseUrl}/discover/tv?api_key=${apiKey}&language=en-US&page=${page}${yearQuery}${genreQuery}${sortQuery}`);
-                const tvShowsDataResponse = await tvShowsResponse.json();
-                tvShowsData.push(...tvShowsDataResponse.results);
-            }
+            const tvShowsResponse = await fetch(`${baseUrl}/discover/tv?api_key=${apiKey}&language=en-US&page=1${yearQuery}${genreQuery}${sortQuery}`);
+            const tvShowsDataResponse = await tvShowsResponse.json();
+            tvShowsData = tvShowsDataResponse.results;
         }
 
-        // Combine Movies & TV Shows
+        // Combine the fetched data
         const combinedData = [...moviesData, ...tvShowsData];
         displayItems(combinedData);
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 }
-
 
 function displayItems(items) {
     movieGrid.innerHTML = ''; // Clear the grid before displaying new items
@@ -162,7 +157,7 @@ function onSortChange() {
 window.onload = () => {
     fetchGenres(); // Fetch genres first
     populateYearDropdown(); // Populate the year dropdown
-    fetchMoviesAndTVShows('both', 'all', 'all', 'popularity.desc', 3); // Fetch both Movies and TV Shows initially, sorted by popularity
+    fetchMoviesAndTVShows('both', 'all', 'all', 'popularity.desc'); // Fetch both Movies and TV Shows initially, sorted by popularity
 };
 
 
