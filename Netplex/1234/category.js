@@ -157,7 +157,7 @@ function onSortChange() {
 window.onload = () => {
     fetchGenres(); // Fetch genres first
     populateYearDropdown(); // Populate the year dropdown
-    fetchMoviesAndTVShows('both', 'all', 'all', 'popularity.desc'); // Fetch both Movies and TV Shows initially, sorted by popularity
+    fetchMoviesAndTVShows('both', 'all', 'all', 'popularity.desc', 3); // Fetch both Movies and TV Shows initially, sorted by popularity
 };
 
 
