@@ -143,3 +143,14 @@ document.getElementById("menu-btn").addEventListener("click", function() {
     document.getElementById("menu").classList.toggle("active");
 });
 /* FOR RESPONSIVE NAVIGATION BAR END */
+
+
+// For Dropdown More Button Function Start
+document.addEventListener("DOMContentLoaded", function () {
+    const dropdown = document.querySelector(".dropdown");
+
+    dropdown.addEventListener("click", function () {
+        this.classList.toggle("active");
+    });
+});
+// For Dropdown More Button Function End
