@@ -48,7 +48,7 @@ function populateYearDropdown() {
 }
 
 // Fetching movies and TV shows with genre, year filter, and sorting
-async function fetchMoviesAndTVShows(contentType = 'both', genreId = 'all', year = 'all', sortBy = 'popularity.desc') {
+async function fetchMoviesAndTVShows(contentType = 'both', genreId = 'all', year = 'all', sortBy = 'popularity.desc', totalPages = 3) {
     try {
         let moviesData = [];
         let tvShowsData = [];
@@ -58,14 +58,14 @@ async function fetchMoviesAndTVShows(contentType = 'both', genreId = 'all', year
 
         // Fetch movies if contentType is 'both' or 'movies'
         if (contentType === 'both' || contentType === 'movies') {
-            const moviesResponse = await fetch(`${baseUrl}/discover/movie?api_key=${apiKey}&language=en-US&page=1${yearQuery}${genreQuery}${sortQuery}`);
+            const moviesResponse = await fetch(`${baseUrl}/discover/movie?api_key=${apiKey}&language=en-US&page=${page}${yearQuery}${genreQuery}${sortQuery}`);
             const moviesDataResponse = await moviesResponse.json();
             moviesData = moviesDataResponse.results;
         }
 
         // Fetch TV shows if contentType is 'both' or 'tvShows'
         if (contentType === 'both' || contentType === 'tvShows') {
-            const tvShowsResponse = await fetch(`${baseUrl}/discover/tv?api_key=${apiKey}&language=en-US&page=1${yearQuery}${genreQuery}${sortQuery}`);
+            const tvShowsResponse = await fetch(`${baseUrl}/discover/tv?api_key=${apiKey}&language=en-US&page=${page}${yearQuery}${genreQuery}${sortQuery}`);
             const tvShowsDataResponse = await tvShowsResponse.json();
             tvShowsData = tvShowsDataResponse.results;
         }
