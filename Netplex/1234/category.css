@@ -435,7 +435,7 @@ h1 {
 
 /* Show dropdown on hover (for larger screens) */
 @media (min-width: 769px) {
-    .dropdown:hover .dropdown-content {
+    .dropdowns:hover .dropdown-content {
         display: block;
     }
 }
@@ -449,7 +449,7 @@ h1 {
     .dropdown-content li {
         padding: 5px;
     }
-    .dropdown.active .dropdown-content {
+    .dropdowns.active .dropdown-content {
         display: block;
     }
 }
