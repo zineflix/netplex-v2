@@ -515,9 +515,6 @@ window.addEventListener("load", function() {
 });
 
 
-
-
-
 // For sticky header when scrolling
     window.addEventListener("scroll", function () {
       let nav = document.querySelector("nav");
@@ -535,7 +532,19 @@ document.getElementById("menu-btn").addEventListener("click", function() {
 
 
 
-// For Floating Message Close Function
+// For Floating Message Close Function Start
 function closeMessage() {
         document.getElementById("floating-message").style.display = "none";
     }
+// For Floating Message Close Function End
+
+
+// For Dropdown More Button Function Start
+document.addEventListener("DOMContentLoaded", function () {
+    const dropdown = document.querySelector(".dropdown");
+
+    dropdown.addEventListener("click", function () {
+        this.classList.toggle("active");
+    });
+});
+// For Dropdown More Button Function End
