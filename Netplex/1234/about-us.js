@@ -24,6 +24,7 @@ document.getElementById("menu-btn").addEventListener("click", function() {
 });
 
 
+// For Dropdown More Button Function Start
 document.addEventListener("DOMContentLoaded", function () {
     const dropdown = document.querySelector(".dropdown");
 
@@ -31,3 +32,4 @@ document.addEventListener("DOMContentLoaded", function () {
         this.classList.toggle("active");
     });
 });
+// For Dropdown More Button Function End
