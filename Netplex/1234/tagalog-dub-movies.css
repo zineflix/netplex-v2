@@ -456,4 +456,43 @@ body {
             border-radius: 10px;
             margin-top: 10px;
         }
+
+/* Responsive Grid */
+@media (max-width: 600px) {
+    .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Adjust grid for smaller screens */
+        gap: 10px;
+    }
+}
+
+/* Make modal fit better on small screens */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        padding: 15px;
+    }
+    iframe {
+        height: 200px; /* Smaller video player */
+    }
+    .poster-container img {
+        max-height: 200px; /* Prevent oversized posters */
+    }
+    h2 {
+        font-size: 18px; /* Adjust text sizes */
+    }
+    p {
+        font-size: 14px;
+    }
+}
+
+/* Extra tweaks for very small screens */
+@media (max-width: 480px) {
+    .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Even smaller grid */
+    }
+    iframe {
+        height: 180px;
+    }
+}
+
 /* FOR TAGALOG DUB MOVIE SECTION END */
