@@ -338,14 +338,13 @@ body {
 
 
 /* FOR TAGALOG DUB MOVIE SECTION START */
-h1 {
-    text-align: center;
-    margin-top: 150px;
-    margin-bottom: 50px;
-    font-size: 50px;
-}
-
-.gallery {
+        h1 {
+            text-align: center;
+            margin-top: 150px;
+            margin-bottom: 50px;
+            font-size: 50px;
+        }
+        .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 20px;
@@ -429,6 +428,7 @@ h1 {
             border-radius: 10px;
             text-align: left;
             position: relative;
+            margin-top: 100px;
         }
         .close-btn {
             position: absolute;
