@@ -421,15 +421,16 @@ body {
             visibility: visible;
         }
         .modal-content {
-            background: #222;
-            padding: 20px;
-            width: 90%;
-            max-width: 600px;
-            border-radius: 10px;
-            text-align: left;
-            position: relative;
-            margin-top: 100px;
-        }
+    background: #222;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 10px;
+    text-align: left;
+    position: relative;
+    max-height: 90vh; /* Prevents the modal from exceeding the screen height */
+    overflow-y: auto; /* Enables vertical scrolling */
+}
         .close-btn {
             position: absolute;
             top: 10px;
