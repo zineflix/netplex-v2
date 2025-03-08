@@ -430,6 +430,7 @@ body {
     position: relative;
     max-height: 90vh; /* Prevents the modal from exceeding the screen height */
     overflow-y: auto; /* Enables vertical scrolling */
+    margin-bottom: 50px;          
 }
         .close-btn {
             position: absolute;
