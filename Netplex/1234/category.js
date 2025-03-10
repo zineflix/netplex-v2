@@ -191,7 +191,7 @@ document.getElementById("menu-btn").addEventListener("click", function() {
 
 // For Dropdown More Button Function Start
 document.addEventListener("DOMContentLoaded", function () {
-    const dropdowns = document.querySelector(".dropdowns");
+    const dropdown = document.querySelector(".dropdown");
 
     dropdowns.addEventListener("click", function () {
         this.classList.toggle("active");
