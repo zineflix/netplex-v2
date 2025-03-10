@@ -426,7 +426,7 @@ h3 {
 .modal-content {
     background: #222;
     padding: 20px;
-    width: 90%;
+    width: 95%;
     max-width: 600px;
     border-radius: 10px;
     text-align: left;
@@ -434,9 +434,6 @@ h3 {
     max-height: 90vh; /* Prevents the modal from exceeding the screen height */
     overflow-y: auto; /* Enables vertical scrolling */
     margin-bottom: 50px;
-    border: 2px;
-    border-style: solid;
-    border-color: #0296cc;
 }
 .close-btn {
     position: absolute;
