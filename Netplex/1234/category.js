@@ -20,14 +20,14 @@ async function fetchGenres() {
         
         genres = [...movieGenres.genres, ...tvGenres.genres]; // Combine genres from movies and TV shows
 
-        populateGenreDropdowns(); // Populate genre dropdown after fetching genres
+        populateGenreDropdown(); // Populate genre dropdown after fetching genres
     } catch (error) {
         console.error('Error fetching genres:', error);
     }
 }
 
 // Populate the genre dropdown
-function populateGenreDropdowns() {
+function populateGenreDropdown() {
     genreSelect.innerHTML = '<option value="all">All Genres</option>'; // Default option
     genres.forEach(genre => {
         const option = document.createElement('option');
@@ -38,7 +38,7 @@ function populateGenreDropdowns() {
 }
 
 // Populate the year dropdown with years from 1900 to the current year
-function populateYearDropdowns() {
+function populateYearDropdown() {
     for (let year = currentYear; year >= 1900; year--) {
         const option = document.createElement('option');
         option.value = year;
@@ -191,7 +191,7 @@ document.getElementById("menu-btn").addEventListener("click", function() {
 
 // For Dropdown More Button Function Start
 document.addEventListener("DOMContentLoaded", function () {
-    const dropdown = document.querySelector(".dropdown");
+    const dropdowns = document.querySelector(".dropdowns");
 
     dropdowns.addEventListener("click", function () {
         this.classList.toggle("active");
