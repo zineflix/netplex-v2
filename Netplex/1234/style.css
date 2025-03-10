@@ -2115,7 +2115,7 @@ background-color: #0296cc; /* Darker green on hover */
 
 .dropdown-content li {
     list-style: none;
-    padding: 10px;
+    padding: 5px;
     text-align: right;
 }
 
@@ -2123,7 +2123,7 @@ background-color: #0296cc; /* Darker green on hover */
     color: white;
     text-decoration: none;
     display: block;
-    padding: 5px;
+    padding: 10px;
     transition: background 0.3s;
 }
 
