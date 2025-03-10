@@ -133,7 +133,7 @@ h1 {
         margin-top: 20px; /* Add space from top */
     }
 
-    .dropdowns {
+    .dropdown {
         width: 100%; /* Make each dropdown take full width */
         min-width: 150px; /* Optional: minimum width for dropdowns */
     }
