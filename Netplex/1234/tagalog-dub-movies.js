@@ -62,7 +62,7 @@ const API_KEY = "a1e72fd93ed59f56e6332813b9f8dcae";
             20453: "https://short.icu/UcOXhP3kE",
             1001311: "https://short.icu/Bds-kvQ-d",
             11770: "https://short.icu/9WQZkbpvM",
-            41387: "link",
+            41387: "https://short.icu/Vs4-n_xYk",
             16269: "https://short.icu/f3PqFTBwx",
             57663: "https://short.icu/9eWDFK1_b",
             53658: "https://short.icu/NyUhbCXeM",
