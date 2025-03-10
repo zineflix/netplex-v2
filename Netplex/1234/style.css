@@ -2169,7 +2169,7 @@ background-color: #0296cc; /* Darker green on hover */
 /* Show dropdown on click (for mobile) */
 @media (max-width: 768px) {
     .dropdown-content {
-        position: static;
+        position: absolute;
         display: none;
     }
     .dropdown-content li {
