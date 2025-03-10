@@ -497,16 +497,19 @@ document.getElementById("menu-btn").addEventListener("click", function() {
 
 // For Dropdown More Button Function Start
 document.addEventListener("DOMContentLoaded", function () {
-    const dropBtn = document.querySelector(".dropbtn");
-    const dropContent = document.querySelector(".dropdown-content");
+    const moreBtn = document.getElementById("more-btn");
+    const moreMenu = document.getElementById("more-menu");
 
-    dropBtn.addEventListener("click", function (event) {
-        event.stopPropagation();
-        dropContent.classList.toggle("active");
+    moreBtn.addEventListener("click", function (event) {
+        event.stopPropagation(); // Prevents click from bubbling to document
+        moreMenu.classList.toggle("show");
     });
 
-    document.addEventListener("click", function () {
-        dropContent.classList.remove("active");
+    // Hide dropdown when clicking outside
+    document.addEventListener("click", function (event) {
+        if (!moreBtn.contains(event.target) && !moreMenu.contains(event.target)) {
+            moreMenu.classList.remove("show");
+        }
     });
 });
 
