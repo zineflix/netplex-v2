@@ -26,19 +26,10 @@ document.getElementById("menu-btn").addEventListener("click", function() {
 
 // For Dropdown More Button Function Start
 document.addEventListener("DOMContentLoaded", function () {
-    const dropdownButton = document.querySelector(".dropbtn");
-    const dropdownMenu = document.querySelector(".dropdown-content");
+    const dropdown = document.querySelector(".dropdown");
 
-    dropdownButton.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent event bubbling
-        dropdownMenu.classList.toggle("active");
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener("click", function (event) {
-        if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
-            dropdownMenu.classList.remove("active");
-        }
+    dropdown.addEventListener("click", function () {
+        this.classList.toggle("active");
     });
 });
 // For Dropdown More Button Function End
