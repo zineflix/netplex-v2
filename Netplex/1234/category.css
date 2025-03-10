@@ -114,7 +114,7 @@ h1 {
         align-items: center;
     }
 
-    .dropdowns {
+    .dropdown {
         text-align: center;
         position: relative;
         max-width: 250px; /* Increase max-width for better spacing */
