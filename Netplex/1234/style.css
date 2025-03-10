@@ -2171,7 +2171,7 @@ background-color: #0296cc; /* Darker green on hover */
 /* Show dropdown on click (for mobile) */
 @media (max-width: 768px) {
     .dropdown-content {
-        display: none;
+        display: none; /* Initially hidden */
         position: absolute;
         background-color: #333;
         min-width: 160px;
@@ -2179,13 +2179,19 @@ background-color: #0296cc; /* Darker green on hover */
         list-style: none;
         padding: 0;
     }
-    .dropdown-content li {
-        padding: 5px;
-    }
+
+    /* Ensure toggle effect on click */
     .dropdown-content.show {
-        display: block;
+        display: block !important;
+    }
+
+    /* Remove hover effect for mobile */
+    .dropdown:hover .dropdown-content,
+    .dropdown:focus-within .dropdown-content {
+        display: none !important;
     }
 }
+
 /* Dropdown MORE Button End*/
 
 
