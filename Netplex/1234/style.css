@@ -2143,7 +2143,7 @@ background-color: #0296cc; /* Darker green on hover */
 
 .dropdown-content li {
     list-style: none;
-    padding: 5px;
+    padding: 10px;
     text-align: right;
 }
 
@@ -2169,20 +2169,14 @@ background-color: #0296cc; /* Darker green on hover */
 /* Show dropdown on click (for mobile) */
 @media (max-width: 768px) {
     .dropdown-content {
+        position: static;
         display: none;
     }
     .dropdown-content li {
         padding: 5px;
     }
     .dropdown.active .dropdown-content {
-        display: block; /* Make sure it appears when clicked */
-        position: absolute;
-        right: 0;
-        background-color: #1e1e1e;
-        min-width: 150px;
-        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-        border-radius: 5px;
-        z-index: 1000;
+        display: block;
     }
 }
 /* Dropdown MORE Button End*/
