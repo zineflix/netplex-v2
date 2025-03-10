@@ -2171,29 +2171,25 @@ background-color: #0296cc; /* Darker green on hover */
 /* Show dropdown on click (for mobile) */
 @media (max-width: 768px) {
     .dropdown-content {
-        display: none; /* Hidden by default */
+        display: none;
         position: absolute;
         background-color: #333;
         min-width: 160px;
         z-index: 1000;
         list-style: none;
         padding: 0;
-        right: 0;
     }
-
-    /* Show dropdown when toggled */
+    .dropdown-content li {
+        padding: 5px;
+    }
     .dropdown-content.show {
-        display: block !important;
+        display: block;
     }
-
-    /* Remove hover-based dropdown on mobile */
     .dropdown:hover .dropdown-content,
     .dropdown:focus-within .dropdown-content {
-        display: none !important;
+        display: block;
     }
 }
-
-
 /* Dropdown MORE Button End*/
 
 
