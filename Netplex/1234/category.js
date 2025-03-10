@@ -20,14 +20,14 @@ async function fetchGenres() {
         
         genres = [...movieGenres.genres, ...tvGenres.genres]; // Combine genres from movies and TV shows
 
-        populateGenreDropdown(); // Populate genre dropdown after fetching genres
+        populateGenreDropdowns(); // Populate genre dropdown after fetching genres
     } catch (error) {
         console.error('Error fetching genres:', error);
     }
 }
 
 // Populate the genre dropdown
-function populateGenreDropdown() {
+function populateGenreDropdowns() {
     genreSelect.innerHTML = '<option value="all">All Genres</option>'; // Default option
     genres.forEach(genre => {
         const option = document.createElement('option');
@@ -38,7 +38,7 @@ function populateGenreDropdown() {
 }
 
 // Populate the year dropdown with years from 1900 to the current year
-function populateYearDropdown() {
+function populateYearDropdowns() {
     for (let year = currentYear; year >= 1900; year--) {
         const option = document.createElement('option');
         option.value = year;
