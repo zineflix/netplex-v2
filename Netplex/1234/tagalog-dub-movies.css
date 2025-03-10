@@ -433,7 +433,8 @@ h3 {
     position: relative;
     max-height: 90vh; /* Prevents the modal from exceeding the screen height */
     overflow-y: auto; /* Enables vertical scrolling */
-    margin-bottom: 50px;          
+    margin-bottom: 50px;
+    border: 2px;
 }
 .close-btn {
     position: absolute;
