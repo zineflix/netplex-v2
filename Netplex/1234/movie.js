@@ -497,19 +497,11 @@ document.getElementById("menu-btn").addEventListener("click", function() {
 
 // For Dropdown More Button Function Start
 document.addEventListener("DOMContentLoaded", function () {
-    const moreBtn = document.querySelector(".dropbtn");
-    const dropdownContent = document.querySelector(".dropdown-content");
+    const menuBtn = document.getElementById("menu-btn");
+    const menu = document.getElementById("menu");
 
-    moreBtn.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent click from propagating
-        dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener("click", function (event) {
-        if (!moreBtn.contains(event.target) && !dropdownContent.contains(event.target)) {
-            dropdownContent.style.display = "none";
-        }
+    menuBtn.addEventListener("click", function () {
+        menu.classList.toggle("active");
     });
 });
 
@@ -524,11 +516,4 @@ function closeMessage() {
 
 
 //--For Navigation Header Mobile--//    
-document.addEventListener("DOMContentLoaded", function () {
-    const menuBtn = document.getElementById("menu-btn");
-    const menu = document.getElementById("menu");
 
-    menuBtn.addEventListener("click", function () {
-        menu.classList.toggle("active");
-    });
-});
