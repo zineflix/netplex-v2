@@ -2175,7 +2175,14 @@ background-color: #0296cc; /* Darker green on hover */
         padding: 5px;
     }
     .dropdown.active .dropdown-content {
-        display: block;
+        display: block; /* Make sure it appears when clicked */
+        position: absolute;
+        right: 0;
+        background-color: #1e1e1e;
+        min-width: 150px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        z-index: 1000;
     }
 }
 /* Dropdown MORE Button End*/
