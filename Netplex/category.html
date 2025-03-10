@@ -61,7 +61,7 @@
       <li><a href="category.html">CATEGORY <i class="fa-solid fa-layer-group" style="color: #0296cc;"></i></a></li>
       <li><a href="search.html">SEARCH <i class="fa-solid fa-magnifying-glass" style="color: #0296cc;"></i></a></li>
       <li><a href="/download/Netplex.apk">DOWNLOAD APP <i class="fa-solid fa-download" style="color: #0296cc;"></i></a></li>
-      <li class="dropdowns">
+      <li class="dropdown">
         <button class="dropbtn">MORE <i class="fa-solid fa-square-caret-down" style="color: #0296cc;"></i></button>
         <ul class="dropdown-content">
             <li><a href="tagalog-dub-movies.html">Tagalog Dub Movies</a></li>
@@ -85,7 +85,7 @@
         <!-- Flex container for the dropdowns -->
         <div class="dropdown-container">
             <!-- Dropdown for selecting content type (Movies or TV Shows) -->
-            <div class="dropdown">
+            <div class="dropdowns">
                 <label for="contentType"></label>
                 <select id="contentType" onchange="onContentTypeChange()">
                     <option value="both">Both Movies & TV Shows</option>
@@ -95,7 +95,7 @@
             </div>
 
             <!-- Dropdown for selecting genre -->
-            <div class="dropdown">
+            <div class="dropdowns">
                 <label for="genreSelect"></label>
                 <select id="genreSelect" onchange="onGenreChange()">
                     <option value="all">All Genres</option>
@@ -104,7 +104,7 @@
             </div>
 
             <!-- Dropdown for selecting release year -->
-            <div class="dropdown">
+            <div class="dropdowns">
                 <label for="yearSelect"></label>
                 <select id="yearSelect" onchange="onYearChange()">
                     <option value="all">All Years</option>
@@ -113,7 +113,7 @@
             </div>
 
             <!-- Dropdown for Category -->
-            <div class="dropdown">
+            <div class="dropdowns">
                 <label for="sortSelect"></label>
                 <select id="sortSelect" onchange="onSortChange()">
                     <option value="popularity.desc">Popularity (Descending-Ascending)</option>
