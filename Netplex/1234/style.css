@@ -2133,19 +2133,17 @@ background-color: #0296cc; /* Darker green on hover */
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #111;
-    min-width: 160px;
+    background-color: #1e1e1e;
+    min-width: 150px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-}
-
-.dropdown-content.show {
-    display: block;
+    border-radius: 5px;
+    right: 0;
 }
 
 .dropdown-content li {
     list-style: none;
-    padding: 5px;
+    padding: 10px;
     text-align: right;
 }
 
@@ -2171,8 +2169,8 @@ background-color: #0296cc; /* Darker green on hover */
 /* Show dropdown on click (for mobile) */
 @media (max-width: 768px) {
     .dropdown-content {
-        position: relative; /* Adjust if needed */
-        width: 100%;
+        position: static;
+        display: none;
     }
     .dropdown-content li {
         padding: 5px;
