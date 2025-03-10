@@ -1701,9 +1701,7 @@ h4 {
 
 
 
-/* FOR RESPONSIVE NAVIGATION BAR */
-
-/* Navigation Bar */
+/* NAVIGATION BAR START */
     nav {
       width: 100%;
       background: rgba(0, 0, 0, 0); /* Transparent at the top */
@@ -1757,9 +1755,38 @@ h4 {
     nav ul li a.active {
       background-color: #0296cc;
     }
+/* Mobile Navbar */
+.menu-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+}
 
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: #1e1e1e;
+        width: 100%;
+        text-align: center;
+    }
 
-/* FOR MOBILE 780PX BELOW */
+    .nav-links.active {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links li {
+        padding: 15px 0;
+    }
+}
 
 /* Mobile Styles (Screen width below 768px) */
     @media (max-width: 768px) {
@@ -1783,11 +1810,11 @@ h4 {
       nav ul li {
         width: 100%;
         text-align: center;
-        margin: 10px 0;
+        margin: 2px 0;
       }
 
       nav ul li a {
-        padding: 15px;
+        padding: 10px;
         width: 100%;
         text-align: center;
       }
@@ -1821,6 +1848,7 @@ h4 {
         display: none;  /* Hide the menu button on desktop */
       }
     }
+/* NAVIGATION BAR END */
 
 .movie-rating {
     position: absolute;
@@ -2115,7 +2143,7 @@ background-color: #0296cc; /* Darker green on hover */
 
 .dropdown-content li {
     list-style: none;
-    padding: 10px;
+    padding: 5px;
     text-align: right;
 }
 
