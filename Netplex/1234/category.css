@@ -383,7 +383,7 @@ h1 {
 /* FOR RESPONSIVE NAVIGATION BAR END */
 
 /* Dropdown MORE Button Start*/
-.dropdown {
+.dropdowns {
     position: relative;
     display: inline-block;
 }
@@ -435,7 +435,7 @@ h1 {
 
 /* Show dropdown on hover (for larger screens) */
 @media (min-width: 769px) {
-    .dropdown:hover .dropdown-content {
+    .dropdowns:hover .dropdown-content {
         display: block;
     }
 }
