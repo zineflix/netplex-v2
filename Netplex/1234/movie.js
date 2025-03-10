@@ -504,26 +504,12 @@ function closeMessage() {
 // For Dropdown More Button Function Start
 document.addEventListener("DOMContentLoaded", function () {
     const dropdown = document.querySelector(".dropdown");
-    const dropdownBtn = document.querySelector(".dropbtn");
-    const dropdownContent = document.querySelector(".dropdown-content");
 
-    if (dropdownBtn && dropdownContent) {
-        dropdownBtn.addEventListener("click", function (event) {
-            event.stopPropagation(); // Prevents the event from bubbling up
-            dropdown.classList.toggle("active"); // Toggle the active class
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener("click", function (event) {
-            if (!dropdown.contains(event.target)) {
-                dropdown.classList.remove("active");
-            }
-        });
-    }
+    dropdown.addEventListener("click", function () {
+        this.classList.toggle("active");
+    });
 });
-
 // For Dropdown More Button Function End
-
 
 
 
