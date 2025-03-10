@@ -129,8 +129,7 @@ body {
   
 
 
-/* FOR RESPONSIVE NAVIGATION BAR START */
-/* Navigation Bar */
+/* NAVIGATION BAR START */
     nav {
       width: 100%;
       background: rgba(0, 0, 0, 0); /* Transparent at the top */
@@ -184,8 +183,7 @@ body {
     nav ul li a.active {
       background-color: #0296cc;
     }
-
-/* Mobile Navigation Bar */
+/* Mobile Navbar */
 .menu-toggle {
     display: none;
     font-size: 24px;
@@ -218,7 +216,6 @@ body {
     }
 }
 
-
 /* Mobile Styles (Screen width below 768px) */
     @media (max-width: 768px) {
       /* Navigation links initially hidden on mobile */
@@ -241,11 +238,11 @@ body {
       nav ul li {
         width: 100%;
         text-align: center;
-        margin: 10px 0;
+        margin: 2px 0;
       }
 
       nav ul li a {
-        padding: 15px;
+        padding: 10px;
         width: 100%;
         text-align: center;
       }
@@ -279,8 +276,7 @@ body {
         display: none;  /* Hide the menu button on desktop */
       }
     }
-
-/* FOR RESPONSIVE NAVIGATION BAR END */
+/* NAVIGATION BAR END */
 
 
 /* Dropdown MORE Button Start*/
