@@ -162,7 +162,7 @@ body {
 /* NAVIGATION BAR END */
 
 
-/* Scroll Container */
+/* SCROLL CONTAINER START */
 .scroll-container {
     position: relative; /* Needed for absolute positioning of arrows */
     display: flex;
@@ -208,6 +208,8 @@ body {
           padding: 8px;
 }
 }
+/* SCROLL CONTAINER START */
+
 
 /* BANNER SECTION START */
 .banner {
