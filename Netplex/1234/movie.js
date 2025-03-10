@@ -501,22 +501,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const moreMenu = document.getElementById("more-menu");
 
     moreBtn.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevents event bubbling
+        event.stopPropagation(); // Prevents click from propagating to document
         moreMenu.classList.toggle("show"); // Toggle dropdown visibility
     });
 
-    // Clicking outside should close the dropdown only if it's open
+    // Clicking anywhere outside should close the dropdown
     document.addEventListener("click", function (event) {
-        if (!moreBtn.contains(event.target) && !moreMenu.contains(event.target)) {
-            moreMenu.classList.remove("show");
+        if (moreMenu.classList.contains("show")) {
+            if (!moreBtn.contains(event.target) && !moreMenu.contains(event.target)) {
+                moreMenu.classList.remove("show");
+            }
         }
     });
-
-    // Prevent closing when clicking inside the dropdown
-    moreMenu.addEventListener("click", function (event) {
-        event.stopPropagation();
-    });
 });
+
+
 
 
 
