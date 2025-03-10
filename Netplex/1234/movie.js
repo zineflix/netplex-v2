@@ -1,529 +1,2206 @@
-const apiKey = 'a1e72fd93ed59f56e6332813b9f8dcae'; // Your TMDB API Key
-const baseUrl = 'https://api.themoviedb.org/3';
-
-// Helper function to fetch movies and populate the row
-const fetchMovies = async (category, rowId) => {
-    try {
-        let url = '';
-        switch (category) {
-            case 'popular':
-                url = `${baseUrl}/discover/movie?api_key=${apiKey}&sort_by=popularity.desc&vote_count.gte=500&vote_average=10&page=1`;
-                break; 
-            case 'movies':
-                url = `${baseUrl}/discover/movie?api_key=${apiKey}&sort_by=popularity.desc&vote_count.gte=500&vote_average=10&page=1`;
-                break;           
-            case 'trending':
-                url = `${baseUrl}/trending/movie/week?api_key=${apiKey}`;
-                break;
-            case 'top_rated':
-                url = `${baseUrl}/movie/top_rated?api_key=${apiKey}&language=en-US&page=1`;
-                break;
-            case 'action':
-                url = `${baseUrl}/discover/movie?api_key=${apiKey}&with_genres=28&page=1`;
-                break;
-            case 'comedy':
-                url = `${baseUrl}/discover/movie?api_key=${apiKey}&with_genres=35&page=1`;
-                break;
-            case 'horror':
-                url = `${baseUrl}/discover/movie?api_key=${apiKey}&with_genres=27&page=1`;
-                break;
-            case 'romance':
-                url = `${baseUrl}/discover/movie?api_key=${apiKey}&with_genres=10749&page=1`;
-                break;
-            case 'animation':
-                url = `${baseUrl}/discover/movie?api_key=${apiKey}&with_genres=16&page=1`;
-                break;
-            default:
-                console.log('Unknown category');
-                return;
-        }
-
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(data);  // Log data for debugging
-
-        const movieCards = document.getElementById(rowId);
-        movieCards.innerHTML = ''; // Clear existing posters
-
-        if (data.results && data.results.length > 0) {
-            data.results.forEach(movie => {
-    const movieCard = document.createElement('div');
-    movieCard.classList.add('movie-card');
-    movieCard.style.position = 'relative';
-              
-    // Create the play button
-const playButton = document.createElement('div');
-playButton.classList.add('play-button');
-playButton.innerHTML = '<i class="fas fa-play"></i>';
-
-
-    // Movie poster
-    const moviePoster = document.createElement('img');
-    moviePoster.classList.add('row__poster');
-    moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-    moviePoster.alt = movie.title;
-
-    // Star Rating
-    const rating = document.createElement('div');
-    rating.classList.add('movie-rating');
-    rating.innerHTML = `<i class="fas fa-star"></i> ${movie.vote_average.toFixed(1)}`; // Star icon with rating
-
-    // Append elements to the movie card
-    movieCard.appendChild(moviePoster);
-    movieCard.appendChild(rating);
-    movieCard.appendChild(playButton);          
-
-    // Click event to navigate to details page
-    movieCard.addEventListener('click', () => {
-        window.location.href = `movie-details.html?movie_id=${movie.id}`;
-    });
-
-    movieCards.appendChild(movieCard);
-});
-
-        } else {
-            console.log(`No results for category: ${category}`);
-        }
-    } catch (error) {
-        console.error('Error fetching movies:', error);
-    }
-};
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Retrieve the movie list from localStorage
-    let movieList = JSON.parse(localStorage.getItem('movieList')) || [];
-
-    // Get the container where movies will be displayed
-    const movieListContainer = document.getElementById('movie-list-container');
-
-    // Check if the list is empty
-    if (movieList.length === 0) {
-        movieListContainer.innerHTML = '<p>Your movie list is empty!</p>';
-        return;
-    }
-
-    // Loop through the list of movies and display them
-    movieList.forEach(movie => {
-        const movieCard = document.createElement('div');
-        movieCard.classList.add('movie-card');
-
-        // Movie poster
-const moviePoster = document.createElement('img');
-moviePoster.classList.add('row__poster'); // Same class as the main page
-moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-moviePoster.alt = movie.title;
-
-        // Movie title
-        const movieTitle = document.createElement('p');
-        movieTitle.textContent = movie.title;
-
-        // Append poster and title to the movie card
-        movieCard.appendChild(moviePoster);
-        movieCard.appendChild(movieTitle);
-
-        // Add the movie card to the movie list container
-        movieListContainer.appendChild(movieCard);
-
-        // Add click event to each movie poster to redirect to the movie details page
-        movieCard.addEventListener('click', () => {
-            window.location.href = `movie-details.html?movie_id=${movie.id}`;
-        });
-    });
-});
-
-const fetchBanner = async () => {
-    try {
-        // Fetch popular movies from the API
-        const url = `${baseUrl}/movie/popular?api_key=${apiKey}&language=en-US&page=1`;
-        const response = await fetch(url);
-        const data = await response.json();
-
-        // Select a random movie from the list of popular movies
-        const movie = data.results[Math.floor(Math.random() * data.results.length)];
-
-        // ----------------------
-        // Update Banner with Movie Data
-        // ----------------------
-
-        
-        const banner = document.querySelector('.banner');
-        
-
-        // Set the banner title to the selected movie's title
-        const bannerTitle = document.querySelector('.banner__title');
-        bannerTitle.textContent = movie.title;
-
-        // Set the banner description (limit to 150 characters for brevity)
-        const bannerDescription = document.querySelector('.banner__description');
-        bannerDescription.textContent = movie.overview.length > 150 ? movie.overview.substring(0, 150) + '...' : movie.overview;
-
-        // Set the banner background image using the movie's backdrop
-        banner.style.backgroundImage = `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`;
-
-        // ----------------------
-        // Play Button Functionality
-        // ----------------------
-
-        // Add event listener to the Play button to navigate to movie details
-        playButton.addEventListener('click', () => {
-            window.location.href = `movie-details.html?movie_id=${movie.id}`;
-        });
-
-    } catch (error) {
-        console.error('Error fetching banner data:', error);
-    }
-};
-
-// Load a random movie for the banner when the page loads
-fetchBanner();
-
-const initArrowNavigation = () => {
-    // Find all rows of posters (e.g., netflixOriginals, topRated, etc.)
-    const allRows = document.querySelectorAll('.row__posters');
-
-    // Loop over each row and add the scroll functionality
-    allRows.forEach(rowPosters => {
-        const prevButton = rowPosters.parentElement.querySelector('.arrow-button.prev');
-        const nextButton = rowPosters.parentElement.querySelector('.arrow-button.next');
-        let scrollAmount = 0;
-        const scrollStep = 220; // Adjust scroll step to your preference
-
-        // Check if both buttons exist
-        if (prevButton && nextButton) {
-            // Scroll left (previous)
-            prevButton.addEventListener('click', () => {
-                // Ensure we don't scroll past the start
-                if (scrollAmount > 0) {
-                    scrollAmount -= scrollStep;
-                    rowPosters.scrollTo({
-                        left: scrollAmount,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-
-            // Scroll right (next)
-            nextButton.addEventListener('click', () => {
-                // Ensure we don't scroll past the end
-                const maxScroll = rowPosters.scrollWidth - rowPosters.clientWidth;
-                if (scrollAmount < maxScroll) {
-                    scrollAmount += scrollStep;
-                    rowPosters.scrollTo({
-                        left: scrollAmount,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        }
-    });
-};
-
-// Toggle the search bar visibility when clicking the search icon
-function toggleSearchBar() {
-    const searchBar = document.querySelector('.search-bar');
-    searchBar.classList.toggle('show');
+* {
+  margin: 0;
+  box-sizing: border-box;
 }
 
-// Close the search bar if clicked outside
-document.addEventListener('click', function(event) {
-    const searchBar = document.querySelector('.search-bar');
-    const searchIcon = document.querySelector('.icon i.fa-search');
-    const iconsContainer = document.querySelector('.icons-container');
 
-    // Check if the click was outside the search bar or any of the icons
-    if (!searchBar.contains(event.target) && !iconsContainer.contains(event.target)) {
-        searchBar.classList.remove('show');
-    }
-});
-
-function openSearchPage() {
-    // Magbukas ug new page
-    window.location.href = 'search.html';  // I-replace ang 'search.html' sa URL sa imong gustong page
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #111;
+  overflow: hidden; /* Prevents the scrollbar from showing */
 }
 
-// Array of movie endpoints with custom server names
-const MOVIE_ENDPOINTS = [
-    { url: 'https://vidsrc.net/embed/movie/', name: 'Ads Server 1' },
-    { url: 'https://vidlink.pro/movie/', name: 'Ads Server 2' },
-    { url: 'https://vidsrc.dev/embed/movie/', name: 'Ads Server 3' }, 
-    { url: 'https://moviesapi.club/movie/', name: 'Ads Server 4' },
-    { url: 'https://vidsrc.xyz/embed/movie/', name: 'Ads Server 5' },
-    { url: 'https://vidsrc.vip/embed/movie/', name: 'Ads Server 6' },
-    { url: 'https://embed.su/embed/movie/', name: 'Ads Server 7' },
-    { url: 'https://player.smashy.stream/movie/', name: 'Ads Server 8' },
-    { url: 'https://vidsrc.cc/v2/embed/movie/', name: 'Ads Server 9' },
-    { url: 'https://player.videasy.net/movie/', name: 'Ads Server 10' },
-    { url: 'https://111movies.com/movie/', name: 'Ads Server 11' },
-    { url: 'https://embed.rgshows.me/api/1/movie/?id=', name: 'Ads Server 12' },
-    { url: 'https://embed.rgshows.me/api/3/movie/?id=', name: 'Ads Server 13' },
-    { url: 'https://rivestream.org/embed?type=movie&id=', name: 'Ads Server 14' },
-    { url: 'https://vidsrc.rip/embed/movie/', name: 'Ads Server 15' },
-    { url: 'https://vidsrc.cc/v3/embed/movie/', name: 'Ads Server 16' },
-    
-];
+body::-webkit-scrollbar {
+  display: none; /* Hide scrollbar in Webkit-based browsers */
+}
 
-// Get the movie ID from the URL query string
-const urlParams = new URLSearchParams(window.location.search);
-const movieId = urlParams.get('movie_id');
+html {
+  scroll-behavior: smooth;
+  overflow: scroll; /* Makes sure the scroll functionality works even if the scrollbar is hidden */
+}
+  
 
-// Variable to keep track of the current server index
-let currentServerIndex = 0; // To store which server is currently selected
+  .row__poster {
+    width: 200px; /* Increased width for larger posters */
+    object-fit: contain;
+    margin-right: 10px;
+    transition: transform 450ms;
+  }
+  
+  .row__posters {
+    display: flex;
+    overflow: hidden;
+    padding: 20px;
+    position: relative;
+  }
+  
+  .row__poster:hover {
+    transform: scale(1.08);
+    box-shadow: 0 10px 20px #0296cc;
+  }
+  
+  .row__posters::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .row__posterLarge {
+    max-height: 250px;
+  }
+  
+  .row__posterLarge:hover {
+    transform: scale(1.09);
+  }
+  
 
-// Fetch movie details based on the movieId
-const fetchMovieDetails = async () => {
-    try {
-        // Fetch the movie details using the movie ID
-        const url = `${baseUrl}/movie/${movieId}?api_key=${apiKey}&language=en-US`;
-        const response = await fetch(url);
-        const movie = await response.json();
+  .row {
+    color: white;
+    margin-left: 20px;
+  }
+  
+/* Banner */
+.banner {
+  position: relative;
+    width: 100%;
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
 
-        // Movie Poster
-        const posterUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-        document.getElementById('movie-poster').src = posterUrl;
+.banner__contents {
+  max-width: 40%;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 25px;
+    border-radius: 10px;
+}
 
-        // Movie Background
-        const backdropUrl = movie.backdrop_path ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}` : 'https://via.placeholder.com/1500x800?text=No+Backdrop+Available';
-        document.querySelector('.blurred-background').style.backgroundImage = `url(${backdropUrl})`;
+/* Default styles for larger screens */
+.banner__title {
+  font-size: 50px;  /* Default font size */
+  font-weight: 900;  /* Bold font */
+  padding-bottom: 10px;  /* Space below the title */
+}
 
-        // Movie Description
-        document.getElementById('movie-description').textContent = movie.overview;
-
-        // Movie Rating (star rating)
-        const movieRating = movie.vote_average; // Rating from 1 to 10
-        const starContainer = document.getElementById('movie-rating');
-        starContainer.innerHTML = ''; // Clear existing stars
-
-        const filledStars = Math.round(movieRating / 2); // Convert 10-point rating to 5-point scale
-        const emptyStars = 5 - filledStars;
-
-        // Add filled stars
-        for (let i = 0; i < filledStars; i++) {
-            const star = document.createElement('span');
-            star.classList.add('star', 'filled');
-            starContainer.appendChild(star);
-        }
-
-        // Add empty stars
-        for (let i = 0; i < emptyStars; i++) {
-            const star = document.createElement('span');
-            star.classList.add('star', 'empty');
-            starContainer.appendChild(star);
-        }
-
-        // Movie Release Date
-        document.getElementById('release-date-text').textContent = `: ${movie.release_date}`;
-
-        // Movie Genres
-        const genreContainer = document.getElementById('movie-genres');
-        genreContainer.innerHTML = ''; // Clear existing genres
-        movie.genres.forEach(genre => {
-            const genreElement = document.createElement('span');
-            genreElement.classList.add('genre');
-            genreElement.textContent = genre.name;
-            genreContainer.appendChild(genreElement);
-        });
-
-        const watchNowBtn = document.getElementById('watch-now-btn');
-        watchNowBtn.addEventListener('click', () => {
-            // Fetch the current movie history
-
-            // Now load the movie iframe for watching
-            const iframeContainer = document.getElementById('iframe-container');
-            iframeContainer.style.display = 'flex'; // Show iframe container
-        
-            // Inject iframe inside iframe container
-            const iframe = document.getElementById('movie-iframe');
-            iframe.src = `${MOVIE_ENDPOINTS[currentServerIndex].url}${movieId}?primaryColor=ffffff&secondaryColor=a2a2a2&iconColor=eefdec&icons=default&player=jw&title=true&poster=true&autoplay=true`; // Use selected server URL
-        
-            // Hide the Watch Now button
-            watchNowBtn.style.display = 'none'; // Hide the Watch Now button
-        });
-
-        // Fetch More Like This Movies
-        fetchMoreLikeThis(movieId);
-
-        // Add functionality for Change Server Button
-        const changeServerBtn = document.getElementById('change-server-btn');
-        const serverDropdown = document.getElementById('server-dropdown');
-        const serverList = document.getElementById('server-list');
-
-        // Populate the server list with custom names
-        MOVIE_ENDPOINTS.forEach((endpoint, index) => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${endpoint.name}`; // Use custom server name
-            listItem.addEventListener('click', () => changeServer(index));
-            serverList.appendChild(listItem);
-        });
-
-        // Show dropdown when Change Server button is clicked
-        changeServerBtn.addEventListener('click', () => {
-            serverDropdown.style.display = serverDropdown.style.display === 'none' ? 'block' : 'none';
-        });
-
-        // Function to change the server
-        function changeServer(index) {
-            currentServerIndex = index;
-            const iframe = document.getElementById('movie-iframe');
-            iframe.src = `${MOVIE_ENDPOINTS[currentServerIndex].url}${movieId}`; // Update iframe source
-
-            // Hide the dropdown
-            serverDropdown.style.display = 'none';
-
-            // Log the server change (optional)
-            console.log(`Changed to server: ${MOVIE_ENDPOINTS[currentServerIndex].name}`);
-        }
-
-        const closeBtn = document.getElementById('close-iframe-btn');
-        closeBtn.addEventListener('click', () => {
-            // Hide iframe container
-            const iframeContainer = document.getElementById('iframe-container');
-            iframeContainer.style.display = 'none';
-        
-            // Remove the iframe content by clearing the innerHTML
-            iframeContainer.innerHTML = '';
-        
-            // Show the Watch Now button again
-            watchNowBtn.style.display = 'block'; // Show the Watch Now button
-        
-            // Refresh the page
-            window.location.reload();  // This will reload the page
-        });
-        
-    } catch (error) {
-        console.error('Error fetching movie details:', error);
+.banner__description {
+  font-size: 15px;
     }
-};
 
-// Fetch More Like This Movies
-const fetchMoreLikeThis = async (movieId) => {
-    try {
-        const url = `${baseUrl}/movie/${movieId}/similar?api_key=${apiKey}&language=en-US`;
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+/* Adjustments for mobile devices */
+@media (max-width: 768px) {
+  .banner {
+        height: 300px;
+        padding: 10px;
+    }
+  .banner__contents {
+        max-width: 75%;
+        font-size: 14px;
+        padding: 5px;
+  }
+  .banner__title {
+    font-size: 25px;  /* Slightly smaller font size on mobile */
+    margin-bottom: 5px;  /* Keep bottom padding consistent */
+  }
+
+  .banner__description {
+    font-size: 10px;
+  }
+}
+
+
+.banner__button {
+  cursor: pointer;
+  color: #fff;
+  outline: none;
+  border: none;
+  font-weight: 700;
+  border-radius: 0.3vw;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: #0296cc;
+  margin-bottom: 20px;
+}
+
+.banner__button:hover {
+  color: #000;
+  background-color: #e6e6e6;
+  transition: all 0.2s;
+}
+
+.banner::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #121212 100%);
         }
-        const data = await response.json();
+  
+/* Arrow Buttons styling */
+.arrow-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 2rem;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 2;
+    border-radius: 50%;
+  }
+  
+  .arrow-button.prev {
+    left: 10px;
+  }
+  
+  .arrow-button.next {
+    right: 10px;
+  }
+  
+  .row__posters {
+    display: flex;
+    overflow-x: scroll;
+    position: relative;
+    padding: 20px;
+  }
+  
+  /* Hide scrollbar */
+  .row__posters::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Movie posters styling */
+  .row__poster {
+    width: 200px;
+    object-fit: contain;
+    margin-right: 10px;
+    transition: transform 450ms;
+    border-radius: 10px;
+  }
+  
+  .row__poster:hover {
+    transform: scale(1.08);
+  }
 
-        const similarMoviesContainer = document.getElementById('similar-movies-container');
-        similarMoviesContainer.innerHTML = ''; // Clear previous similar movies
+  .row {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .row__posters {
+    display: flex;
+    overflow-x: scroll;
+    padding: 20px 0;
+  }
+  
+  .arrow-buttons {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    z-index: 1;
+  }
+  
+  .arrow-button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 30px;  /* Set the size of the icon */
+  }
+  
+  .arrow-button:hover {
+    background-color: transparent;
+  }
+  
+  .arrow-button i {
+    pointer-events: none; /* Ensures the icon does not interfere with button click */
+  }  
 
-        // Loop through the results and create movie grid items
-        data.results.forEach(movie => {
-            const movieItem = document.createElement('div');
-            movieItem.classList.add('similar-movie'); // Add the grid item class
 
-            // Movie Poster Image
-            const movieImageUrl = movie.poster_path ? `https://image.tmdb.org/t/p/original${movie.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Image';
-            const movieImage = document.createElement('img');
-            movieImage.src = movieImageUrl;
-            movieImage.alt = movie.title;
-            movieImage.classList.add('similar-movie-img'); // Add the image class
+/* Container for Recommendations */
+.recommendations-container {
+  padding: 20px;
+  text-align: center;
+}
 
-            // Movie Title
-            const movieTitle = document.createElement('span');
-            movieTitle.textContent = movie.title;
-            movieTitle.classList.add('movie-title'); // Optional class for styling titles
+/* Heading for Recommendations */
+h2 {
+  font-size: 24px;
+  color: #fcfafa;
+}
 
-            movieItem.appendChild(movieImage); // Append the image
+/* List of Recommendations */
+.recommendation-list {
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+}
 
-            // Add click event to redirect to the selected movie page
-            movieItem.addEventListener('click', () => {
-                window.location.href = `?movie_id=${movie.id}`; // Redirect to the selected movie
-            });
+/* Individual Recommendation Item */
+.recommendation-list li {
+  background-color: transparent;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.397);
+  margin-bottom: 20px; /* Space between items */
+  display: flex; /* Align content horizontally */
+  justify-content: flex-start; /* Align poster and title to the left */
+  align-items: center; /* Center title and poster vertically */
+  gap: 20px; /* Space between poster and title */
+  width: 80%; /* Control width for neatness */
+  margin-left: auto; /* Center the whole list */
+  margin-right: auto;
+}
 
-            similarMoviesContainer.appendChild(movieItem); // Append to the container
-        });
-    } catch (error) {
-        console.error('Error fetching similar movies:', error);
+/* Poster Image */
+.recommendation-list img {
+  width: 150px; /* Adjust width */
+  height: 200px; /* Adjust height */
+  border-radius: 8px;
+  flex-shrink: 0; /* Prevent image from shrinking */
+}
+
+/* Content Container (Title, Date) */
+.recommendation-list .content-info {
+  display: flex;
+  flex-direction: column; /* Stack title and date vertically */
+  justify-content: center; /* Center content vertically */
+  align-items: flex-start; /* Align title and date to the left */
+}
+
+/* Title Style */
+.recommendation-list h4 {
+  margin: 0;
+  font-size: 20px;
+  color: #f3f3f3;
+  font-weight: bold;
+  text-align: left;
+}
+
+/* Release Date Style */
+.recommendation-list p {
+  color: #777;
+  font-size: 14px;
+  margin: 0;
+  text-align: left;
+}
+
+/* Search Container */
+.search-container {
+  display: flex;
+  justify-content: center; /* Center the search bar */
+  margin-top: 20px; /* Space from the top */
+}
+
+/* Search Input */
+.search-container input {
+  padding: 10px;
+  font-size: 16px;
+  width: 250px; /* Adjust width for better layout */
+  border-radius: 8px;
+  border: 1px solid #ccc; 
+  box-shadow: 0 2px 5px rgba(252, 251, 251, 0.397);
+  outline: none; /* Remove the default outline */
+}
+
+.recommendation-list li:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Enhance shadow on hover */
+  background-color: rgba(255, 255, 255, 0.1); /* Light background change */
+}
+
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  color: white;
+  background-color: #111;
+}
+
+/* Full-Screen Background */
+.blurred-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000;
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px); /* Apply blur effect */
+  z-index: -1;  /* Make sure it's behind all content */
+}
+
+/* Movie Details Section */
+.movie-details {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Movie Background (Poster) */
+.movie-background {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Poster Styling */
+.movie-poster {
+  width: 250px;
+  height: 375px;
+  object-fit: cover;
+  border-radius: 10px;
+/*  border: 4px solid white; */
+}
+
+/* Movie Title */
+#movie-title {
+  font-size: 2.5rem;
+  margin-top: 20px;
+  text-align: center;
+}
+
+#movie-description {
+  font-size: 1.2rem;
+  margin-top: 20px;
+  text-align: center; /* Center the text */
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto; /* Center the description horizontally */
+  padding: 0 20px; /* Add some padding for better readability */
+}
+
+/* Movie Info Section */
+.movie-info {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 40px;
+  text-align: center;
+}
+
+.movie-info div {
+  font-size: 1.1rem;
+}
+
+.movie-info .movie-release-date {
+  color: #fff;
+}
+
+/* Cast Section */
+.movie-cast {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.movie-cast .cast-member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.movie-cast .cast-member img {
+  width: 100px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+/*  border: 3px solid white; */
+  margin-bottom: 10px;
+}
+
+.movie-cast .cast-member p {
+  color: transparent;
+  font-size: 1rem;
+  max-width: 100px;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .movie-details {
+      padding: 10px;
+  }
+
+  .movie-poster {
+      width: 150px;
+      height: 225px;
+  }
+
+  .movie-info {
+      flex-direction: column;
+  }
+}
+
+/* Star Rating Styles */
+.star {
+  font-size: 1.1rem;
+  margin-right: 5px;
+  display: inline-block;
+}
+
+.star.filled::before {
+  content: '★'; /* Filled star */
+  color: #f7c400; /* Gold color */
+}
+
+.star.empty::before {
+  content: '☆'; /* Empty star */
+  color: #ccc; /* Light gray color for empty stars */
+}
+
+/* Close button (X) */
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 6rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: #030303; /* Change color on hover */
+}
+.close-text {
+    font-size: 16px;
+    color: red;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.watch-now-btn:hover, .watch-trailer-btn:hover {
+  background-color: #000000; /* Darker gold on hover */
+}
+
+/* Movie Poster and Watch Now Button Container */
+.movie-poster-container {
+  display: flex;
+  flex-direction: column; /* Stack poster and button vertically */
+  align-items: center; /* Center the poster and button horizontally */
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Movie Poster Styling */
+.movie-poster {
+  width: 250px;
+  height: 375px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Movie Genres */
+.movie-genres {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.genre {
+  background-color: #b91515;
+  color: #fff;
+  padding: 5px 15px;
+  border-radius: 10px;
+  font-size: 1rem;
+  text-transform: capitalize;
+}
+
+#iframe-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Optional: to dim the background */
+  z-index: 1000;
+}
+
+#iframe-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Styling for the Close button */
+#close-iframe-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: red;
+  color: white;
+  font-size: 16px;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  z-index: 1100; /* Make sure it's on top of the iframe */
+}
+
+#close-iframe-btn:hover {
+  background-color: darkred;
+}
+
+#change-server-btn {
+  position: absolute;
+  top: 10px;
+  right: 90px;
+  background-color: #0296cc;
+  color: white;
+  font-size: 16px;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  z-index: 1100; /* Make sure it's on top of the iframe */
+}
+
+#change-server-btn:hover {
+  background-color: black;
+}
+
+.server-dropdown {
+  position: absolute;
+  top: 50px;  /* Space below the Change Server button */
+  right: 40px;  /* Align with the right side of the container */
+  background-color: darkred;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  z-index: 10;
+  display: none;  /* Initially hidden */
+}
+
+/* Style for each server option in the dropdown */
+.server-dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.server-dropdown ul li {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for server options */
+.server-dropdown ul li:hover {
+  background-color: #f0f0f0;
+}
+
+/* TV Show Details Section */
+.tv-show-details {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* TV Show Background (Poster) */
+.tv-show-background {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Poster Styling */
+.tv-show-poster {
+  width: 250px;
+  height: 375px;
+  object-fit: cover;
+  border-radius: 10px;
+/*  border: 4px solid white; */
+}
+
+/* TV Show Title */
+#tv-show-title {
+  font-size: 2.5rem;
+  margin-top: 20px;
+  text-align: center;
+}
+
+#tv-show-description {
+  font-size: 1.2rem;
+  margin-top: 20px;
+  text-align: center; /* Center the text */
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto; /* Center the description horizontally */
+  padding: 0 20px; /* Add some padding for better readability */
+}
+
+/* TV Show Info Section */
+.tv-show-info {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 40px;
+  text-align: center;
+}
+
+.tv-show-info div {
+  font-size: 1.1rem;
+}
+
+.tv-show-info .tv-show-first-air-date {
+  color: #fff;
+}
+
+/* Cast Section */
+.tv-show-cast {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.tv-show-cast .cast-member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tv-show-cast .cast-member img {
+  width: 100px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  /* border: 3px solid white; */
+  margin-bottom: 10px;
+}
+
+.tv-show-cast .cast-member p {
+  color: transparent;
+  font-size: 1rem;
+  max-width: 100px;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .tv-show-details {
+      padding: 10px;
+  }
+
+  .tv-show-info {
+      flex-direction: column;
+  }
+}
+
+/* Star Rating Styles */
+.star {
+  font-size: 1.1rem;
+  margin-right: 5px;
+  display: inline-block;
+}
+
+.star.filled::before {
+  content: '★'; /* Filled star */
+  color: #f7c400; /* Gold color */
+}
+
+.star.empty::before {
+  content: '☆'; /* Empty star */
+  color: #ccc; /* Light gray color for empty stars */
+}
+
+/* Close button (X) */
+.close-button {
+  position: absolute;
+  top: 30px;
+  right: 20px;
+  font-size: 2.2rem;
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  z-index: 10;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: #030303; /* Change color on hover */
+}
+
+/* Watch Now Button */
+.watch-now-btn, .watch-trailer-btn {
+  background-color: #0296cc;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  margin-top: 20px; /* Adds space between poster and button */
+}
+
+.watch-now-btn:hover, .watch-trailer-btn:hover {
+  background-color: #000000; /* Darker gold on hover */
+}
+
+/* TV Show Poster and Watch Now Button Container */
+.tv-show-poster-container {
+  display: flex;
+  flex-direction: column; /* Stack poster and button vertically */
+  align-items: center; /* Center the poster and button horizontally */
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* TV Show Genres */
+.tv-show-genres {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.genre {
+  background-color: rgba(51, 51, 51, 0.5);
+  color: #fff;
+  padding: 5px 5px;
+  border-radius: 5px;
+  font-size: 1rem;
+  text-transform: capitalize;
+}
+
+#iframe-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Optional: to dim the background */
+  z-index: 1000;
+}
+
+#iframe-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+#watch-now-btn {
+  position: relative;
+  z-index: 900; /* Make sure it's above the iframe */
+}
+
+/* Styling for the Close button */
+#close-iframe-btn {
+  position: absolute;
+  top: 0px;
+  right: 30px;
+  background-color: rgba(221, 27, 27, 0.39);
+  color: white;
+  font-size: 14px;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-bottom-left-radius: 15px;  /* Para sa left bottom corner */
+  border-bottom-right-radius: 15px; /* Para sa right bottom corner */
+  z-index: 1100; /* Make sure it's on top of the iframe */
+}
+
+#close-iframe-btn:hover {
+  background-color: darkred;
+}
+
+#change-server-btn {
+  position: absolute;
+  top: 0px;
+  right: 100px;
+  background-color: #0296cc;
+  color: white;
+  font-size: 14px;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-bottom-left-radius: 15px;  /* Para sa left bottom corner */
+  border-bottom-right-radius: 15px; /* Para sa right bottom corner */
+  z-index: 1100; /* Make sure it's on top of the iframe */
+}
+
+#change-server-btn:hover {
+  background-color: black;
+}
+
+.server-dropdown {
+  position: absolute;
+  top: 50px;  /* Space below the Change Server button */
+  right: 40px;  /* Align with the right side of the container */
+  background-color: darkred;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  z-index: 10;
+  display: none;  /* Initially hidden */
+}
+
+/* Style for each server option in the dropdown */
+.server-dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.server-dropdown ul li {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for server options */
+.server-dropdown ul li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Control buttons inside iframe container for Season and Episode */
+.iframe-controls {
+  position: absolute;
+  top: 0px;
+  left: 10px;
+  z-index: 2;
+  display: flex;
+  gap: 15px; /* Horizontal gap between buttons */
+  background: transparent;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.control-btn {
+  padding: 12px 25px;
+  background-color: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+/* Style for the buttons */
+#season-btn, #episode-btn {
+  background-color: #0296cc;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+#season-btn:hover, #episode-btn:hover {
+  background-color: #0c0c0c;
+}
+
+/* Style for the dropdown list */
+.dropdown-list {
+  display: none;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  background-color: rgba(51, 51, 51, 0.5);
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  max-height: 300px;
+  overflow-y: scroll; /* Enable scrolling */
+}
+
+/* Hide the scrollbar but keep scrolling functionality */
+.dropdown-list::-webkit-scrollbar {
+  display: none; /* Hide scrollbar in Webkit-based browsers */
+}
+
+/* Show dropdown when toggled */
+.dropdown-list.show {
+  display: block;
+}
+
+/* Style for each list item (season/episode) */
+.dropdown-list li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.dropdown-list li:hover {
+  background-color: #f1f1f1;
+}
+
+/* Style the season and episode images */
+#seasons-list img, #episodes-list img {
+  width: 50px;
+  height: auto;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+#seasons-list li, #episodes-list li {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+}
+
+#seasons-list li:hover, #episodes-list li:hover {
+  background-color: #0296cc;
+}
+
+#more-like-this {
+  margin-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px; /* Adds padding on the left and right */
+}
+
+#more-like-this h3 {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Container for similar shows */
+#similar-shows-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Create responsive columns */
+  gap: 10px; /* Space between items */
+  padding: 10px;
+}
+
+/* Individual show item */
+.similar-show {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.similar-show:hover {
+  transform: scale(1.05); /* Zoom effect on hover */
+}
+
+/* Image styling */
+.similar-show-img {
+  width: 100%;
+  height: 210px; /* Adjust the height as needed */
+  object-fit: cover; /* Ensure images maintain aspect ratio */
+}
+
+/* Title styling */
+.similar-show span {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+}
+
+/* Mobile Responsiveness: 4 items per row */
+@media (max-width: 768px) {
+  #similar-shows-container {
+    grid-template-columns: repeat(4, 1fr); /* 4 items per row */
+  }
+
+  .similar-show-img {
+    height: 180px; /* Reduce image size for mobile */
+  }
+}
+
+.similar-movies-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Create responsive columns */
+  gap: 10px;
+  padding: 25px;
+}
+
+.similar-movie {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.similar-movie:hover {
+  transform: scale(1.05); /* Zoom effect on hover */
+}
+
+.similar-movie-img {
+  width: 100%;
+  height: 210px; /* Adjust the height as needed */
+  object-fit: cover; /* Ensure images maintain aspect ratio */
+}
+
+.similar-movie span {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+}
+
+#backButton {
+  background-color: #504d4dab;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+#backButton:hover {
+  background-color: #030303;
+}
+
+
+/* Style for the "Watch Trailer" heading */
+#movie-trailer-container h3 {
+  font-size: 30px;
+  color: white; /* Bold gold color */
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Style for the trailer section */
+#movie-trailer-container {
+  background-color: transparent; /* Dark background for dawg feel */
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+  margin-top: 30px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+
+/* Dawg Style Trailer Container */
+.trailer-container {
+  background-color: transparent; /* Dark background for dawg feel */
+  padding:20px;
+  border-radius: 10px;
+  color: white;
+  margin-top: 30px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+
+.trailer-title {
+  font-size: 30px;
+  color: white; /* Bold gold color */
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: transparent;
+}
+
+/* Search Bar */
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding: 0 20px; /* Adds padding to the left and right of the search bar */
+}
+
+#search-bar {
+  width: 100%;
+  max-width: 400px; /* Makes the search bar smaller */
+  padding: 10px; /* Reduces padding inside the search bar */
+  font-size: 16px; /* Reduces font size inside the search bar */
+  border: 2px solid #0c0c0c;
+  border-radius: 5px;
+  background-color: #f9fafb;
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+#search-bar:focus {
+  border-color: #264653;
+}
+
+/* Recommended Movies Section */
+#recommended {
+  align-items: center;
+  background-color: transparent;
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+#recommended h2 {
+  margin: 0;
+  font-size: 28px;
+}
+
+/* Grid Layout for Results */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.movie-item {
+  position: relative;
+  background-color: transparent;
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.movie-item:hover {
+  transform: scale(1.05);
+}
+
+.movie-item img {
+  width: 70%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* No Results Message */
+#movie-results p {
+  text-align: center;
+  font-size: 18px;
+  color: #999;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  margin: 20px auto;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #da2121;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+}
+
+/* Keyframe for spinner animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Style for Go Back Button */
+.go-back-btn {
+  position: fixed;  /* Fixed position to stay at the top-left of the page */
+  top: 5px;        /* 10px from the top of the page */
+  left: 10px;       /* 10px from the left of the page */
+  padding: 5px 10px;
+  font-size: 16px;
+  background-color: #343636;  /* Dark blue background */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1000; /* Ensures it appears above other content */
+}
+
+/* Go Back Button Hover Effect */
+.go-back-btn:hover {
+  background-color: #000000;
+}
+
+/* Loading Screen Style */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.993); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* Align items vertically */
+  z-index: 9999; /* Ensure it stays on top of the page */
+}
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3); /* Light color border */
+  border-top: 4px solid #fff; /* White top part of the spinner */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite; /* Animation for the spinner */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Loading Text Style */
+.loading-text {
+  margin-top: 15px; /* Add some space between the spinner and the text */
+  font-size: 15px; /* Make the text large enough */
+  color: white; /* White text color */
+  font-family: 'Arial', sans-serif; /* Optional: Change the font */
+}
+
+/* Ensure the movie card container is positioned relative to place the icon */
+.movie-card-container {
+  position: relative;
+  display: inline-block;
+  margin: 10px;
+}
+
+
+
+.container {
+  text-align: center; /* Centers the text horizontally */
+}
+
+h3 {
+  margin: 0;
+  padding: 20px 0;
+}
+
+.list-icon {
+position: absolute;
+top: 15px;
+right: 50px; /* Adjusted for better placement on mobile */
+font-size: 25px;  /* Slightly larger size for better visibility */
+color: white;
+background-color: rgba(92, 90, 90, 0);
+border: none;
+padding: 8px;
+border-radius: 50%;
+cursor: pointer;
+transition: background-color 0.3s, filter 0.3s; /* Smooth transition effects */
+backdrop-filter: blur(10px);
+}
+
+/* Hover effect for the icon */
+.list-icon:hover {
+background-color: rgba(87, 84, 84, 0);
+}
+
+/* Ensure the icon doesn't interfere with layout on small screens */
+@media (max-width: 768px) {
+.list-icon {
+  top: 15px;  /* Make the icon slightly closer to the top for small screens */
+  right: 70px;  /* Ensure it's not too far right */
+  font-size: 18px;  /* Reduce the size a little on smaller screens */
+}
+}
+
+#movie-description {
+background-color: rgba(56, 55, 55, 0.644); /* Semi-transparent black background */
+color: white; /* Text color */
+padding: 20px;
+border-radius: 8px;
+max-width: 80%;
+margin: 0 auto; /* Center it horizontally */
+}
+
+#tv-show-description {
+background-color: rgba(56, 55, 55, 0.644); /* Semi-transparent black background */
+color: white; /* White text for contrast */
+padding: 20px;
+border-radius: 8px;
+max-width: 80%; /* Limiting width */
+margin: 0 auto; /* Centering the description box */
+}
+
+
+
+/* Movie Description */
+#movie-description, #tv-show-description {
+  font-size: 1rem;
+  color: #eee;
+  margin-top: 10px;
+  line-height: 1.5;
+  max-width: 900px;
+}
+
+
+/* Container for similar TV shows */
+#similar-shows-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive grid */
+  gap: 20px; /* Space between items */
+  justify-items: center; /* Center items in each grid cell */
+  margin-top: 20px;
+}
+
+/* Styling for each TV show item */
+.similar-show {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Image styling for TV shows */
+.similar-show-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  transition: transform 0.3s ease;
+}
+
+/* TV show title styling */
+.similar-show span {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+}
+
+/* Hover effect for TV show item */
+.similar-show:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+}
+
+.similar-show:hover .similar-show-img {
+  transform: scale(1.05);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  /* On tablets and smaller devices, display 4 items per row */
+  #similar-shows-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Adjust poster size for tablets */
+  .similar-show-img {
+    height: 220px; /* Adjust the height for tablet view */
+  }
+}
+
+@media (max-width: 480px) {
+  /* On mobile devices, display 2 items per row */
+  #similar-shows-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Adjust poster size for mobile */
+  .similar-show-img {
+    height: 180px; /* Adjust the height for mobile view */
+  }
+}
+
+/* Container for similar movies */
+.similar-movies-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  margin-top: 20px;
+}
+
+/* Styling for each movie item */
+.similar-movie {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Image styling */
+.similar-movie-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  transition: transform 0.3s ease;
+}
+
+/* Movie title styling */
+.movie-title {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+}
+
+/* Hover effect for movie item */
+.similar-movie:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+}
+
+.similar-movie:hover .similar-movie-img {
+  transform: scale(1.05);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  /* On tablets and smaller devices, display 4 items per row */
+  .similar-movies-container {
+      grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Make posters a bit smaller on tablets */
+  .similar-movie-img {
+      height: 220px; /* Adjust the height for tablet view */
+  }
+}
+
+@media (max-width: 480px) {
+  /* On mobile devices, display 2 items per row */
+  .similar-movies-container {
+      grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Make posters smaller on mobile */
+  .similar-movie-img {
+      height: 180px; /* Adjust the height for mobile view */
+  }
+}
+
+
+
+/* Styles for the "MOVIES" text */
+.movies {
+  font-family: "Electronica Display Outline";  
+  font-size: 25px;  /* Default font size */
+  color: white;  /* White color for MOVIES */
+  display: inline-block; /* Keep MOVIES in one line */
+  vertical-align: top; /* Align to the top */
+  margin-top: 13px;  /* Move "MOVIES" a little down */
+  letter-spacing: -0.5px;  /* Slightly reduce spacing for a tighter look */
+  margin-left: 5px;  /* A little space between "TOP" and "MOVIES" */
+  line-height: 1;  /* Adjust line height for tighter spacing */
+}
+
+/* Styles for the "TV-SHOWS" text */
+.tv-shows {
+  font-family: "Electronica Display Outline";  
+  font-size: 25px;  /* Default font size */
+  color: white;  /* White color for TV-SHOWS */
+  display: inline-block; /* Keep TV-SHOWS in one line */
+  vertical-align: top; /* Align to the top */
+  margin-top: 13px;  /* Move "TV-SHOWS" a little down */
+  letter-spacing: -0.5px;  /* Slightly reduce spacing for a tighter look */
+  margin-left: 5px;  /* A little space between "TOP" and "TV-SHOWS" */
+  line-height: 1;  /* Adjust line height for tighter spacing */
+}
+
+/* Styles for the POPULAR */
+h4 {
+  font-family: "Electronica Display Outline";  
+  font-size: 50px;  /* Larger font for POPULAR */
+  color: transparent;
+  background-image: linear-gradient(180deg, transparent, rgba(228, 47, 47, 0.61), rgb(228, 47, 47));
+  -webkit-background-clip: text;
+  background-clip: text;
+  letter-spacing: 1px;  
+  word-spacing: 1px;  
+  line-height: 1;  
+  text-align: left;  /* Align text to the left */
+  animation: fadeInFromRight 2s ease-out; 
+}
+
+/* Styles for the "K-DRAMA" text */
+.k-drama {
+  font-family: "Electronica Display Outline";  
+  font-size: 25px;  /* Default font size */
+  color: white;  /* White color for K-DRAMA */
+  display: inline-block; /* Keep K-DRAMA in one line */
+  vertical-align: top; /* Align to the top */
+  margin-top: 13px;  /* Move "K-DRAMA" a little down */
+  letter-spacing: 0px;  /* Slightly reduce spacing for a tighter look */
+  margin-left: 5px;  /* A little space between "TOP" and "K-DRAMA" */
+  line-height: 1;  /* Adjust line height for tighter spacing */
+}
+
+/* Styles for the "ANIME" text */
+.anime {
+  font-family: "Electronica Display Outline";  
+  font-size: 25px;  /* Default font size */
+  color: white;  /* White color for ANIME */
+  display: inline-block; /* Keep ANIME in one line */
+  vertical-align: top; /* Align to the top */
+  margin-top: 13px;  /* Move "ANIME" a little down */
+  letter-spacing: 0px;  /* Slightly reduce spacing for a tighter look */
+  margin-left: 5px;  /* A little space between "TOP" and "ANIME" */
+  line-height: 1;  /* Adjust line height for tighter spacing */
+}
+
+/* Styles for the "VIVAMAX" text */
+.vivamax {
+  font-family: "Electronica Display Outline";  
+  font-size: 25px;  /* Default font size */
+  color: white;  /* White color for VIVAMAX */
+  display: inline-block; /* Keep VIVAMAX in one line */
+  vertical-align: top; /* Align to the top */
+  margin-top: 13px;  /* Move "VIVAMAX" a little down */
+  letter-spacing: 0px;  /* Slightly reduce spacing for a tighter look */
+  margin-left: 5px;  /* A little space between "TOP" and "VIVAMAX" */
+  line-height: 1;  /* Adjust line height for tighter spacing */
+}
+
+/* Keyframe animation */
+@keyframes fadeInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(50px); 
+    background-image: linear-gradient(180deg, transparent, rgba(228, 47, 47, 0.61), rgb(228, 47, 47));
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+    background-image: linear-gradient(180deg, transparent, rgba(228, 47, 47, 0.61), rgb(228, 47, 47));
+  }
+}
+
+
+/* Further adjustments for very small screens (e.g., phones in portrait mode) */
+/* Adjust styles for mobile devices */
+@media (max-width: 768px) { 
+  .movies {
+    font-size: 16px;  /* Slightly smaller font for mobile */
+    margin-top: 10px;  /* Adjust margin for better spacing */
+  }
+
+ .tv-shows {
+    font-size: 16px;  /* Slightly smaller font for mobile */
+    margin-top: 10px;  /* Adjust margin for better spacing */
+  }
+  
+  h4 {
+    font-size: 35px;  /* Smaller font size for h4 on mobile */
+    letter-spacing: 0.5px;  /* Adjust letter spacing */
+    word-spacing: 0.5px;  /* Adjust word spacing */
+  }
+  
+  .k-drama {
+    font-size: 16px;  /* Even smaller font for very small screens */
+    margin-top: 10px;  /* Further reduce margin */
+  }
+  
+  .anime {
+    font-size: 16px;  /* Even smaller font for very small screens */
+    margin-top: 10px;  /* Further reduce margin */
+  }
+  
+  .vivamax {
+    font-size: 16px;  /* Even smaller font for very small screens */
+    margin-top: 10px;  /* Further reduce margin */
+  }  
+  
+}
+
+/* Further adjustments for very small screens (e.g., phones in portrait mode) */
+@media (max-width: 480px) {
+  .movies {
+    font-size: 16px;  /* Even smaller font for very small screens */
+    margin-top: 10px;  /* Further reduce margin */
+  }
+
+  .tv-shows {
+    font-size: 16px;  /* Even smaller font for very small screens */
+    margin-top: 10px;  /* Further reduce margin */
+  }
+  
+  h4 {
+    font-size: 35px;  /* Even smaller font for POPULAR */
+    letter-spacing: 0.3px;  /* Tighter letter-spacing */
+    word-spacing: 0.3px;  /* Tighter word-spacing */
+  }
+  
+  .k-drama {
+    font-size: 16px;  /* Even smaller font for very small screens */
+    margin-top: 10px;  /* Further reduce margin */
+  }
+  
+    .anime {
+    font-size: 16px;  /* Even smaller font for very small screens */
+    margin-top: 10px;  /* Further reduce margin */
+  }
+  
+    .vivamax {
+    font-size: 16px;  /* Even smaller font for very small screens */
+    margin-top: 10px;  /* Further reduce margin */
+  }  
+  
+}
+
+
+
+/* NAVIGATION BAR START */
+    nav {
+      width: 100%;
+      background: rgba(0, 0, 0, 0); /* Transparent at the top */
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      padding: 10px 20px;
+      transition: background-color 0.3s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-};
 
-// Fetch and display movie details on page load
-fetchMovieDetails();
-
-// Fetch data for different categories
-fetchMovies('popular', 'popularMovies');
-fetchMovies('movies', 'popularMovie');
-fetchMovies('trending', 'trendingNow');
-fetchMovies('top_rated', 'topRated');
-fetchMovies('action', 'actionMovies');
-fetchMovies('comedy', 'comedyMovies');
-fetchMovies('horror', 'horrorMovies');
-fetchMovies('romance', 'romanceMovies');
-fetchMovies('animation', 'animation');
-
-// Fetch banner details
-fetchBanner();
-
-// Initialize arrow buttons functionality after fetching the movie data
-document.addEventListener('DOMContentLoaded', initArrowNavigation);
-
-// JavaScript for the Close Button
-document.getElementById('close-button').addEventListener('click', () => {
-    window.location.href = 'movies.html';  // Redirects to the main page (index.html)
-});
-
-window.addEventListener("load", function() {
-    setTimeout(function() {
-        document.getElementById("loading-screen").style.display = "none";
-    }, 1000); // 3000ms = 3 seconds
-});
-
-
-// For Responsive Header
-window.addEventListener("scroll", function () {
-    let nav = document.querySelector("nav");
-    if (window.scrollY > 50) {
-        nav.classList.add("nav-solid"); // Solid color after scrolling down
-    } else {
-        nav.classList.remove("nav-solid"); // Transparent at the top
+    /* Sticky Header when Scrolling */
+    .nav-solid {
+      background-color: rgba(0, 0, 0, 1); /* Solid background when scrolled */
     }
-});
 
-// For sticky header when scrolling
-    window.addEventListener("scroll", function () {
-      let nav = document.querySelector("nav");
-      if (window.scrollY > 50) {
-        nav.classList.add("nav-solid"); // Add solid background when scrolled
-      } else {
-        nav.classList.remove("nav-solid"); // Remove solid background at top
+    /* Logo Style */
+    #logo {
+      max-height: 25px;
+      display: inline-block;
+    }
+
+    /* Navigation Menu (Links) */
+    nav ul {
+      display: flex;
+      justify-content: flex-end;
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+    }
+
+    nav ul li {
+      margin-left: 5px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      text-transform: uppercase;
+      padding: 10px;
+      display: inline-block;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    nav ul li a:hover,
+    nav ul li a.active {
+      background-color: #0296cc;
+    }
+/* Mobile Navbar */
+.menu-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: #1e1e1e;
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links li {
+        padding: 15px 0;
+    }
+}
+
+/* Mobile Styles (Screen width below 768px) */
+    @media (max-width: 768px) {
+      /* Navigation links initially hidden on mobile */
+      nav ul {
+        display: none;  /* Hidden by default */
+        flex-direction: column;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.9);
+        position: absolute;
+        top: 50px; /* To place the menu below the nav bar */
+        left: 0;
+        right: 0;
+        width: 100%;
+        padding: 10px 0;
       }
-    });
+      /* Active state of the menu */
+      nav.active ul {
+        display: flex; /* Show the menu when active */
+      }
+      nav ul li {
+        width: 100%;
+        text-align: center;
+        margin: 2px 0;
+      }
 
-    // Toggle menu visibility when menu button is clicked
-document.getElementById("menu-btn").addEventListener("click", function() {
-    document.getElementById("menu").classList.toggle("active");
-});
+      nav ul li a {
+        padding: 10px;
+        width: 100%;
+        text-align: center;
+      }
 
-// For Dropdown More Button Function Start
-document.addEventListener("DOMContentLoaded", function () {
-    const dropdown = document.querySelector(".dropdown");
+      /* Logo will adjust for smaller screens */
+      #logo {
+        max-height: 20px;
+      }
 
-    if (dropdown) {
-        dropdown.addEventListener("click", function (event) {
-            event.stopPropagation(); // Prevents the document click from firing immediately
-            this.classList.toggle("active");
-        });
+      /* Menu Button visible on mobile */
+      .menu-btn {
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        background-color: #0296cc;
+        padding: 10px 20px;
+        border-radius: 5px;
+        display: block;  /* Visible on mobile */
+      }
 
-        // Close dropdown when clicking outside
-        document.addEventListener("click", function (event) {
-            if (!dropdown.contains(event.target) && dropdown.classList.contains("active")) {
-                dropdown.classList.remove("active");
-            }
-        });
+      /* Show menu when active */
+#menu.active {
+    display: flex;
+}
     }
-});
 
-// For Dropdown More Button Function End
-
-
-
-// For Floating Message Close Function Start
-function closeMessage() {
-        document.getElementById("floating-message").style.display = "none";
+    /* Hide the menu button on desktop */
+    @media (min-width: 769px) {
+      .menu-btn {
+        display: none;  /* Hide the menu button on desktop */
+      }
     }
-// For Floating Message Close Function End
+/* NAVIGATION BAR END */
+
+.movie-rating {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(0, 0, 0, 0);
+    color: gold;
+    padding: 5px 8px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    z-index: 20; /* Ensures it stays above other elements */
+    transition: opacity 0.3s ease-in-out;
+}
+
+.movie-rating i {
+    margin-right: 5px;
+}
+
+.tv-show-rating {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(0, 0, 0, 0);
+    color: gold;
+    padding: 5px 8px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    z-index: 20; /* Ensures it stays above other elements */
+    transition: transform 0.3s ease-in-out;
+}
+
+.tv-show-rating i {
+    margin-right: 5px;
+}
 
 
+/* Chat button styling Start */
+#chat-container {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    z-index: 1000;
+}
 
-//--For Navigation Header Mobile--//    
+#chat-button {
+    background-color: #0296cc;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    cursor: pointer;
+    border-radius: 50px;
+    font-size: 16px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s ease;
+}
+
+#chat-button:hover {
+    background-color: #0275a6;
+}
+
+/* Chat Box */
+#chat-box {
+    position: fixed;
+    bottom: 70px;
+    right: 15px;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+    width: 300px;
+    display: none;
+}
+
+/* Close button */
+#close-chat {
+    display: block;
+    text-align: right;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+#close-chat:hover {
+    color: red;
+}
+
+/* Input and text area */
+#chat-box input,
+#chat-box textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Send button */
+#send-message {
+    width: 100%;
+    background-color: #0296cc;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+#send-message:hover {
+    background-color: #0275a6;
+}
+
+/* Responsive Mobile View */
+@media screen and (max-width: 480px) {
+    #chat-box {
+        width: 90%; /* Make chat box wider on mobile */
+        right: 5%;
+        bottom: 80px;
+    }
+
+    #chat-button {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    #send-message {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+/* Chat button styling End */
+
+/* Floating Message */
+#floating-message {
+position: fixed;
+top: 25%;
+left: 50%;
+transform: translateX(-50%);
+background-color: #121212;
+color: white;
+text-align: center;
+padding: 15px;
+font-size: 15px;
+z-index: 1000;
+border-radius: 20px; /* Rounded top corners */
+width: 30%; /* You can adjust the width as needed */
+backdrop-filter: blur(8px); /* Apply blur effect to the background */
+-webkit-backdrop-filter: blur(8px); /* Ensure blur effect works on iOS */
+border: 2px solid white;
+}
+
+#floating-message button {
+background-color: red; /* Green background for the "OK" button */
+color: white;
+border: none;
+font-size: 10px;
+padding: 8px 16px;
+cursor: pointer;
+border-radius: 5px; /* Rounded button corners */
+margin-top: 10px; /* Adds space between the message and the button */
+}
+
+#floating-message button:hover {
+background-color: #0296cc; /* Darker green on hover */
+}
+
+/* Adjustment of arrow button in mobile */
+@media (max-width: 768px) {
+       .scroll-left {
+          font-size: 20px;
+          padding: 8px;
+}
+       .scroll-right {
+          font-size: 20px;
+          padding: 8px;
+}
+}
+
+/* Adjustment of floating message in mobile */
+@media (max-width: 768px) {
+   #floating-message {
+     padding: 5px;
+     font-size: 15px;
+     width: 75%;
+     top: 25%;
+   
+}}
+
+
+/* Play Button */
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, #551A8B, #000);
+    color: white;
+    font-size: 28px;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    box-shadow: 0 0 15px violet;
+}
+
+/* Glow Effect Animation */
+@keyframes galaxyGlow {
+    0% { box-shadow: 0 0 15px violet; }
+    50% { box-shadow: 0 0 30px blue; }
+    100% { box-shadow: 0 0 15px violet; }
+}
+
+
+/* Hover Effect */
+.movie-card:hover .play-button {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+    animation: galaxyGlow 1.5s infinite alternate;
+}
+
+.play-button i {
+    font-size: 30px;
+}
+
+/* Hover Effect */
+.tv-show-card:hover .play-button {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+    animation: galaxyGlow 1.5s infinite alternate;
+}
+
+
+.tv-show-card, .movie-card {
+    position: relative;
+    overflow: visible;
+}
+
+.row__poster:hover + .tv-show-rating, 
+.row__poster:hover + .movie-rating {
+    transform: scale(1.2);
+    opacity: 1;
+    z-index: 30;
+}
+
+
+/* Dropdown MORE Button Start*/
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background: none;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    text-transform: uppercase;
+    font-size: 17px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+.dropbtn:hover {
+    background-color: #0296cc;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #1e1e1e;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border-radius: 5px;
+    right: 0;
+}
+.dropdown-content.show {
+    display: block;
+}
+.dropdown-content li {
+    list-style: none;
+    padding: 5px;
+    text-align: right;
+}
+
+.dropdown-content li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    transition: background 0.3s;
+}
+
+.dropdown-content li a:hover {
+    background-color: #0296cc;
+}
+
+/* Show dropdown on hover (for larger screens) */
+@media (min-width: 769px) {
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+}
+
+/* Show dropdown on click (for mobile) */
+@media (max-width: 768px) {
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #333;
+        min-width: 160px;
+        z-index: 1000;
+        list-style: none;
+        padding: 0;
+    }
+    .dropdown-content li {
+        padding: 5px;
+    }
+    .dropdown-content.show {
+        display: block;
+    }
+    .dropdown:hover .dropdown-content,
+    .dropdown:focus-within .dropdown-content {
+        display: block;
+    }
+}
+/* Dropdown MORE Button End*/
+
+
+/* DISABLE ADS  START */
+/* Hide common ad elements */
+/* Blocking Ads Using CSS */
+.ads, .ad-container, [id*="ad"] {
+    display: none !important;
+    pointer-events: none !important;
+}
+meta[http-equiv="refresh"] {
+    display: none !important;
+}
+/* DISABLE ADS  END */
