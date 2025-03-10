@@ -503,21 +503,22 @@ function closeMessage() {
 
 // For Dropdown More Button Function Start
 document.addEventListener("DOMContentLoaded", function () {
-    const dropBtn = document.querySelector(".dropbtn");
+    const moreBtn = document.querySelector(".dropbtn");
     const dropdownContent = document.querySelector(".dropdown-content");
 
-    dropBtn.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent click from bubbling up
-        dropdownContent.classList.toggle("show");
+    moreBtn.addEventListener("click", function (event) {
+        event.stopPropagation(); // Prevent click from propagating
+        dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
     });
 
-    // Close the dropdown if the user clicks outside of it
+    // Close dropdown when clicking outside
     document.addEventListener("click", function (event) {
-        if (!dropBtn.contains(event.target) && !dropdownContent.contains(event.target)) {
-            dropdownContent.classList.remove("show");
+        if (!moreBtn.contains(event.target) && !dropdownContent.contains(event.target)) {
+            dropdownContent.style.display = "none";
         }
     });
 });
+
 
 // For Dropdown More Button Function End
 
