@@ -2170,9 +2170,6 @@ background-color: #0296cc; /* Darker green on hover */
 
 /* Show dropdown on click (for mobile) */
 @media (max-width: 768px) {
-    .dropdown-content li {
-        padding: 5px;
-    }
     .dropdown-content {
         display: none;
         position: absolute;
@@ -2182,11 +2179,10 @@ background-color: #0296cc; /* Darker green on hover */
         list-style: none;
         padding: 0;
     }
-    .dropdown-content.show {
-    display: block;
+    .dropdown-content li {
+        padding: 5px;
     }
-    .dropdown:hover .dropdown-content,
-    .dropdown:focus-within .dropdown-content {
+    .dropdown-content.show {
         display: block;
     }
 }
