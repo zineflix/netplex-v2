@@ -498,23 +498,25 @@ document.getElementById("menu-btn").addEventListener("click", function() {
 // For Dropdown More Button Function Start
 document.addEventListener("DOMContentLoaded", function () {
     const dropdown = document.querySelector(".dropdown");
-    const dropdownContent = document.querySelector(".dropdown-content");
     const dropbtn = document.querySelector(".dropbtn");
+    const dropdownContent = document.querySelector(".dropdown-content");
 
-    if (dropdown && dropdownContent && dropbtn) {
+    if (dropdown && dropbtn && dropdownContent) {
+        // Toggle dropdown when clicking the "More" button
         dropbtn.addEventListener("click", function (event) {
-            event.stopPropagation(); // Prevents the document click from closing immediately
+            event.stopPropagation(); // Prevents immediate closure
             dropdownContent.classList.toggle("show");
         });
 
         // Close dropdown when clicking outside
         document.addEventListener("click", function (event) {
-            if (!dropdown.contains(event.target)) {
+            if (!dropbtn.contains(event.target) && !dropdownContent.contains(event.target)) {
                 dropdownContent.classList.remove("show");
             }
         });
     }
 });
+
 
 
 // For Dropdown More Button Function End
