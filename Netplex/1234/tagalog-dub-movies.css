@@ -324,19 +324,13 @@ body {
 /* Show dropdown on click (for mobile) */
 @media (max-width: 768px) {
     .dropdown-content {
+        position: static;
         display: none;
-        position: absolute;
-        background-color: #1e1e1e;
-        min-width: 150px;
-        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-        border-radius: 5px;
-        right: 0;
     }
     .dropdown-content li {
         padding: 5px;
     }
-    .dropdown-content.active {
+    .dropdown.active .dropdown-content {
         display: block;
     }
 }
