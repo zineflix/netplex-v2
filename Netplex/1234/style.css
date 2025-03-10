@@ -2133,12 +2133,14 @@ background-color: #0296cc; /* Darker green on hover */
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #1e1e1e;
-    min-width: 150px;
+    background-color: #111;
+    min-width: 160px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    border-radius: 5px;
-    right: 0;
+}
+
+.dropdown-content.show {
+    display: block;
 }
 
 .dropdown-content li {
@@ -2169,8 +2171,8 @@ background-color: #0296cc; /* Darker green on hover */
 /* Show dropdown on click (for mobile) */
 @media (max-width: 768px) {
     .dropdown-content {
-        position: static;
-        display: none;
+        position: relative; /* Adjust if needed */
+        width: 100%;
     }
     .dropdown-content li {
         padding: 5px;
