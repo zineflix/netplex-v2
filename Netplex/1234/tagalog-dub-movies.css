@@ -338,38 +338,37 @@ body {
 
 
 /* FOR TAGALOG DUB MOVIE SECTION START */
-        h1 {
-            text-align: center;
-            margin-top: 150px;
-            margin-bottom: 50px;
-            font-size: 50px;
-        }
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            margin-bottom: 100px;
-        }
-        .movie-card {
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-        .movie-card:hover img {
-            box-shadow: 0 8px 20px #0296cc; /* Stronger shadow */
-            transform: scale(1.05); /* Slight zoom effect */
-        }
-        .movie-card img {
-            width: 100%;
-            border-radius: 10px;
-            display: block;
-            box-shadow: 0 4px 10px #0296cc; /* Soft shadow */
-            transition: box-shadow 0.3s ease, transform 0.3s ease;
-        }
+h1 {
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 25px;
+    font-size: 50px;
+}
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    margin-bottom: 50px;
+}
+.movie-card {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+.movie-card:hover img {
+    box-shadow: 0 8px 20px #0296cc; /* Stronger shadow */
+    transform: scale(1.05); /* Slight zoom effect */
+}
+.movie-card img {
+    width: 100%;
+    border-radius: 10px;
+    display: block;
+    box-shadow: 0 4px 10px #0296cc; /* Soft shadow */
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
 
-        /* Play Button Effect */
-        /* Play Button Effect */
+/* Play Button Effect */
 .play-button {
     position: absolute;
     top: 50%;
@@ -396,31 +395,31 @@ body {
     box-shadow: 0 0 15px rgba(255, 0, 0, 0.6); /* Glowing effect */
 }
 
-        .movie-card:hover .play-button {
-            opacity: 1;
-        }
+.movie-card:hover .play-button {
+    opacity: 1;
+}
 
-        /* Modal Styles */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            margin-top: 50px;
-        }
-        .modal.show {
-            opacity: 1;
-            visibility: visible;
-        }
-        .modal-content {
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    margin-top: 50px;
+}
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+.modal-content {
     background: #222;
     padding: 20px;
     width: 90%;
@@ -432,32 +431,32 @@ body {
     overflow-y: auto; /* Enables vertical scrolling */
     margin-bottom: 50px;          
 }
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 20px;
-            cursor: pointer;
-            color: white;
-        }
-        .poster-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 10px;
-        }
-        .poster-container img {
-            max-width: 100%;
-            max-height: 300px;
-            object-fit: contain; /* Ensures the image doesn't stretch */
-            border-radius: 10px;
-        }
-        iframe {
-            width: 100%;
-            height: 300px;
-            border: none;
-            border-radius: 10px;
-            margin-top: 10px;
-        }
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+}
+.poster-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.poster-container img {
+    max-width: 100%;
+    max-height: 300px;
+    object-fit: contain; /* Ensures the image doesn't stretch */
+    border-radius: 10px;
+}
+iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+    border-radius: 10px;
+    margin-top: 10px;
+}
 
 /* Responsive Grid */
 @media (max-width: 600px) {
