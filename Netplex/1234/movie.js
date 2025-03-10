@@ -502,8 +502,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (dropbtn && dropdownContent) {
         dropbtn.addEventListener("click", function (event) {
-            event.stopPropagation(); // Prevent event bubbling
-            dropdownContent.classList.toggle("show"); // Toggle visibility
+            event.stopPropagation(); // Prevents bubbling issues
+            dropdownContent.classList.toggle("show"); // Toggle dropdown menu
         });
 
         // Close dropdown when clicking outside
@@ -514,6 +514,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
 
 
 
