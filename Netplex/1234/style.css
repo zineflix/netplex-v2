@@ -2123,26 +2123,23 @@ background-color: #0296cc; /* Darker green on hover */
     border-radius: 5px;
     right: 0;
 }
-
-.dropdown-content.show {
-    display: block; /* This makes it visible when toggled */
-}
-.dropbtn {
-    background: none;
-    color: white;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    text-transform: uppercase;
-    font-size: 17px;
-    border-radius: 5px;
-    transition: background 0.3s;
-}
 .dropbtn:hover {
     background-color: #0296cc;
 }
+.dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #1e1e1e;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            border-radius: 5px;
+            right: 0;
+        }
 
+        .dropdown-content.show {
+            display: block;
+        }
 .dropdown-content {
     display: none;
     position: absolute;
