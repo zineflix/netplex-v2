@@ -2113,7 +2113,12 @@ background-color: #0296cc; /* Darker green on hover */
     position: relative;
     display: inline-block;
 }
-
+.dropdown-content li {
+        padding: 5px;
+    }
+    .dropdown-content.show {
+        display: block;
+    }
 .dropbtn {
     background: none;
     color: white;
@@ -2178,12 +2183,6 @@ background-color: #0296cc; /* Darker green on hover */
         z-index: 1000;
         list-style: none;
         padding: 0;
-    }
-    .dropdown-content li {
-        padding: 5px;
-    }
-    .dropdown-content.show {
-        display: block;
     }
     .dropdown:hover .dropdown-content,
     .dropdown:focus-within .dropdown-content {
