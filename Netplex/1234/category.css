@@ -432,7 +432,7 @@ h1 {
 
 /* Show dropdown on hover (for larger screens) */
 @media (min-width: 769px) {
-    .dropdowns:hover .dropdown-content {
+    .dropdown:hover .dropdown-content {
         display: block;
     }
 }
