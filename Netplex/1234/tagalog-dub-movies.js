@@ -144,3 +144,19 @@ const API_KEY = "a1e72fd93ed59f56e6332813b9f8dcae";
 
         fetchMovies();
 // FOR TAGALOG DUB MOVIE SECTION END //
+
+// Fullscreen Button Start //
+document.getElementById("fullscreenButton").addEventListener("click", function () {
+    let iframe = document.getElementById("movieTrailer");
+
+    if (iframe.requestFullscreen) {
+        iframe.requestFullscreen();
+    } else if (iframe.mozRequestFullScreen) { // Firefox
+        iframe.mozRequestFullScreen();
+    } else if (iframe.webkitRequestFullscreen) { // Chrome, Safari, Opera
+        iframe.webkitRequestFullscreen();
+    } else if (iframe.msRequestFullscreen) { // IE/Edge
+        iframe.msRequestFullscreen();
+    }
+});
+// Fullscreen Button End //
