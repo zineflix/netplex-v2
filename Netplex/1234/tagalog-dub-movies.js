@@ -158,5 +158,9 @@ document.getElementById("fullscreenButton").addEventListener("click", function (
     } else if (iframe.msRequestFullscreen) { // IE/Edge
         iframe.msRequestFullscreen();
     }
+    // Rotate the screen to landscape mode (Only works on mobile browsers)
+    if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock("landscape").catch(error => console.log("Orientation lock failed:", error));
+    }
 });
 // Fullscreen Button End //
