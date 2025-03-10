@@ -383,7 +383,7 @@ h1 {
 /* FOR RESPONSIVE NAVIGATION BAR END */
 
 /* Dropdown MORE Button Start*/
-.dropdowns {
+.dropdown {
     position: relative;
     display: inline-block;
 }
@@ -417,7 +417,7 @@ h1 {
 
 .dropdown-content li {
     list-style: none;
-    padding: 10px;
+    padding: 5px;
     text-align: right;
 }
 
@@ -435,7 +435,7 @@ h1 {
 
 /* Show dropdown on hover (for larger screens) */
 @media (min-width: 769px) {
-    .dropdowns:hover .dropdown-content {
+    .dropdown:hover .dropdown-content {
         display: block;
     }
 }
@@ -449,7 +449,7 @@ h1 {
     .dropdown-content li {
         padding: 5px;
     }
-    .dropdowns.active .dropdown-content {
+    .dropdown.active .dropdown-content {
         display: block;
     }
 }
