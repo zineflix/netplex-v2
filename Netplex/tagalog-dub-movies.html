@@ -70,6 +70,7 @@
 </nav>  
 <!-- FOR RESPONSIVE NAVIGATION BAR END -->
     
+<script src="1234/about-us.js"></script>
 
 <!-- FOR TAGALOG DUB MOVIE SECTION START -->
 <h1>TAGALOG DUB MOVIES</h1>
@@ -77,17 +78,19 @@
 
     <!-- Movie Modal -->
     <div class="modal" id="movieModal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div class="poster-container">
-                <img id="moviePoster" src="" alt="Movie Poster">
-            </div>
-            <h2 id="movieTitle"></h2>
-            <p><strong>Genres:</strong> <span id="movieGenres"></span></p>
-            <p id="movieDescription"></p>
-            <iframe id="movieTrailer" src="" allowfullscreen></iframe>
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <div class="poster-container">
+            <img id="moviePoster" src="" alt="Movie Poster">
         </div>
-    </div>  
+        <h2 id="movieTitle"></h2>
+        <p><strong>Genres:</strong> <span id="movieGenres"></span></p>
+        <p id="movieDescription"></p>
+        <!-- Full-screen button -->
+        <button id="fullscreenButton">🔲 Fullscreen Video</button>
+        <iframe id="movieTrailer" src="" allowfullscreen></iframe>
+    </div>
+</div>  
 <!-- FOR TAGALOG DUB MOVIE SECTION END -->  
   
 <!--For Chat With Us Function Start-->
@@ -156,4 +159,6 @@ document.addEventListener("DOMContentLoaded", function () {
 </body>
   
 </html>
+
+
       
