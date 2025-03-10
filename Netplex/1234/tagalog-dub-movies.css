@@ -479,6 +479,9 @@ body {
     .poster-container img {
         max-height: 200px; /* Prevent oversized posters */
     }
+    h1 {
+        font-size: 30px;
+    }
     h2 {
         font-size: 18px; /* Adjust text sizes */
     }
