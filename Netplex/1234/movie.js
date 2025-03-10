@@ -497,37 +497,22 @@ document.getElementById("menu-btn").addEventListener("click", function() {
 
 // For Dropdown More Button Function Start
 document.addEventListener("DOMContentLoaded", function () {
-    // Toggle mobile menu
-    const menuBtn = document.getElementById("menu-btn");
-    const menu = document.getElementById("menu");
+    const dropdown = document.querySelector(".dropdown");
 
-    if (menuBtn && menu) {
-        menuBtn.addEventListener("click", function () {
-            menu.classList.toggle("active");
-        });
-    }
-
-    // Toggle dropdown menu
-    const dropbtn = document.querySelector(".dropbtn");
-    const dropdownContent = document.querySelector(".dropdown-content");
-
-    if (dropbtn && dropdownContent) {
-        dropbtn.addEventListener("click", function (event) {
-            event.stopPropagation(); // Stop from closing immediately
-            dropdownContent.classList.toggle("show");
+    if (dropdown) {
+        dropdown.addEventListener("click", function (event) {
+            event.stopPropagation(); // Prevents the document click from firing immediately
+            this.classList.toggle("active");
         });
 
-        // Close dropdown when clicking anywhere else
+        // Close dropdown when clicking outside
         document.addEventListener("click", function (event) {
-            if (!dropbtn.contains(event.target) && !dropdownContent.contains(event.target)) {
-                dropdownContent.classList.remove("show");
+            if (!dropdown.contains(event.target) && dropdown.classList.contains("active")) {
+                dropdown.classList.remove("active");
             }
         });
     }
 });
-
-
-
 
 // For Dropdown More Button Function End
 
@@ -542,4 +527,3 @@ function closeMessage() {
 
 
 //--For Navigation Header Mobile--//    
-
