@@ -2189,6 +2189,13 @@ background-color: #0296cc; /* Darker green on hover */
     .dropdown:focus-within .dropdown-content {
         display: block;
     }
+    .dropdown-content {
+    display: none;
+    }
+
+    .dropdown-content.show {
+    display: block;
+    }
 }
 /* Dropdown MORE Button End*/
 
