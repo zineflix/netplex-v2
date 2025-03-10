@@ -501,17 +501,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const moreMenu = document.getElementById("more-menu");
 
     moreBtn.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevents click from bubbling to document
-        moreMenu.classList.toggle("show");
+        event.stopPropagation(); // Prevents event bubbling
+        moreMenu.classList.toggle("show"); // Toggle dropdown visibility
     });
 
-    // Hide dropdown when clicking outside
+    // Clicking outside should close the dropdown only if it's open
     document.addEventListener("click", function (event) {
         if (!moreBtn.contains(event.target) && !moreMenu.contains(event.target)) {
             moreMenu.classList.remove("show");
         }
     });
+
+    // Prevent closing when clicking inside the dropdown
+    moreMenu.addEventListener("click", function (event) {
+        event.stopPropagation();
+    });
 });
+
+
 
 // For Dropdown More Button Function End
 
