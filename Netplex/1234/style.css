@@ -2140,7 +2140,9 @@ background-color: #0296cc; /* Darker green on hover */
     border-radius: 5px;
     right: 0;
 }
-
+.dropdown-content.show {
+    display: block;
+}
 .dropdown-content li {
     list-style: none;
     padding: 10px;
