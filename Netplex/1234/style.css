@@ -2169,13 +2169,27 @@ background-color: #0296cc; /* Darker green on hover */
 /* Show dropdown on click (for mobile) */
 @media (max-width: 768px) {
     .dropdown-content {
-        position: absolute;
+        position: static;
         display: none;
     }
     .dropdown-content li {
         padding: 5px;
     }
     .dropdown.active .dropdown-content {
+        display: block;
+    }
+}
+@media (max-width: 768px) {
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #333;
+        min-width: 160px;
+        z-index: 1000;
+    }
+
+    .dropdown:hover .dropdown-content,
+    .dropdown:focus-within .dropdown-content {
         display: block;
     }
 }
