@@ -435,7 +435,8 @@ h3 {
     overflow-y: auto; /* Enables vertical scrolling */
     margin-bottom: 50px;
     border: 2px;
-    color: cyan;
+    border-style: solid;
+    border-color: cyan;
 }
 .close-btn {
     position: absolute;
