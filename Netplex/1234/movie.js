@@ -497,29 +497,25 @@ document.getElementById("menu-btn").addEventListener("click", function() {
 
 // For Dropdown More Button Function Start
 document.addEventListener("DOMContentLoaded", function () {
-    const moreBtn = document.getElementById("more-btn");
-    const moreMenu = document.getElementById("more-menu");
+    const dropdownButton = document.querySelector(".dropbtn");
+    const dropdownContent = document.querySelector(".dropdown-content");
 
-    moreBtn.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevents click from propagating to document
-        moreMenu.classList.toggle("show"); // Toggle dropdown visibility
+    dropdownButton.addEventListener("click", function (event) {
+        event.stopPropagation(); // Prevent event from bubbling up
+        dropdownContent.classList.toggle("active");
     });
 
-    // Clicking anywhere outside should close the dropdown
+    // Close dropdown if clicked outside
     document.addEventListener("click", function (event) {
-        if (moreMenu.classList.contains("show")) {
-            if (!moreBtn.contains(event.target) && !moreMenu.contains(event.target)) {
-                moreMenu.classList.remove("show");
-            }
+        if (!dropdownButton.contains(event.target) && !dropdownContent.contains(event.target)) {
+            dropdownContent.classList.remove("active");
         }
     });
 });
 
-
-
-
-
 // For Dropdown More Button Function End
+
+
 
 // For Floating Message Close Function Start
 function closeMessage() {
