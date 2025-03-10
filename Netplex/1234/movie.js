@@ -497,18 +497,16 @@ document.getElementById("menu-btn").addEventListener("click", function() {
 
 // For Dropdown More Button Function Start
 document.addEventListener("DOMContentLoaded", function () {
-    const dropdown = document.querySelector(".dropdown");
     const dropbtn = document.querySelector(".dropbtn");
     const dropdownContent = document.querySelector(".dropdown-content");
 
-    if (dropdown && dropbtn && dropdownContent) {
-        // Toggle dropdown when clicking the "More" button
+    if (dropbtn && dropdownContent) {
         dropbtn.addEventListener("click", function (event) {
-            event.stopPropagation(); // Prevents immediate closure
-            dropdownContent.classList.toggle("show");
+            event.stopPropagation(); // Stop event from bubbling up
+            dropdownContent.classList.toggle("show"); // Toggle dropdown visibility
         });
 
-        // Close dropdown when clicking outside
+        // Close dropdown when clicking anywhere else
         document.addEventListener("click", function (event) {
             if (!dropbtn.contains(event.target) && !dropdownContent.contains(event.target)) {
                 dropdownContent.classList.remove("show");
@@ -516,6 +514,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
 
 
 
