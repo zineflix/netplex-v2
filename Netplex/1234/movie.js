@@ -491,8 +491,13 @@ window.addEventListener("scroll", function () {
     });
 
     // Toggle menu visibility when menu button is clicked
-document.getElementById("menu-btn").addEventListener("click", function() {
-    document.getElementById("menu").classList.toggle("active");
+document.addEventListener("DOMContentLoaded", function () {
+    const menuBtn = document.getElementById("menu-btn");
+    const menu = document.getElementById("menu");
+
+    menuBtn.addEventListener("click", function () {
+        menu.classList.toggle("active");
+    });
 });
 
 
