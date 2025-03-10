@@ -12,7 +12,7 @@ body {
     color: #ffffff;
 }
 
-/* Navigation Bar */
+/* NAVIGATION BAR START */
     nav {
       width: 100%;
       background: rgba(0, 0, 0, 0); /* Transparent at the top */
@@ -66,6 +66,101 @@ body {
     nav ul li a.active {
       background-color: #0296cc;
     }
+/* Mobile Navbar */
+.menu-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: #1e1e1e;
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links li {
+        padding: 15px 0;
+    }
+}
+
+/* Mobile Styles (Screen width below 768px) */
+    @media (max-width: 768px) {
+      /* Navigation links initially hidden on mobile */
+      nav ul {
+        display: none;  /* Hidden by default */
+        flex-direction: column;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.9);
+        position: absolute;
+        top: 50px; /* To place the menu below the nav bar */
+        left: 0;
+        right: 0;
+        width: 100%;
+        padding: 10px 0;
+      }
+      /* Active state of the menu */
+      nav.active ul {
+        display: flex; /* Show the menu when active */
+      }
+      nav ul li {
+        width: 100%;
+        text-align: center;
+        margin: 2px 0;
+      }
+
+      nav ul li a {
+        padding: 10px;
+        width: 100%;
+        text-align: center;
+      }
+
+      /* Logo will adjust for smaller screens */
+      #logo {
+        max-height: 20px;
+      }
+
+      /* Menu Button visible on mobile */
+      .menu-btn {
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        background-color: #0296cc;
+        padding: 10px 20px;
+        border-radius: 5px;
+        display: block;  /* Visible on mobile */
+      }
+
+      /* Show menu when active */
+#menu.active {
+    display: flex;
+}
+    }
+
+    /* Hide the menu button on desktop */
+    @media (min-width: 769px) {
+      .menu-btn {
+        display: none;  /* Hide the menu button on desktop */
+      }
+    }
+/* NAVIGATION BAR END */
+
 
 /* Scroll Container */
 .scroll-container {
@@ -102,40 +197,19 @@ body {
     color: black;
 }
 
-/* Mobile Navbar */
-.menu-toggle {
-    display: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: white;
-}
-
+/* Adjustment of arrow button in mobile */
 @media (max-width: 768px) {
-    .nav-links {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 60px;
-        right: 0;
-        background-color: #1e1e1e;
-        width: 100%;
-        text-align: center;
-    }
-
-    .nav-links.active {
-        display: flex;
-    }
-
-    .menu-toggle {
-        display: block;
-    }
-
-    .nav-links li {
-        padding: 15px 0;
-    }
+       .scroll-left {
+          font-size: 20px;
+          padding: 8px;
+}
+       .scroll-right {
+          font-size: 20px;
+          padding: 8px;
+}
 }
 
-/* Banner */
+/* BANNER SECTION START */
 .banner {
     position: relative;
     width: 100%;
@@ -200,7 +274,7 @@ body {
         font-size: 10px;
     }
 }
-
+/* BANNER SECTION END */
 
 /* Section Titles */
 .section {
@@ -266,70 +340,7 @@ body {
 }
 
 
-
-
-/* Mobile Styles (Screen width below 768px) */
-    @media (max-width: 768px) {
-      /* Navigation links initially hidden on mobile */
-      nav ul {
-        display: none;  /* Hidden by default */
-        flex-direction: column;
-        align-items: center;
-        background-color: rgba(0, 0, 0, 0.9);
-        position: absolute;
-        top: 50px; /* To place the menu below the nav bar */
-        left: 0;
-        right: 0;
-        width: 100%;
-        padding: 10px 0;
-      }
-      /* Active state of the menu */
-      nav.active ul {
-        display: flex; /* Show the menu when active */
-      }
-      nav ul li {
-        width: 100%;
-        text-align: center;
-        margin: 2px 0;
-      }
-
-      nav ul li a {
-        padding: 10px;
-        width: 100%;
-        text-align: center;
-      }
-
-      /* Logo will adjust for smaller screens */
-      #logo {
-        max-height: 20px;
-      }
-
-      /* Menu Button visible on mobile */
-      .menu-btn {
-        color: white;
-        font-size: 18px;
-        font-weight: bold;
-        cursor: pointer;
-        background-color: #0296cc;
-        padding: 10px 20px;
-        border-radius: 5px;
-        display: block;  /* Visible on mobile */
-      }
-
-      /* Show menu when active */
-#menu.active {
-    display: flex;
-}
-    }
-
-    /* Hide the menu button on desktop */
-    @media (min-width: 769px) {
-      .menu-btn {
-        display: none;  /* Hide the menu button on desktop */
-      }
-    }
-
-
+/* FLOATING MESSAGE START */
 #floating-message {
 position: fixed;
 top: 25%
@@ -364,18 +375,6 @@ margin-top: 10px; /* Adds space between the message and the button */
 background-color: #0296cc; /* Darker green on hover */
 }
 
-/* Adjustment of arrow button in mobile */
-@media (max-width: 768px) {
-       .scroll-left {
-          font-size: 20px;
-          padding: 8px;
-}
-       .scroll-right {
-          font-size: 20px;
-          padding: 8px;
-}
-}
-
 /* Adjustment of floating message in mobile */
 @media (max-width: 768px) {
    #floating-message {
@@ -385,6 +384,7 @@ background-color: #0296cc; /* Darker green on hover */
      top: 25%;
    
 }}
+/* FLOATING MESSAGE END */
 
 
 /* Chat button styling Start */
