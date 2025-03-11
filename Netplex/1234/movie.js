@@ -497,14 +497,10 @@ document.getElementById("menu-btn").addEventListener("click", function() {
 
 
 
-
-
 // For Floating Message Close Function Start
 function closeMessage() {
         document.getElementById("floating-message").style.display = "none";
     }
 // For Floating Message Close Function End
 
-
-
-//--For Navigation Header Mobile--//    
+  
