@@ -52,6 +52,14 @@ const channelData = {
                     url: "https://d1bail49udbz1k.cloudfront.net/out/v1/78e282e04f0944f3ad0aa1db7a1be645/index_3.m3u8"
                 },
                 {
+                    name: "CINEMO TFC",
+                    url: "https://d1bail49udbz1k.cloudfront.net/out/v1/3a895f368f4a467c9bca0962559efc19/index.mpd",
+                    type: "mpd",
+                    keys: {
+                        "aa8aebe35ccc4541b7ce6292efcb1bfb": "aab1df109d22fc5d7e3ec121ddf24e5f"
+                    }
+                },
+                {
                     name: "Viva Cinema",
                     url: "https://qp-pldt-live-grp-06-prod.akamaized.net/out/u/viva_sd.mpd",
                     type: "mpd",
@@ -106,6 +114,11 @@ const channelData = {
                     keys: {
                         "04e292bc99bd4ccba89e778651914254": "ff0a62bdf8920ce453fe680330b563a5"
                     }
+                },
+                {
+                    name: "I Heart Asia",
+                    type: "https://tv.jomarhost.xyz/memfs/7a68dbe7-c91b-49b5-bd2f-1b0d16dd187c.m3u8",
+                    url: "m3u8 link"
                 },
                 {
                     name: "Knowledge Channel",
@@ -308,14 +321,6 @@ const channelData = {
                     }
                 },
                 {
-                    name: "CINEMO TFC",
-                    url: "https://d1bail49udbz1k.cloudfront.net/out/v1/3a895f368f4a467c9bca0962559efc19/index.mpd",
-                    type: "mpd",
-                    keys: {
-                        "aa8aebe35ccc4541b7ce6292efcb1bfb": "aab1df109d22fc5d7e3ec121ddf24e5f"
-                    }
-                },
-                {
                     name: "PARAMOUNT NETWORK",
                     url: "https://qp-pldt-live-grp-11-prod.akamaized.net/out/u/dr_paramount.mpd",
                     type: "mpd",
@@ -364,7 +369,7 @@ const channelData = {
                     }
                 },
                 {
-                    name: "NAME",
+                    name: "Reserved Channel",
                     url: "mpd link",
                     type: "mpd",
                     keys: {
@@ -372,12 +377,12 @@ const channelData = {
                     }
                 },
                 {
-                    name: "NAME",
+                    name: "Reserved Channel",
                     type: "m3u8",
                     url: "m3u8 link"
                 },
                 {
-                    name: "NAME",
+                    name: "Reserved Channel",
                     url: "mpd link",
                     type: "mpd",
                     keys: {
