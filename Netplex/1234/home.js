@@ -153,3 +153,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 // For Dropdown More Button Function End
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('.media-row').forEach(el => {
+        el.style.overflowX = "scroll";
+    });
+});
