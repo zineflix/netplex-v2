@@ -40,7 +40,7 @@ html {
   }
   
   .row__posters::-webkit-scrollbar {
-    display: flex;
+    display: none;
   }
   
   .row__posterLarge {
@@ -173,7 +173,7 @@ html {
   
   /* Hide scrollbar */
   .row__posters::-webkit-scrollbar {
-    display: flex;
+    display: none;
   }
   
   /* Movie posters styling */
@@ -946,7 +946,7 @@ body {
 
 /* Hide the scrollbar but keep scrolling functionality */
 .dropdown-list::-webkit-scrollbar {
-  display: flex; /* Hide scrollbar in Webkit-based browsers */
+  display: none; /* Hide scrollbar in Webkit-based browsers */
 }
 
 /* Show dropdown when toggled */
