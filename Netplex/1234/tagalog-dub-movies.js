@@ -60,7 +60,7 @@ const API_KEY = "a1e72fd93ed59f56e6332813b9f8dcae";
             9470: "https://short.icu/XoTnMZi8e",
             396535: "https://short.icu/LqFDAWPgr",
             20453: "https://short.icu/UcOXhP3kE",
-            1001311: "https://short.icu/Bds-kvQ-d",
+            1001311: "https://drive.google.com/file/d/18nb0r8cIjLF17bCYo0gf6R35En1laH9R/preview",
             11770: "https://short.icu/9WQZkbpvM",
             41387: "https://short.icu/Vs4-n_xYk",
             16269: "https://short.icu/f3PqFTBwx",
