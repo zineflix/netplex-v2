@@ -40,7 +40,7 @@ html {
   }
   
   .row__posters::-webkit-scrollbar {
-    display: none;
+    display: flex;
   }
   
   .row__posterLarge {
@@ -946,7 +946,7 @@ body {
 
 /* Hide the scrollbar but keep scrolling functionality */
 .dropdown-list::-webkit-scrollbar {
-  display: none; /* Hide scrollbar in Webkit-based browsers */
+  display: flex; /* Hide scrollbar in Webkit-based browsers */
 }
 
 /* Show dropdown when toggled */
