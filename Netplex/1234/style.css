@@ -173,7 +173,7 @@ html {
   
   /* Hide scrollbar */
   .row__posters::-webkit-scrollbar {
-    display: none;
+    display: flex;
   }
   
   /* Movie posters styling */
