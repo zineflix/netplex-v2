@@ -291,7 +291,7 @@ body {
 
 /* Poster Rows */
 .media-row {
-    display: flex;
+    display: inline-block;
     overflow-x: auto;
     overflow-y: hidden;
     gap: 10px;
