@@ -117,8 +117,8 @@ const channelData = {
                 },
                 {
                     name: "I Heart Asia",
-                    type: "https://tv.jomarhost.xyz/memfs/7a68dbe7-c91b-49b5-bd2f-1b0d16dd187c.m3u8",
-                    url: "m3u8 link"
+                    type: "m3u8",
+                    url: "https://tv.jomarhost.xyz/memfs/7a68dbe7-c91b-49b5-bd2f-1b0d16dd187c.m3u8"
                 },
                 {
                     name: "Knowledge Channel",
