@@ -328,7 +328,7 @@ body {
         display: none;
     }
     .dropdown-content li {
-        padding: 5px;
+        padding: 2px;
     }
     .dropdown.active .dropdown-content {
         display: block;
