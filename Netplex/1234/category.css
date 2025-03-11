@@ -265,7 +265,7 @@ h1 {
     }
 
     nav ul li {
-      margin-left: 5px;
+      margin-left: 2px;
     }
 
     nav ul li a {
@@ -414,7 +414,7 @@ h1 {
 
 .dropdown-content li {
     list-style: none;
-    padding: 5px;
+    padding: 2px;
     text-align: right;
 }
 
@@ -444,7 +444,7 @@ h1 {
         display: none;
     }
     .dropdown-content li {
-        padding: 5px;
+        padding: 2px;
     }
     .dropdown.active .dropdown-content {
         display: block;
