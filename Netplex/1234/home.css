@@ -291,8 +291,8 @@ body {
 
 /* Poster Rows */
 .media-row {
-    display: inline-block;
-    overflow-x: auto;
+    display: flex;
+    overflow-x: scroll;
     overflow-y: hidden;
     gap: 10px;
     white-space: nowrap;
