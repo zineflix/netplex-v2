@@ -491,25 +491,31 @@ window.addEventListener("scroll", function () {
     });
 
     // Toggle menu visibility when menu button is clicked
-document.addEventListener("DOMContentLoaded", function () {
-    const menuBtn = document.getElementById("menu-btn");
-    const menu = document.getElementById("menu");
-
-    menuBtn.addEventListener("click", function () {
-        menu.classList.toggle("active");
-    });
+document.getElementById("menu-btn").addEventListener("click", function() {
+    document.getElementById("menu").classList.toggle("active");
 });
-
 
 // For Dropdown More Button Function Start
 document.addEventListener("DOMContentLoaded", function () {
     const dropdown = document.querySelector(".dropdown");
 
-    dropdown.addEventListener("click", function () {
-        this.classList.toggle("active");
-    });
+    if (dropdown) {
+        dropdown.addEventListener("click", function (event) {
+            event.stopPropagation(); // Prevents the document click from firing immediately
+            this.classList.toggle("active");
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener("click", function (event) {
+            if (!dropdown.contains(event.target) && dropdown.classList.contains("active")) {
+                dropdown.classList.remove("active");
+            }
+        });
+    }
 });
+
 // For Dropdown More Button Function End
+
 
 
 // For Floating Message Close Function Start
