@@ -2143,7 +2143,7 @@ background-color: #0296cc; /* Darker green on hover */
 
 .dropdown-content li {
     list-style: none;
-    padding: 5px;
+    padding: 2px;
     text-align: right;
 }
 
@@ -2173,7 +2173,7 @@ background-color: #0296cc; /* Darker green on hover */
         display: none;
     }
     .dropdown-content li {
-        padding: 5px;
+        padding: 2px;
     }
     .dropdown.active .dropdown-content {
         display: block;
