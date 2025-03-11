@@ -11,7 +11,7 @@ body {
 }
 
 body::-webkit-scrollbar {
-  display: auto; /* Hide scrollbar in Webkit-based browsers */
+  display: none; /* Hide scrollbar in Webkit-based browsers */
 }
 
 html {
