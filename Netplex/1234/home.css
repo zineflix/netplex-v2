@@ -647,7 +647,7 @@ background-color: #0296cc; /* Darker green on hover */
         display: none;
     }
     .dropdown-content li {
-        padding: 5px;
+        padding: 2px;
     }
     .dropdown.active .dropdown-content {
         display: block;
