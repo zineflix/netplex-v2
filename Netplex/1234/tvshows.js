@@ -538,13 +538,3 @@ function closeMessage() {
     }
 // For Floating Message Close Function End
 
-
-// For Dropdown More Button Function Start
-document.addEventListener("DOMContentLoaded", function () {
-    const dropdown = document.querySelector(".dropdown");
-
-    dropdown.addEventListener("click", function () {
-        this.classList.toggle("active");
-    });
-});
-// For Dropdown More Button Function End
