@@ -73,11 +73,11 @@ const channelData = {
                     url: "https://qp-pldt-live-grp-02-prod.akamaized.net/out/u/tv5_5.m3u8"
                 },
                 {
-                    name: "Animax",
-                    url: "https://qp-pldt-live-grp-12-prod.akamaized.net/out/u/cg_animax_sd.mpd",
+                    name: "Animax Live",
+                    url: "https://tglmp01.akamaized.net/out/v1/de55fad9216e4fe7ad8d2eed456ba1ec/manifest.mpd",
                     type: "mpd",
                     keys: {
-                        "92032b0e41a543fb9830751273b8debd": "03f8b65e2af785b10d6634735dbe6c11"
+                        "edf1a715de9748638dd2fad75a419af2": "2f5a3199b26e9b693ae881af7ff864cf"
                     }
                 },
                 {
@@ -102,6 +102,14 @@ const channelData = {
                     type: "mpd",
                     keys: {
                         "564b3b1c781043c19242c66e348699c5": "d3ad27d7fe1f14fb1a2cd5688549fbab"
+                    }
+                },
+                {
+                    name: "Cartoon Network Live",
+                    url: "https://a190aivottlinear-a.akamaihd.net/OTTB/iad-nitro/live/clients/dash/enc/ampfzrmpam/out/v1/e08f3866c80040f2bc494cb48ebc7bce/cenc.mpd",
+                    type: "mpd",
+                    keys: {
+                        "7ef57f7f3e8cf0efe4f3d5772a7cbb35": "0ac6d617095fbe0ca7f4c9ae72fa5f51"
                     }
                 },
                 {
