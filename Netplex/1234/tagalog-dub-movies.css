@@ -418,6 +418,7 @@ h3 {
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
     margin-top: 50px;
+    z-index: 1001;
 }
 .modal.show {
     opacity: 1;
