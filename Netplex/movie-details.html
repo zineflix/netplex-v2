@@ -143,7 +143,7 @@
   
  <!-- Welcome Message Section -->
   <div id="welcomeMessage">
-    Welcome to NETPLEX
+    Welcome to <b>NETPLEX</b>
   </div>
 
   <!-- Leave a Comment Section -->
@@ -244,12 +244,6 @@
       }
     }
 
-    // Get Movie ID
-    function getMovieId() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('id'); // Assuming the movie ID is in the URL as ?id=movieID_12345
-}
-    
     // Submit a new comment
     async function submitComment() {
       const username = document.getElementById('username').value.trim();
@@ -268,15 +262,13 @@
       const profilePicture = selectedAvatar; // Use selected avatar
 
       try {
-        const movieId = getMovieId(); // Function to get the movie/show ID
-        await addDoc(collection(db, "comments", movieId, "userComments"), {
-        text: commentText,
-        user: username,
-        timestamp: serverTimestamp(),
-        likeCount: 0,
-        profilePicture: profilePicture
-      });
-
+        await addDoc(collection(db, "comments"), {
+          text: commentText,
+          user: username,
+          timestamp: serverTimestamp(),
+          likeCount: 0,
+          profilePicture: profilePicture
+        });
 
         console.log("Comment added successfully.");
         document.getElementById('commentText').value = ''; // Clear input field
@@ -288,27 +280,31 @@
 
     // Fetch and display comments
     async function getComments() {
-      const movieId = getMovieId(); // Get the movie/show ID
       const commentsContainer = document.getElementById('commentsContainer');
       commentsContainer.innerHTML = "<p>Loading comments...</p>";
 
       try {
-        const q = query(collection(db, "comments", movieId, "userComments"), orderBy("timestamp", "desc"));
+        const q = query(collection(db, "comments"), orderBy("timestamp", "desc"));
         const querySnapshot = await getDocs(q);
 
-        commentsContainer.innerHTML = "";
+        commentsContainer.innerHTML = ""; // Clear previous comments
         querySnapshot.forEach((doc) => {
           const data = doc.data();
           const commentElement = document.createElement("div");
           commentElement.classList.add("comment");
+
           commentElement.innerHTML = `
             <div class="commentHeader">
-              <img src="${data.profilePicture || 'default.jpg'}" class="profilePicture">
+              <img src="${data.profilePicture || 'https://example.com/default-profile.jpg'}" class="profilePicture">
               <strong>${data.user}</strong>
               <div class="timestamp">${data.timestamp ? new Date(data.timestamp.toDate()).toLocaleString() : "Just now"}</div>
             </div>
             <p>${data.text}</p>
+            <div class="likeSection">
+              <span>Likes: ${data.likeCount || 0}</span>
+            </div>
           `;
+
           commentsContainer.appendChild(commentElement);
         });
 
@@ -318,7 +314,6 @@
       }
     }
 
-
     // Fetch comments and display avatars when the page loads
     window.onload = () => {
       getComments();
@@ -327,8 +322,6 @@
 
     // Expose functions to global scope
     window.submitComment = submitComment;
-
-    
   </script>
 <!-- LEAVE A COMMENT END -->
   
