@@ -2214,7 +2214,7 @@ meta[http-equiv="refresh"] {
       text-align: center;
     }
     input, textarea {
-      width: 75%;
+      width: 50%;
       padding: 10px;
       font-size: 16px;
       margin-bottom: 10px;
@@ -2241,7 +2241,7 @@ meta[http-equiv="refresh"] {
       margin: 10px auto; /* Centers the div horizontally */
       background-color: #fff;
       border-radius: 4px;
-      width: 75%;
+      width: 50%;
       display: block; /* Ensures it behaves as a block-level element */
     }
     .commentHeader {
@@ -2281,4 +2281,15 @@ meta[http-equiv="refresh"] {
     #selectedAvatarText {
       color: white;
     }
+
+
+/* Adjustments for mobile devices */
+@media (max-width: 768px) {
+  .comment {
+    width: 75%;
+  }
+  input, textarea {
+      width: 75%;
+  }
+}
 /* LEAVE A COMMENT END */
