@@ -209,21 +209,39 @@
     // Function to display available avatars
     function displayAvatars() {
       const avatarContainer = document.getElementById('avatarContainer');
-      profilePictures.forEach((url, index) => {
+      avatarContainer.innerHTML = ""; // Clear existing avatars
+
+      profilePictures.forEach((url) => {
         const avatarImg = document.createElement('img');
         avatarImg.src = url;
-        avatarImg.alt = `Avatar ${index + 1}`;
+        avatarImg.alt = "Avatar";
         avatarImg.classList.add('avatar');
-        avatarImg.onclick = () => selectAvatar(url);
+        
+        // Highlight the default selected avatar
+        if (url === selectedAvatar) {
+          avatarImg.classList.add('selected-avatar');
+        }
+
+        avatarImg.onclick = () => selectAvatar(url, avatarImg);
         avatarContainer.appendChild(avatarImg);
       });
     }
 
     // Function to select an avatar
-    function selectAvatar(avatar) {
+    function selectAvatar(avatar, selectedElement) {
       selectedAvatar = avatar;
       const avatarPreview = document.getElementById('avatarPreview');
       avatarPreview.src = avatar; // Update the preview image
+
+      // Remove highlight from previous selection
+      document.querySelectorAll('.avatar').forEach(img => img.classList.remove('selected-avatar'));
+      selectedElement.classList.add('selected-avatar'); // Highlight new selection
+
+      // Hide "SELECTED AVATAR" text if it exists
+      const selectedText = document.getElementById("selectedAvatarText");
+      if (selectedText) {
+        selectedText.style.display = "none";
+      }
     }
 
     // Submit a new comment
@@ -251,6 +269,7 @@
           likeCount: 0,
           profilePicture: profilePicture
         });
+
         console.log("Comment added successfully.");
         document.getElementById('commentText').value = ''; // Clear input field
         getComments(); // Fetch updated comments
@@ -295,7 +314,7 @@
       }
     }
 
-    // Fetch comments when the page loads
+    // Fetch comments and display avatars when the page loads
     window.onload = () => {
       getComments();
       displayAvatars(); // Display available avatars on page load
