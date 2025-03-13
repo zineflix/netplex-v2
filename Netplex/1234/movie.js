@@ -266,6 +266,11 @@ const MOVIE_ENDPOINTS = [
 const urlParams = new URLSearchParams(window.location.search);
 const movieId = urlParams.get('movie_id');
 
+// Fetch comments when the page loads
+window.onload = function () {
+  getComments(); // Fetch comments when the page loads
+};
+
 // Variable to keep track of the current server index
 let currentServerIndex = 0; // To store which server is currently selected
 
