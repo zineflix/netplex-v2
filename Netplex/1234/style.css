@@ -2304,21 +2304,21 @@ meta[http-equiv="refresh"] {
 /* Adjustments for mobile devices */
 @media (max-width: 768px) {
   .comment {
-    width: 75%;
+    width: 90%;
   }
   input, textarea {
-    width: 75%;
+    width: 90%;
   }
   #commentForm {
-    width: 75%; 
+    width: 90%; 
     margin-left: 0%;
   }
   #leaveCommentMessage {
-    width: 75%;
+    width: 90%;
     margin-left: 0%;
   }
   #welcomeMessage {
-    width: 75%;
+    width: 90%;
     margin-left: 0%;
   }
 }    
