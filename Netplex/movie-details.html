@@ -246,73 +246,76 @@
 
     // Submit a new comment
     async function submitComment() {
-      const username = document.getElementById('username').value.trim();
-      const commentText = document.getElementById('commentText').value.trim();
+  if (!movieId) {
+    console.error("Movie ID not found!");
+    return;
+  }
 
-      if (!username) {
-        alert("Please enter your name.");
-        return;
-      }
+  const username = document.getElementById('username').value.trim();
+  const commentText = document.getElementById('commentText').value.trim();
 
-      if (!commentText) {
-        alert("Please enter a comment.");
-        return;
-      }
+  if (!username || !commentText) {
+    alert("Please enter your name and a comment.");
+    return;
+  }
 
-      const profilePicture = selectedAvatar; // Use selected avatar
+  const profilePicture = selectedAvatar; // Assuming you have selectedAvatar defined
 
-      try {
-        await addDoc(collection(db, "comments"), {
-          text: commentText,
-          user: username,
-          timestamp: serverTimestamp(),
-          likeCount: 0,
-          profilePicture: profilePicture
-        });
+  try {
+    await addDoc(collection(db, "comments", movieId, "userComments"), {
+      text: commentText,
+      user: username,
+      timestamp: serverTimestamp(),
+      likeCount: 0,
+      profilePicture: profilePicture
+    });
 
-        console.log("Comment added successfully.");
-        document.getElementById('commentText').value = ''; // Clear input field
-        getComments(); // Fetch updated comments
-      } catch (error) {
-        console.error("Error adding comment:", error);
-      }
-    }
+    console.log("Comment added successfully.");
+    document.getElementById('commentText').value = ''; // Clear input
+    getComments(); // Refresh comments
+  } catch (error) {
+    console.error("Error adding comment:", error);
+  }
+}
+
 
     // Fetch and display comments
     async function getComments() {
-      const commentsContainer = document.getElementById('commentsContainer');
-      commentsContainer.innerHTML = "<p>Loading comments...</p>";
+  if (!movieId) {
+    console.error("Movie ID not found!");
+    return;
+  }
 
-      try {
-        const q = query(collection(db, "comments"), orderBy("timestamp", "desc"));
-        const querySnapshot = await getDocs(q);
+  const commentsContainer = document.getElementById('commentsContainer');
+  commentsContainer.innerHTML = "<p>Loading comments...</p>";
 
-        commentsContainer.innerHTML = ""; // Clear previous comments
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          const commentElement = document.createElement("div");
-          commentElement.classList.add("comment");
+  try {
+    const q = query(collection(db, "comments", movieId, "userComments"), orderBy("timestamp", "desc"));
+    const querySnapshot = await getDocs(q);
 
-          commentElement.innerHTML = `
-            <div class="commentHeader">
-              <img src="${data.profilePicture || 'https://example.com/default-profile.jpg'}" class="profilePicture">
-              <strong>${data.user}</strong>
-              <div class="timestamp">${data.timestamp ? new Date(data.timestamp.toDate()).toLocaleString() : "Just now"}</div>
-            </div>
-            <p>${data.text}</p>
-            <div class="likeSection">
-              <span>Likes: ${data.likeCount || 0}</span>
-            </div>
-          `;
+    commentsContainer.innerHTML = ""; // Clear previous comments
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const commentElement = document.createElement("div");
+      commentElement.classList.add("comment");
+      commentElement.innerHTML = `
+        <div class="commentHeader">
+          <img src="${data.profilePicture || 'https://example.com/default-profile.jpg'}" class="profilePicture">
+          <strong>${data.user}</strong>
+          <div class="timestamp">${data.timestamp ? new Date(data.timestamp.toDate()).toLocaleString() : "Just now"}</div>
+        </div>
+        <p>${data.text}</p>
+      `;
 
-          commentsContainer.appendChild(commentElement);
-        });
+      commentsContainer.appendChild(commentElement);
+    });
 
-      } catch (error) {
-        console.error("Error fetching comments:", error);
-        commentsContainer.innerHTML = "<p>Error loading comments.</p>";
-      }
-    }
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+    commentsContainer.innerHTML = "<p>Error loading comments.</p>";
+  }
+}
+
 
     // Fetch comments and display avatars when the page loads
     window.onload = () => {
@@ -324,6 +327,18 @@
     window.submitComment = submitComment;
   </script>
 <!-- LEAVE A COMMENT END -->
+    
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const movieId = urlParams.get('movie_id');
+
+  window.onload = function () {
+    getComments(); // Fetch comments when the page loads
+  };
+</script>
+    
+</body>
+</html>
   
 </body>
 </html>
