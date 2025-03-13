@@ -2311,12 +2311,15 @@ meta[http-equiv="refresh"] {
   }
   #commentForm {
     width: 75%; 
+    margin-left: 0%;
   }
   #leaveCommentMessage {
     width: 75%;
+    margin-left: 0%;
   }
   #welcomeMessage {
     width: 75%;
+    margin-left: 0%;
   }
 }    
     
