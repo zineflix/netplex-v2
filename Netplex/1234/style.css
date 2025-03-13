@@ -2307,7 +2307,10 @@ meta[http-equiv="refresh"] {
     width: 75%;
   }
   input, textarea {
-      width: 75%;
+    width: 75%;
+  }
+  #commentForm {
+    width: 75%; 
   }
 }    
     
