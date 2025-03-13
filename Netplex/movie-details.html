@@ -244,6 +244,12 @@
       }
     }
 
+    // Get Movie ID
+    function getMovieId() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('id'); // Assuming the movie ID is in the URL as ?id=movieID_12345
+}
+    
     // Submit a new comment
     async function submitComment() {
       const username = document.getElementById('username').value.trim();
@@ -322,10 +328,7 @@
     // Expose functions to global scope
     window.submitComment = submitComment;
 
-    function getMovieId() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('id'); // Assuming the movie ID is in the URL as ?id=movieID_12345
-}
+    
   </script>
 <!-- LEAVE A COMMENT END -->
   
