@@ -2204,8 +2204,8 @@ meta[http-equiv="refresh"] {
       padding-bottom: 20px;
       color: #0296cc;
       background-color: #1e1e1e;
-      width: 50%;
-      margin-left: 25%;
+      width: 60%;
+      margin-left: 20%;
     }
     #leaveCommentMessage {
       font-size: 20px;
@@ -2213,18 +2213,18 @@ meta[http-equiv="refresh"] {
       padding-bottom: 15px;
       color: white;
       background-color: #1e1e1e;
-      width: 50%;
-      margin-left: 25%;
+      width: 60%;
+      margin-left: 20%;
     }
     #commentForm {
       margin-bottom: 20px;
       text-align: center;
       background-color: #1e1e1e;
-      width: 50%;
-      margin-left: 25%;
+      width: 60%;
+      margin-left: 20%;
     }
     input, textarea {
-      width: 50%;
+      width: 60%;
       padding: 10px;
       font-size: 16px;
       margin-bottom: 10px;
