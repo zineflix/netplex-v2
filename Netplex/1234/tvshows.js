@@ -229,6 +229,11 @@ let currentServerIndex = 0;
 let selectedSeason = null;
 let selectedEpisode = null;
 
+// Fetch comments when the page loads
+window.onload = function () {
+  getComments(); // Fetch comments when the page loads
+};
+
 console.log('TV Show ID:', tvShowId);
 
 const fetchTVShowDetails = async () => {
