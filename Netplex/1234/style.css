@@ -2214,7 +2214,7 @@ meta[http-equiv="refresh"] {
       text-align: center;
     }
     input, textarea {
-      width: 50%;
+      width: 75%;
       padding: 10px;
       font-size: 16px;
       margin-bottom: 10px;
@@ -2241,7 +2241,7 @@ meta[http-equiv="refresh"] {
       margin: 10px auto; /* Centers the div horizontally */
       background-color: #fff;
       border-radius: 4px;
-      width: 50%;
+      width: 75%;
       display: block; /* Ensures it behaves as a block-level element */
     }
     .commentHeader {
