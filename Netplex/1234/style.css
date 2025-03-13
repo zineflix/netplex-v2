@@ -2197,7 +2197,7 @@ meta[http-equiv="refresh"] {
 
 
 /* LEAVE A COMMENT START */
-#welcomeMessage {
+    #welcomeMessage {
       font-size: 24px;
       text-align: center;
       padding-top: 20px;
@@ -2311,6 +2311,12 @@ meta[http-equiv="refresh"] {
   }
   #commentForm {
     width: 75%; 
+  }
+  #leaveCommentMessage {
+    width: 75%;
+  }
+  #welcomeMessage {
+    width: 75%;
   }
 }    
     
