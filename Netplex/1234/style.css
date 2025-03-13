@@ -2206,6 +2206,7 @@ meta[http-equiv="refresh"] {
       background-color: #1e1e1e;
       width: 60%;
       margin-left: 20%;
+      border-radius: 4px;
     }
     #leaveCommentMessage {
       font-size: 20px;
@@ -2222,6 +2223,7 @@ meta[http-equiv="refresh"] {
       background-color: #1e1e1e;
       width: 60%;
       margin-left: 20%;
+      border-radius: 4px;
     }
     input, textarea {
       width: 60%;
@@ -2252,7 +2254,7 @@ meta[http-equiv="refresh"] {
       margin: 10px auto; /* Centers the div horizontally */
       background-color: #fff;
       border-radius: 4px;
-      width: 50%;
+      width: 60%;
       display: block; /* Ensures it behaves as a block-level element */
     }
     #commentText {
