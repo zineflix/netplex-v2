@@ -1,9 +1,11 @@
-const firebaseConfig = {
-    apiKey: "YOUR_FIREBASE_API_KEY",
-    authDomain: "mynetplex-9fbbf.firebaseapp.com",
-    projectId: "mynetplex-9fbbf",
-    storageBucket: "mynetplex-9fbbf.firebasestorage.app",
-    messagingSenderId: "1028305253119",
-    appId: "1:1028305253119:web:ee07ea2678b046271152ca"
-};
-export { firebaseConfig };
+async function getFirebaseConfig() {
+    const response = await fetch("https://netplex.streamhdmovie1.workers.dev/firebase-config");
+    return response.json();
+}
+
+getFirebaseConfig().then(config => {
+    import("https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js").then(({ initializeApp }) => {
+        const app = initializeApp(config);
+        console.log("Firebase initialized securely!");
+    });
+});
