@@ -28,5 +28,5 @@ function openPopunder(url) {
 
 function getTvShowIdFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get("tv_show_id");
+    return urlParams.get("id"); // Extract 'id' parameter from the URL
 }
