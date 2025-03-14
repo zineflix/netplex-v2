@@ -3,10 +3,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (watchNowBtn) {
         watchNowBtn.addEventListener("click", async function () {
-            const movieId = getMovieId(); // Ensure you have a way to get movie ID
+            const movieId = getMovieId(); // Unique ID per movie
             const userIp = await getUserIP();
 
-            if (shouldTriggerPopunder(movieId, userIp)) {
+            if (movieId && userIp && shouldTriggerPopunder(movieId, userIp)) {
                 openPopunder();
                 savePopunderData(movieId, userIp);
             }
@@ -18,7 +18,7 @@ async function getUserIP() {
     try {
         const response = await fetch("https://api64.ipify.org?format=json");
         const data = await response.json();
-        return data.ip;
+        return data.ip; // User's IP Address
     } catch (error) {
         console.error("Failed to get user IP:", error);
         return null;
@@ -26,16 +26,17 @@ async function getUserIP() {
 }
 
 function getMovieId() {
-    // Extract the movie ID from the URL or some identifier on the page
-    return document.getElementById("movie-title")?.innerText || "defaultMovie";
+    // Extract movie ID from the page (modify this as per your structure)
+    const movieTitleElement = document.getElementById("movie-title");
+    return movieTitleElement ? movieTitleElement.innerText.trim().replace(/\s+/g, "-").toLowerCase() : "default-movie";
 }
 
 function shouldTriggerPopunder(movieId, userIp) {
     const key = `popunder_${movieId}_${userIp}`;
     const lastTriggered = localStorage.getItem(key);
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Date().toISOString().split("T")[0]; // Get today's date
 
-    return lastTriggered !== today; // Only trigger if not triggered today
+    return lastTriggered !== today; // Return true if popunder wasn't triggered today
 }
 
 function savePopunderData(movieId, userIp) {
@@ -45,11 +46,11 @@ function savePopunderData(movieId, userIp) {
 }
 
 function openPopunder() {
-    const url = "https://acceptguide.com/w6gnwauzb?key=4d8f595f0136eea4d9e6431d88f478b5"; // Replace with the actual popunder link
-    const popunder = window.open(url, "_blank", "width=100,height=100");
+    const popunderUrl = "https://acceptguide.com/w6gnwauzb?key=4d8f595f0136eea4d9e6431d88f478b5"; // Replace with actual popunder URL
+    const popunder = window.open(popunderUrl, "_blank", "width=100,height=100");
 
     if (popunder) {
-        popunder.blur(); // Push it to the background
-        window.focus(); // Bring the main window back to focus
+        popunder.blur(); // Push to background
+        window.focus(); // Bring main window back to front
     }
 }
