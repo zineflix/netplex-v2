@@ -1,4 +1,3 @@
-<!-- LEAVE A COMMENT START -->
 <script type="module">
     import { firebaseConfig } from "./config.js";
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
@@ -160,4 +159,3 @@
     // Expose functions to global scope
     window.submitComment = submitComment;
   </script>
-<!-- LEAVE A COMMENT END -->
