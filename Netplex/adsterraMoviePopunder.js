@@ -15,11 +15,11 @@ function triggerPopunder() {
 
     localStorage.setItem("popunderData", JSON.stringify({ ...savedData, [movieId]: today }));
 
-    openPopunder("https://your-popunder-url.com");
+    openPopunder("https://acceptguide.com/w6gnwauzb?key=4d8f595f0136eea4d9e6431d88f478b5");
 }
 
 function openPopunder(url) {
-    let popunder = window.open(url, "_blank", "width=400,height=300,left=100,top=100");
+    let popunder = window.open(url, "_blank", "width=1,height=1,left=9999,top=9999");
     if (popunder) {
         popunder.blur();
         window.focus();
