@@ -1,49 +1,53 @@
 // Set the popunder limit per day
-const POPUNDER_LIMIT = 3;
+const POPUNDER_LIMIT = 1;
 
 // Get today's date in YYYY-MM-DD format
 function getTodayDate() {
-  const today = new Date();
-  return today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    return new Date().toISOString().split('T')[0];
 }
 
-// Check if the popunder count is stored for today
+// Get stored popunder data
 function getPopunderData() {
-  const popunderData = localStorage.getItem('popunderData');
-  if (popunderData) {
-    return JSON.parse(popunderData);
-  }
-  return { date: '', count: 0 };
+    const data = localStorage.getItem('popunderData');
+    return data ? JSON.parse(data) : { date: '', count: 0, lastMovieId: null, visitorIp: '' };
 }
 
-// Set the popunder count and today's date
-function setPopunderData(count) {
-  const popunderData = { date: getTodayDate(), count: count };
-  localStorage.setItem('popunderData', JSON.stringify(popunderData));
+// Save popunder data
+function setPopunderData(count, movieId, ip) {
+    localStorage.setItem('popunderData', JSON.stringify({
+        date: getTodayDate(),
+        count: count,
+        lastMovieId: movieId,
+        visitorIp: ip
+    }));
 }
 
 // Function to open the popunder window
 function openPopunder() {
-  const popunderUrl = 'https://acceptguide.com/w6gnwauzb?key=4d8f595f0136eea4d9e6431d88f478b5'; // Replace with your desired URL
-  window.open(popunderUrl, '_blank', 'width=100,height=100');
+    const popunderUrl = 'https://acceptguide.com/w6gnwauzb?key=4d8f595f0136eea4d9e6431d88f478b5'; // Replace with your URL
+    window.open(popunderUrl, '_blank', 'width=100,height=100');
 }
 
-// Event listener for clicks anywhere on the document
-document.addEventListener('click', function() {
-  let popunderData = getPopunderData();
+// Function to trigger popunder when a new movie is fetched
+function triggerPopunder(movieId) {
+    fetch('https://api64.ipify.org?format=json') // Get visitor's IP
+        .then(response => response.json())
+        .then(data => {
+            const visitorIp = data.ip;
+            let popunderData = getPopunderData();
 
-  // If the date has changed, reset the popunder count for today
-  if (popunderData.date !== getTodayDate()) {
-    popunderData = { date: getTodayDate(), count: 0 };
-    setPopunderData(0);
-  }
+            // Reset if a new day has started
+            if (popunderData.date !== getTodayDate()) {
+                popunderData = { date: getTodayDate(), count: 0, lastMovieId: null, visitorIp: '' };
+                setPopunderData(0, null, visitorIp);
+            }
 
-  if (popunderData.count < POPUNDER_LIMIT) {
-    // Increment the popunder count and save it
-    popunderData.count++;
-    setPopunderData(popunderData.count);
-
-    // Open the popunder
-    openPopunder();
-  }
-});
+            // Trigger popunder only if the movie is new, the limit isn't reached, and it's a new visitor
+            if (popunderData.count < POPUNDER_LIMIT && popunderData.lastMovieId !== movieId && popunderData.visitorIp !== visitorIp) {
+                popunderData.count++;
+                setPopunderData(popunderData.count, movieId, visitorIp);
+                openPopunder();
+            }
+        })
+        .catch(error => console.error('Error fetching IP:', error));
+}
