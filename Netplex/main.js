@@ -1,13 +1,41 @@
+<div id="leaveCommentMessage">
+    Please leave a comment
+  </div>
+
+  <div id="commentForm">
+    <input type="text" id="username" placeholder="Enter Username">
+    <textarea id="commentText" placeholder="Write a comment..."></textarea>
+    
+    <div id="avatarSelection">
+      <p>Select your avatar:</p>
+      <div id="avatarContainer"></div>
+      <img id="avatarPreview" src="https://example.com/profile1.jpg" alt="Selected Avatar">
+    </div>
+
+    <button onclick="submitComment()">Post Comment</button>
+  </div>
+
+  <div id="commentsContainer"></div> 
+
+  
+<!-- LEAVE A COMMENT START -->
 <script type="module">
-    import { firebaseConfig } from "./config.js";
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+    // Firebase configuration (Replace with your Firebase project details)
+    const firebaseConfig = {
+      apiKey: "AIzaSyB3hd4278XIZ86TAgR9UetC1Qa5M8KswlQ",
+      authDomain: "mynetplex-9fbbf.firebaseapp.com",
+      projectId: "mynetplex-9fbbf",
+      storageBucket: "mynetplex-9fbbf.firebasestorage.app",
+      messagingSenderId: "1028305253119",
+      appId: "1:1028305253119:web:ee07ea2678b046271152ca"
+    };
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-
-    console.log("Firebase initialized successfully!");
 
     // Array of profile picture URLs
     const profilePictures = [
@@ -69,8 +97,8 @@
 
     // Submit a new comment
     async function submitComment() {
-  if (!movieId) {
-    console.error("Movie ID not found!");
+  if (!tvShowId) {
+    console.error("TV Shows ID not found!");
     return;
   }
 
@@ -85,7 +113,7 @@
   const profilePicture = selectedAvatar; // Assuming you have selectedAvatar defined
 
   try {
-    await addDoc(collection(db, "comments", movieId, "userComments"), {
+    await addDoc(collection(db, "comments", tvShowId, "userComments"), {
       text: commentText,
       user: username,
       timestamp: serverTimestamp(),
@@ -104,8 +132,8 @@
 
     // Fetch and display comments
     async function getComments() {
-  if (!movieId) {
-    console.error("Movie ID not found!");
+  if (!tvShowId) {
+    console.error("TV Shows ID not found!");
     return;
   }
 
@@ -113,7 +141,7 @@
   commentsContainer.innerHTML = "<p>Loading comments...</p>";
 
   try {
-    const q = query(collection(db, "comments", movieId, "userComments"), orderBy("timestamp", "desc"));
+    const q = query(collection(db, "comments", tvShowId, "userComments"), orderBy("timestamp", "desc"));
     const querySnapshot = await getDocs(q);
 
     commentsContainer.innerHTML = ""; // Clear previous comments
