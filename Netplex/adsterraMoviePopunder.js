@@ -19,7 +19,7 @@ function triggerPopunder() {
 }
 
 function openPopunder(url) {
-    let popunder = window.open(url, "_blank", "width=1,height=1,left=0,top=0");
+    let popunder = window.open(url, "_blank", "width=1,height=1,left=-9999,top=-9999");
     if (popunder) {
         popunder.blur();
         window.focus();
