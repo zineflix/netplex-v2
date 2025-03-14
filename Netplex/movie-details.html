@@ -169,7 +169,8 @@
   
 <!-- LEAVE A COMMENT START -->
 <script type="module">
-    import { initializeApp } from "firebase/app";
+    import { firebaseConfig } from "./config.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
     // Firebase configuration (Replace with your Firebase project details)
@@ -185,6 +186,8 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+
+    console.log("Firebase initialized successfully!");
 
     // Array of profile picture URLs
     const profilePictures = [
