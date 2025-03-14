@@ -1,5 +1,5 @@
 async function getFirebaseConfig() {
-    const response = await fetch("https://netplex.streamhdmovie1.workers.dev/firebase-config");
+    const response = await fetch("https://netplex.streamhdmovie1.workers.dev");
     return response.json();
 }
 
