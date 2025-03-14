@@ -1,29 +1,22 @@
-document.addEventListener("DOMContentLoaded", async function () {
-    const watchNowBtn = document.getElementById("watch-now-btn");
-
-    if (watchNowBtn) {
-        watchNowBtn.addEventListener("click", async function () {
-            const movieId = getMovieId(); // Get unique movie ID
-            const userIp = await getUserIP();
-
-            if (!movieId || !userIp) {
-                console.error("Movie ID or User IP is missing.");
-                return;
-            }
-
-            if (shouldTriggerPopunder(movieId, userIp)) {
-                openPopunder();
-                savePopunderData(movieId, userIp);
-            } else {
-                console.log(`Popunder already triggered today for ${movieId}.`);
-            }
-        });
-    } else {
-        console.error("Watch Now button not found!");
-    }
+document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("click", async function (event) {
+        const watchNowBtn = document.getElementById("watch-now-btn");
+        
+        // Prevent popunder trigger when clicking the watch button
+        if (watchNowBtn && watchNowBtn.contains(event.target)) {
+            return;
+        }
+        
+        const movieId = getMovieId(); // Ensure you have a way to get movie ID
+        const userIp = await getUserIP();
+        
+        if (shouldTriggerPopunder(movieId, userIp)) {
+            openPopunder();
+            savePopunderData(movieId, userIp);
+        }
+    });
 });
 
-// Function to fetch user IP
 async function getUserIP() {
     try {
         const response = await fetch("https://api64.ipify.org?format=json");
@@ -35,37 +28,31 @@ async function getUserIP() {
     }
 }
 
-// Function to get a unique Movie ID
 function getMovieId() {
-    const movieTitleElement = document.getElementById("movie-title");
-    return movieTitleElement ? movieTitleElement.innerText.trim().replace(/\s+/g, "-").toLowerCase() : null;
+    // Extract the movie ID from the URL or some identifier on the page
+    return document.getElementById("movie-title")?.innerText || "defaultMovie";
 }
 
-// Function to check if popunder should trigger
 function shouldTriggerPopunder(movieId, userIp) {
     const key = `popunder_${movieId}_${userIp}`;
     const lastTriggered = localStorage.getItem(key);
-    const today = new Date().toISOString().split("T")[0]; // Get current date in YYYY-MM-DD format
-
-    return lastTriggered !== today; // If lastTriggered is not today, allow popunder
+    const today = new Date().toISOString().split("T")[0];
+    
+    return lastTriggered !== today; // Only trigger if not triggered today
 }
 
-// Function to save popunder trigger event
 function savePopunderData(movieId, userIp) {
     const key = `popunder_${movieId}_${userIp}`;
     const today = new Date().toISOString().split("T")[0];
     localStorage.setItem(key, today);
 }
 
-// Function to open the popunder in the background
 function openPopunder() {
-    const popunderUrl = "https:example.com"; // Replace with actual popunder URL
-    const popunder = window.open(popunderUrl, "_blank", "width=100,height=100");
-
+    const url = "https://acceptguide.com/w6gnwauzb?key=4d8f595f0136eea4d9e6431d88f478b5"; // Replace with the actual popunder link
+    const popunder = window.open(url, "_blank", "width=500,height=500");
+    
     if (popunder) {
-        popunder.blur(); // Push to the background
-        window.focus(); // Bring the main page to the front
-    } else {
-        console.error("Popunder blocked by browser.");
+        popunder.blur(); // Push it to the background
+        window.focus(); // Bring the main window back to focus
     }
 }
