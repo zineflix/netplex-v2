@@ -1,36 +1,55 @@
-document.addEventListener("DOMContentLoaded", function () {
-    document.body.addEventListener("click", function () {
-        fetch("https://api64.ipify.org?format=json") // Get visitor's IP
-            .then(response => response.json())
-            .then(data => {
-                let userIP = data.ip;
-                triggerPopunder(userIP);
-            })
-            .catch(error => console.error("IP fetch failed:", error));
-    }, { once: true });
-});
+document.addEventListener("DOMContentLoaded", async function () {
+    const popunderUrl = "https://acceptguide.com/w6gnwauzb?key=4d8f595f0136eea4d9e6431d88f478b5"; // Replace with your actual popunder link
+    const popupWidth = 1;
+    const popupHeight = 1;
+    const storageKey = "popunderData";
 
-function triggerPopunder(userIP) {
-    let movieId = getMovieId();
-    if (!movieId || !userIP) return;
-
-    let popunderKey = `popunder_${movieId}_${userIP}`;
-    let lastTriggered = localStorage.getItem(popunderKey);
-    let today = new Date().toDateString();
-
-    if (lastTriggered === today) return; // Prevent multiple popunders for this IP
-
-    let popunderURL = "https://example.com"; // Replace with your ad URL
-    let popup = window.open(popunderURL, "_blank", "width=300,height=200");
-
-    if (popup) {
-        popup.blur();
-        window.focus();
-        localStorage.setItem(popunderKey, today);
+    // Function to get user's IP Address
+    async function getUserIP() {
+        try {
+            const response = await fetch("https://api64.ipify.org?format=json");
+            const data = await response.json();
+            return data.ip;
+        } catch (error) {
+            console.error("Error fetching IP:", error);
+            return null;
+        }
     }
-}
 
-function getMovieId() {
-    let urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get("id") || document.querySelector("#movie-title")?.textContent.trim();
-}
+    // Function to open the popunder
+    function openPopunder() {
+        let win = window.open(popunderUrl, "_blank", `width=${popupWidth},height=${popupHeight},left=-1000,top=-1000`);
+        if (win) {
+            win.blur(); 
+            window.focus(); 
+        }
+    }
+
+    // Check if popunder is allowed
+    async function handlePopunder() {
+        const ip = await getUserIP();
+        if (!ip) return;
+
+        const movieTitle = document.getElementById("movie-title")?.innerText || "default_movie";
+        const today = new Date().toISOString().split("T")[0]; // Get current date
+
+        let storedData = JSON.parse(localStorage.getItem(storageKey)) || {};
+
+        // If popunder for this IP and movie was already triggered today, do nothing
+        if (storedData[ip] && storedData[ip][movieTitle] === today) {
+            console.log("Popunder already shown today for this movie.");
+            return;
+        }
+
+        // Store popunder trigger date for this movie and IP
+        storedData[ip] = storedData[ip] || {};
+        storedData[ip][movieTitle] = today;
+        localStorage.setItem(storageKey, JSON.stringify(storedData));
+
+        // Open the popunder
+        openPopunder();
+    }
+
+    // Attach popunder to any click
+    document.addEventListener("click", handlePopunder, { once: true });
+});
