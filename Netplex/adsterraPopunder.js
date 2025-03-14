@@ -5,15 +5,15 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function triggerPopunder() {
-    const movieId = getMovieIdFromURL();
-    if (!movieId) return;
+    const itemId = getItemIdFromURL(); // Get either movie or tvshow ID
+    if (!itemId) return;
 
     const today = new Date().toISOString().split("T")[0]; // Get YYYY-MM-DD
     const savedData = JSON.parse(localStorage.getItem("popunderData")) || {};
 
-    if (savedData[movieId] === today) return; // Already triggered today
+    if (savedData[itemId] === today) return; // Already triggered today
 
-    localStorage.setItem("popunderData", JSON.stringify({ ...savedData, [movieId]: today }));
+    localStorage.setItem("popunderData", JSON.stringify({ ...savedData, [itemId]: today }));
 
     openPopunder("https://acceptguide.com/w6gnwauzb?key=4d8f595f0136eea4d9e6431d88f478b5");
 }
@@ -50,8 +50,10 @@ function openPopunder(url) {
     }
 }
 
-
-function getMovieIdFromURL() {
+function getItemIdFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get("movie_id");
+    const movieId = urlParams.get("movie_id");
+    const tvshowId = urlParams.get("tvshow_id");
+
+    return movieId || tvshowId; // Return either movie_id or tvshow_id
 }
