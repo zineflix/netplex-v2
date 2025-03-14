@@ -145,9 +145,9 @@
     Welcome to <b>NETPLEX</b>
   </div>
 
-<!-- Leave a Comment Section -->
+  <!-- Leave a Comment Section -->
   <div id="leaveCommentMessage">
-    Please leave a comment
+    Please leave a comment below about the Movie/Tv Show.
   </div>
 
   <div id="commentForm">
@@ -245,8 +245,8 @@
 
     // Submit a new comment
     async function submitComment() {
-  if (!tvShowId) {
-    console.error("TV Shows ID not found!");
+  if (!movieId) {
+    console.error("Movie ID not found!");
     return;
   }
 
@@ -261,7 +261,7 @@
   const profilePicture = selectedAvatar; // Assuming you have selectedAvatar defined
 
   try {
-    await addDoc(collection(db, "comments", tvShowId, "userComments"), {
+    await addDoc(collection(db, "comments", movieId, "userComments"), {
       text: commentText,
       user: username,
       timestamp: serverTimestamp(),
@@ -280,8 +280,8 @@
 
     // Fetch and display comments
     async function getComments() {
-  if (!tvShowId) {
-    console.error("TV Shows ID not found!");
+  if (!movieId) {
+    console.error("Movie ID not found!");
     return;
   }
 
@@ -289,7 +289,7 @@
   commentsContainer.innerHTML = "<p>Loading comments...</p>";
 
   try {
-    const q = query(collection(db, "comments", tvShowId, "userComments"), orderBy("timestamp", "desc"));
+    const q = query(collection(db, "comments", movieId, "userComments"), orderBy("timestamp", "desc"));
     const querySnapshot = await getDocs(q);
 
     commentsContainer.innerHTML = ""; // Clear previous comments
