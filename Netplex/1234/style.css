@@ -2332,7 +2332,14 @@ meta[http-equiv="refresh"] {
 
 @media (max-width: 768px) {
   #iframe-container {
-    top: 60px;
+    top: 50;
     height: calc(100% - 60px);
+  }
+  #close-iframe-btn {
+    top: 0;
+  }
+
+  #change-server-btn {
+    top: 0;
   }
 }
