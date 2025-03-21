@@ -2331,11 +2331,8 @@ meta[http-equiv="refresh"] {
 
 
 @media (max-width: 768px) {
-  #close-iframe-btn {
-    top: 50px;
-  }
-
-  #change-server-btn {
-    top: 50px;
+  #iframe-container {
+    top: 60px;
+    height: calc(100% - 60px);
   }
 }
