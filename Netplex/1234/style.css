@@ -2333,13 +2333,13 @@ meta[http-equiv="refresh"] {
 @media (max-width: 768px) {
   #iframe-container {
     top: 50;
-    height: calc(100% - 60px);
+    height: calc(100% - 50px);
   }
   #close-iframe-btn {
-    top: 0;
+    top: -50;
   }
 
   #change-server-btn {
-    top: 0;
+    top: -50;
   }
 }
