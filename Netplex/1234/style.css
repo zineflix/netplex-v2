@@ -2342,4 +2342,7 @@ meta[http-equiv="refresh"] {
   #change-server-btn {
     top: -35;
   }
+  .server-dropdown {
+    top: 0;
+  }
 }
