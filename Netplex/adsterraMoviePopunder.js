@@ -1,20 +1,19 @@
 let preloadedAdIframe;
+let adLoaded = false;
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Preload the ad iframe in the background for faster loading
+// Preload ad iframe in background
+function preloadAd() {
     preloadedAdIframe = document.createElement("iframe");
     preloadedAdIframe.src = "https://beddingfetched.com/w6gnwauzb?key=4d8f595f0136eea4d9e6431d88f478b5";
     preloadedAdIframe.style.display = "none";
     preloadedAdIframe.style.width = "0";
     preloadedAdIframe.style.height = "0";
     preloadedAdIframe.style.border = "none";
+    preloadedAdIframe.onload = () => {
+        adLoaded = true;
+    };
     document.body.appendChild(preloadedAdIframe);
-
-    // Wait for user interaction
-    document.addEventListener("click", function () {
-        triggerPopunder();
-    }, { once: true });
-});
+}
 
 function triggerPopunder() {
     const movieId = getMovieIdFromURL();
@@ -56,7 +55,6 @@ function openPopupContainer() {
     skipBtn.style.zIndex = 10000;
     skipBtn.onclick = () => {
         document.body.removeChild(popup);
-        // Reset and remove the preloaded iframe so it can preload again if needed
         if (preloadedAdIframe) {
             preloadedAdIframe.remove();
             preloadedAdIframe = null;
@@ -68,7 +66,7 @@ function openPopupContainer() {
     countdown.style.fontSize = "24px";
     countdown.style.marginTop = "60px";
 
-    // Use the preloaded iframe and make it visible
+    // Display the preloaded iframe visibly
     if (preloadedAdIframe) {
         preloadedAdIframe.style.display = "block";
         preloadedAdIframe.style.width = "90%";
@@ -81,16 +79,23 @@ function openPopupContainer() {
     popup.appendChild(preloadedAdIframe);
     document.body.appendChild(popup);
 
-    let timer = 10; // Reduced countdown to 10 seconds for faster skip
-    countdown.innerText = `Loading ad... Please wait ${timer} seconds to Skip...`;
+    let timer = 20;
+    let shortCountdownStarted = false;
+
     const interval = setInterval(() => {
-        timer--;
-        countdown.innerText = `Loading ad... Please wait ${timer} seconds to Skip...`;
+        if (adLoaded && !shortCountdownStarted && timer > 3) {
+            timer = 3; // Reduce to 3 seconds if ad finished loading early
+            shortCountdownStarted = true;
+        }
+
+        countdown.innerText = `Ad loading... Please wait ${timer} seconds to skip...`;
+
         if (timer <= 0) {
             clearInterval(interval);
-            countdown.innerText = "You can skip now.";
-            skipBtn.style.display = "block";
+            countdown.innerText = "You can now skip the ad.";
+            if (adLoaded) skipBtn.style.display = "block"; // Only show skip if ad is fully loaded
         }
+        timer--;
     }, 1000);
 }
 
@@ -98,3 +103,14 @@ function getMovieIdFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get("movie_id");
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    preloadAd();
+    document.addEventListener(
+        "click",
+        function () {
+            triggerPopunder();
+        },
+        { once: true }
+    );
+});
