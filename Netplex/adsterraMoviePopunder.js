@@ -15,15 +15,59 @@ function triggerPopunder() {
 
     localStorage.setItem("popunderData", JSON.stringify({ ...savedData, [movieId]: today }));
 
-    openPopunder("https://acceptguide.com/w6gnwauzb?key=4d8f595f0136eea4d9e6431d88f478b5");
+    openPopupContainer("https://beddingfetched.com/w6gnwauzb?key=4d8f595f0136eea4d9e6431d88f478b5");
 }
 
-function openPopunder(url) {
-    let popunder = window.open(url, "_blank", "width=1,height=1,left=0,top=0");
-    if (popunder) {
-        popunder.blur();
-        window.focus();
-    }
+function openPopupContainer(url) {
+    const popup = document.createElement("div");
+    popup.style.position = "fixed";
+    popup.style.top = 0;
+    popup.style.left = 0;
+    popup.style.width = "100%";
+    popup.style.height = "100%";
+    popup.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
+    popup.style.zIndex = 9999;
+    popup.style.display = "flex";
+    popup.style.flexDirection = "column";
+    popup.style.alignItems = "center";
+    popup.style.justifyContent = "center";
+
+    const iframe = document.createElement("iframe");
+    iframe.src = url;
+    iframe.style.width = "90%";
+    iframe.style.height = "80%";
+    iframe.style.border = "none";
+
+    const countdown = document.createElement("div");
+    countdown.style.color = "#fff";
+    countdown.style.fontSize = "24px";
+    countdown.style.marginTop = "20px";
+
+    const skipBtn = document.createElement("button");
+    skipBtn.innerText = "Skip Ad";
+    skipBtn.style.padding = "10px 20px";
+    skipBtn.style.fontSize = "18px";
+    skipBtn.style.marginTop = "10px";
+    skipBtn.style.display = "none";
+    skipBtn.style.cursor = "pointer";
+    skipBtn.onclick = () => document.body.removeChild(popup);
+
+    popup.appendChild(iframe);
+    popup.appendChild(countdown);
+    popup.appendChild(skipBtn);
+    document.body.appendChild(popup);
+
+    let timer = 10; // 10-second countdown
+    countdown.innerText = `Please wait ${timer} seconds...`;
+    const interval = setInterval(() => {
+        timer--;
+        countdown.innerText = `Please wait ${timer} seconds...`;
+        if (timer <= 0) {
+            clearInterval(interval);
+            countdown.innerText = "You can skip now.";
+            skipBtn.style.display = "block";
+        }
+    }, 1000);
 }
 
 function getMovieIdFromURL() {
