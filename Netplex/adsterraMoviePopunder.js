@@ -1,23 +1,3 @@
-document.addEventListener("DOMContentLoaded", function () {
-    document.addEventListener("click", function () {
-        triggerPopunder();
-    }, { once: true }); // Ensures it runs only once per page load
-});
-
-function triggerPopunder() {
-    const movieId = getMovieIdFromURL();
-    if (!movieId) return;
-
-    const today = new Date().toISOString().split("T")[0]; // Get YYYY-MM-DD
-    const savedData = JSON.parse(localStorage.getItem("popunderData")) || {};
-
-    if (savedData[movieId] === today) return; // Already triggered today
-
-    localStorage.setItem("popunderData", JSON.stringify({ ...savedData, [movieId]: today }));
-
-    openPopupContainer("https://beddingfetched.com/w6gnwauzb?key=4d8f595f0136eea4d9e6431d88f478b5");
-}
-
 function openPopupContainer(url) {
     const popup = document.createElement("div");
     popup.style.position = "fixed";
@@ -49,31 +29,26 @@ function openPopupContainer(url) {
     countdown.style.fontSize = "24px";
     countdown.style.marginTop = "60px";
 
-    const iframe = document.createElement("iframe");
-    iframe.src = url;
-    iframe.style.width = "90%";
-    iframe.style.height = "80%";
-    iframe.style.border = "none";
+    // Move the preloaded iframe into popup
+    preloadedAdIframe.style.display = "block";
+    preloadedAdIframe.style.width = "90%";
+    preloadedAdIframe.style.height = "80%";
+    preloadedAdIframe.style.border = "none";
 
     popup.appendChild(skipBtn);
     popup.appendChild(countdown);
-    popup.appendChild(iframe);
+    popup.appendChild(preloadedAdIframe);
     document.body.appendChild(popup);
 
-    let timer = 10; // 10-second countdown
-    countdown.innerText = `Loading ad... Please wait ${timer} seconds...`;
+    let timer = 10;
+    countdown.innerText = `Loading ad... Please wait ${timer} seconds to Skip...`;
     const interval = setInterval(() => {
         timer--;
-        countdown.innerText = `Loading ad... Please wait ${timer} seconds...`;
+        countdown.innerText = `Loading ad... Please wait ${timer} seconds to Skip...`;
         if (timer <= 0) {
             clearInterval(interval);
             countdown.innerText = "You can skip now.";
             skipBtn.style.display = "block";
         }
     }, 1000);
-}
-
-function getMovieIdFromURL() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get("movie_id");
 }
