@@ -32,16 +32,16 @@ function openPopupContainer(url) {
     popup.style.alignItems = "center";
     popup.style.justifyContent = "center";
 
+    const countdown = document.createElement("div");
+    countdown.style.color = "#fff";
+    countdown.style.fontSize = "24px";
+    countdown.style.marginBottom = "10px";
+
     const iframe = document.createElement("iframe");
     iframe.src = url;
     iframe.style.width = "90%";
     iframe.style.height = "80%";
     iframe.style.border = "none";
-
-    const countdown = document.createElement("div");
-    countdown.style.color = "#fff";
-    countdown.style.fontSize = "24px";
-    countdown.style.marginTop = "20px";
 
     const skipBtn = document.createElement("button");
     skipBtn.innerText = "Skip Ad";
@@ -52,16 +52,16 @@ function openPopupContainer(url) {
     skipBtn.style.cursor = "pointer";
     skipBtn.onclick = () => document.body.removeChild(popup);
 
-    popup.appendChild(iframe);
     popup.appendChild(countdown);
+    popup.appendChild(iframe);
     popup.appendChild(skipBtn);
     document.body.appendChild(popup);
 
     let timer = 10; // 10-second countdown
-    countdown.innerText = `Please wait ${timer} seconds...`;
+    countdown.innerText = `Loading ad... Please wait ${timer} seconds...`;
     const interval = setInterval(() => {
         timer--;
-        countdown.innerText = `Please wait ${timer} seconds...`;
+        countdown.innerText = `Loading ad... Please wait ${timer} seconds...`;
         if (timer <= 0) {
             clearInterval(interval);
             countdown.innerText = "You can skip now.";
