@@ -81,7 +81,7 @@ function openPopupContainer() {
     popup.appendChild(preloadedAdIframe);
     document.body.appendChild(popup);
 
-    let timer = 5; // Reduced countdown to 5 seconds for faster skip
+    let timer = 10; // Reduced countdown to 10 seconds for faster skip
     countdown.innerText = `Loading ad... Please wait ${timer} seconds to Skip...`;
     const interval = setInterval(() => {
         timer--;
