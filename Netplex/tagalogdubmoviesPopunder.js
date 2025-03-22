@@ -1,12 +1,12 @@
-let preloadedAdIframe;
-let adIsLoaded = false;
+let adPreloadUrl = "https://beddingfetched.com/w6gnwauzb?key=4d8f595f0136eea4d9e6431d88f478b5";
+let adIsPreloaded = false;
 
 document.addEventListener("DOMContentLoaded", function () {
     const movieModal = document.getElementById("movieModal");
 
     if (!movieModal) return;
 
-    preloadAdIframe(); // Start preloading on page load
+    preloadAdIframe(); // Preload on page load
 
     movieModal.addEventListener("click", function () {
         let movieId = getCurrentMovieId();
@@ -31,20 +31,18 @@ function getCurrentMovieId() {
 }
 
 function preloadAdIframe() {
-    preloadedAdIframe = document.createElement("iframe");
-    preloadedAdIframe.src = "https://beddingfetched.com/w6gnwauzb?key=4d8f595f0136eea4d9e6431d88f478b5";
-    preloadedAdIframe.style.display = "none";
-    preloadedAdIframe.style.width = "0";
-    preloadedAdIframe.style.height = "0";
-    preloadedAdIframe.style.border = "none";
-
-    // Track when ad iframe finishes loading
-    preloadedAdIframe.onload = function () {
-        adIsLoaded = true;
-        console.log("Ad iframe preloaded and ready.");
+    let testIframe = document.createElement("iframe");
+    testIframe.src = adPreloadUrl;
+    testIframe.style.display = "none";
+    testIframe.style.width = "0";
+    testIframe.style.height = "0";
+    testIframe.style.border = "none";
+    testIframe.onload = function () {
+        adIsPreloaded = true;
+        testIframe.remove(); // clean up test iframe after preload check
+        console.log("Ad preload check: successful.");
     };
-
-    document.body.appendChild(preloadedAdIframe);
+    document.body.appendChild(testIframe);
 }
 
 function openPopupContainer() {
@@ -73,59 +71,45 @@ function openPopupContainer() {
     skipBtn.style.zIndex = 10000;
     skipBtn.onclick = () => {
         document.body.removeChild(popup);
-        if (preloadedAdIframe) {
-            preloadedAdIframe.remove();
-            preloadedAdIframe = null;
-            adIsLoaded = false;
-            preloadAdIframe(); // Re-preload for next time
-        }
+        adIsPreloaded = false;
+        preloadAdIframe(); // preload again for next time
     };
 
     const countdown = document.createElement("div");
     countdown.style.color = "#fff";
     countdown.style.fontSize = "24px";
     countdown.style.marginTop = "60px";
-
-    if (preloadedAdIframe) {
-        preloadedAdIframe.style.display = "block";
-        preloadedAdIframe.style.width = "90%";
-        preloadedAdIframe.style.height = "80%";
-        preloadedAdIframe.style.border = "none";
-    }
-
     popup.appendChild(skipBtn);
     popup.appendChild(countdown);
-    popup.appendChild(preloadedAdIframe);
+
+    // Create fresh visible iframe
+    const adIframe = document.createElement("iframe");
+    adIframe.src = adPreloadUrl;
+    adIframe.style.width = "90%";
+    adIframe.style.height = "80%";
+    adIframe.style.border = "none";
+    adIframe.style.marginTop = "20px";
+    popup.appendChild(adIframe);
     document.body.appendChild(popup);
 
-    let timer = 20;
-    let interval;
+    let timer = adIsPreloaded ? 3 : 20; // shorten if preloaded check was successful
+    countdown.innerText = `Loading ad... Please wait ${timer} seconds to Skip...`;
 
-    function showSkip() {
+    let interval = setInterval(() => {
+        timer--;
+        if (timer > 0) {
+            countdown.innerText = `Loading ad... Please wait ${timer} seconds to Skip...`;
+        } else {
+            clearInterval(interval);
+            countdown.innerText = "You can skip now.";
+            skipBtn.style.display = "block";
+        }
+    }, 1000);
+
+    adIframe.onload = function () {
+        console.log("Visible ad iframe finished loading.");
         clearInterval(interval);
         countdown.innerText = "Ad loaded. You can skip now.";
         skipBtn.style.display = "block";
-    }
-
-    // If ad is already loaded, skip countdown
-    if (adIsLoaded) {
-        showSkip();
-    } else {
-        // Start countdown if ad not loaded yet
-        countdown.innerText = `Loading ad... Please wait ${timer} seconds to Skip...`;
-        interval = setInterval(() => {
-            timer--;
-            if (timer > 0) {
-                countdown.innerText = `Loading ad... Please wait ${timer} seconds to Skip...`;
-            } else {
-                showSkip();
-            }
-        }, 1000);
-
-        // If it finishes loading during countdown, skip immediately
-        preloadedAdIframe.onload = function () {
-            adIsLoaded = true;
-            showSkip();
-        };
-    }
+    };
 }
