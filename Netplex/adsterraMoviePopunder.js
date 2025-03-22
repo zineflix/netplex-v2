@@ -30,12 +30,24 @@ function openPopupContainer(url) {
     popup.style.display = "flex";
     popup.style.flexDirection = "column";
     popup.style.alignItems = "center";
-    popup.style.justifyContent = "center";
+    popup.style.justifyContent = "flex-start";
+
+    const skipBtn = document.createElement("button");
+    skipBtn.innerText = "Skip Ad";
+    skipBtn.style.position = "absolute";
+    skipBtn.style.top = "20px";
+    skipBtn.style.right = "20px";
+    skipBtn.style.padding = "10px 20px";
+    skipBtn.style.fontSize = "18px";
+    skipBtn.style.display = "none";
+    skipBtn.style.cursor = "pointer";
+    skipBtn.style.zIndex = 10000;
+    skipBtn.onclick = () => document.body.removeChild(popup);
 
     const countdown = document.createElement("div");
     countdown.style.color = "#fff";
     countdown.style.fontSize = "24px";
-    countdown.style.marginBottom = "10px";
+    countdown.style.marginTop = "60px";
 
     const iframe = document.createElement("iframe");
     iframe.src = url;
@@ -43,18 +55,9 @@ function openPopupContainer(url) {
     iframe.style.height = "80%";
     iframe.style.border = "none";
 
-    const skipBtn = document.createElement("button");
-    skipBtn.innerText = "Skip Ad";
-    skipBtn.style.padding = "10px 20px";
-    skipBtn.style.fontSize = "18px";
-    skipBtn.style.marginTop = "10px";
-    skipBtn.style.display = "none";
-    skipBtn.style.cursor = "pointer";
-    skipBtn.onclick = () => document.body.removeChild(popup);
-
+    popup.appendChild(skipBtn);
     popup.appendChild(countdown);
     popup.appendChild(iframe);
-    popup.appendChild(skipBtn);
     document.body.appendChild(popup);
 
     let timer = 10; // 10-second countdown
