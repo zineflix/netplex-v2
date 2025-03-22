@@ -11,11 +11,11 @@ document.addEventListener("DOMContentLoaded", function () {
         let today = new Date().toISOString().split('T')[0];
 
         if (lastPopunder === today) {
-            console.log("Ad popup already shown today for this movie.");
+            console.log("Popunder already triggered today for this movie.");
             return;
         }
 
-        showAdPopup("https://acceptguide.com/w6gnwauzb?key=4d8f595f0136eea4d9e6431d88f478b5");
+        openPopupContainer("https://acceptguide.com/w6gnwauzb?key=4d8f595f0136eea4d9e6431d88f478b5");
 
         localStorage.setItem(`popunder_${movieId}`, today);
     });
@@ -26,61 +26,57 @@ function getCurrentMovieId() {
     return movieTitleElement ? movieTitleElement.textContent.trim() : null;
 }
 
-function showAdPopup(url) {
-    const popupContainer = document.createElement("div");
-    popupContainer.style.position = "fixed";
-    popupContainer.style.top = "0";
-    popupContainer.style.left = "0";
-    popupContainer.style.width = "100%";
-    popupContainer.style.height = "100%";
-    popupContainer.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
-    popupContainer.style.display = "flex";
-    popupContainer.style.flexDirection = "column";
-    popupContainer.style.alignItems = "center";
-    popupContainer.style.zIndex = "9999";
+function openPopupContainer(url) {
+    const popup = document.createElement("div");
+    popup.style.position = "fixed";
+    popup.style.top = 0;
+    popup.style.left = 0;
+    popup.style.width = "100%";
+    popup.style.height = "100%";
+    popup.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
+    popup.style.zIndex = 9999;
+    popup.style.display = "flex";
+    popup.style.flexDirection = "column";
+    popup.style.alignItems = "center";
+    popup.style.justifyContent = "flex-start";
 
-    const skipButton = document.createElement("button");
-    skipButton.textContent = "Skip Ad";
-    skipButton.style.display = "none";
-    skipButton.style.position = "absolute";
-    skipButton.style.top = "20px";
-    skipButton.style.right = "20px";
-    skipButton.style.padding = "10px 20px";
-    skipButton.style.fontSize = "16px";
-    skipButton.style.cursor = "pointer";
+    const skipBtn = document.createElement("button");
+    skipBtn.innerText = "Skip Ad";
+    skipBtn.style.position = "absolute";
+    skipBtn.style.top = "20px";
+    skipBtn.style.right = "20px";
+    skipBtn.style.padding = "10px 20px";
+    skipBtn.style.fontSize = "18px";
+    skipBtn.style.display = "none";
+    skipBtn.style.cursor = "pointer";
+    skipBtn.style.zIndex = 10000;
+    skipBtn.onclick = () => document.body.removeChild(popup);
 
-    skipButton.addEventListener("click", function () {
-        document.body.removeChild(popupContainer);
-    });
+    const countdown = document.createElement("div");
+    countdown.style.color = "#fff";
+    countdown.style.fontSize = "24px";
+    countdown.style.marginTop = "60px";
 
     const iframe = document.createElement("iframe");
     iframe.src = url;
-    iframe.style.width = "80%";
-    iframe.style.height = "60%";
+    iframe.style.width = "90%";
+    iframe.style.height = "80%";
     iframe.style.border = "none";
-    iframe.allow = "autoplay; fullscreen";
 
-    const countdownDiv = document.createElement("div");
-    countdownDiv.style.color = "white";
-    countdownDiv.style.fontSize = "20px";
-    countdownDiv.style.marginTop = "20px";
+    popup.appendChild(skipBtn);
+    popup.appendChild(countdown);
+    popup.appendChild(iframe);
+    document.body.appendChild(popup);
 
-    let countdown = 10; // seconds
-    countdownDiv.textContent = `Ad ends in ${countdown} seconds...`;
-
-    popupContainer.appendChild(skipButton);
-    popupContainer.appendChild(iframe);
-    popupContainer.appendChild(countdownDiv);
-    document.body.appendChild(popupContainer);
-
-    const countdownInterval = setInterval(() => {
-        countdown--;
-        if (countdown > 0) {
-            countdownDiv.textContent = `Ad ends in ${countdown} seconds...`;
-        } else {
-            clearInterval(countdownInterval);
-            countdownDiv.textContent = "You can now skip the ad.";
-            skipButton.style.display = "block";
+    let timer = 10; // 10-second countdown
+    countdown.innerText = `Loading ad... Please wait ${timer} seconds...`;
+    const interval = setInterval(() => {
+        timer--;
+        countdown.innerText = `Loading ad... Please wait ${timer} seconds...`;
+        if (timer <= 0) {
+            clearInterval(interval);
+            countdown.innerText = "You can skip now.";
+            skipBtn.style.display = "block";
         }
     }, 1000);
 }
