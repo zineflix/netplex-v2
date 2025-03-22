@@ -36,9 +36,22 @@ function showAdPopup(url) {
     popupContainer.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
     popupContainer.style.display = "flex";
     popupContainer.style.flexDirection = "column";
-    popupContainer.style.justifyContent = "center";
     popupContainer.style.alignItems = "center";
     popupContainer.style.zIndex = "9999";
+
+    const skipButton = document.createElement("button");
+    skipButton.textContent = "Skip Ad";
+    skipButton.style.display = "none";
+    skipButton.style.position = "absolute";
+    skipButton.style.top = "20px";
+    skipButton.style.right = "20px";
+    skipButton.style.padding = "10px 20px";
+    skipButton.style.fontSize = "16px";
+    skipButton.style.cursor = "pointer";
+
+    skipButton.addEventListener("click", function () {
+        document.body.removeChild(popupContainer);
+    });
 
     const iframe = document.createElement("iframe");
     iframe.src = url;
@@ -55,21 +68,9 @@ function showAdPopup(url) {
     let countdown = 10; // seconds
     countdownDiv.textContent = `Ad ends in ${countdown} seconds...`;
 
-    const skipButton = document.createElement("button");
-    skipButton.textContent = "Skip Ad";
-    skipButton.style.display = "none";
-    skipButton.style.marginTop = "15px";
-    skipButton.style.padding = "10px 20px";
-    skipButton.style.fontSize = "16px";
-    skipButton.style.cursor = "pointer";
-
-    skipButton.addEventListener("click", function () {
-        document.body.removeChild(popupContainer);
-    });
-
+    popupContainer.appendChild(skipButton);
     popupContainer.appendChild(iframe);
     popupContainer.appendChild(countdownDiv);
-    popupContainer.appendChild(skipButton);
     document.body.appendChild(popupContainer);
 
     const countdownInterval = setInterval(() => {
