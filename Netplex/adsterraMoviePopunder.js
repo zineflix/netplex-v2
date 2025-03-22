@@ -66,37 +66,49 @@ function openPopupContainer() {
     countdown.style.fontSize = "24px";
     countdown.style.marginTop = "60px";
 
-    // Display the preloaded iframe visibly
-    if (preloadedAdIframe) {
-        preloadedAdIframe.style.display = "block";
-        preloadedAdIframe.style.width = "90%";
-        preloadedAdIframe.style.height = "80%";
-        preloadedAdIframe.style.border = "none";
-    }
-
     popup.appendChild(skipBtn);
     popup.appendChild(countdown);
-    popup.appendChild(preloadedAdIframe);
     document.body.appendChild(popup);
 
     let timer = 20;
     let shortCountdownStarted = false;
 
-    const interval = setInterval(() => {
-        if (adLoaded && !shortCountdownStarted && timer > 3) {
-            timer = 3; // Reduce to 3 seconds if ad finished loading early
-            shortCountdownStarted = true;
+    const showAdAndStartCountdown = () => {
+        if (preloadedAdIframe) {
+            preloadedAdIframe.style.display = "block";
+            preloadedAdIframe.style.width = "90%";
+            preloadedAdIframe.style.height = "80%";
+            preloadedAdIframe.style.border = "none";
+            popup.appendChild(preloadedAdIframe);
         }
 
-        countdown.innerText = `Ad loading... Please wait ${timer} seconds to skip...`;
+        const interval = setInterval(() => {
+            if (adLoaded && !shortCountdownStarted && timer > 3 && preloadedAdIframe.style.display === "block") {
+                timer = 3; // Reduce to 3 seconds only after the ad is visible on screen
+                shortCountdownStarted = true;
+            }
 
-        if (timer <= 0) {
-            clearInterval(interval);
-            countdown.innerText = "You can now skip the ad.";
-            if (adLoaded) skipBtn.style.display = "block"; // Only show skip if ad is fully loaded
-        }
-        timer--;
-    }, 1000);
+            countdown.innerText = `Ad loading... Please wait ${timer} seconds to skip...`;
+
+            if (timer <= 0) {
+                clearInterval(interval);
+                countdown.innerText = "You can now skip the ad.";
+                if (adLoaded && preloadedAdIframe.style.display === "block") skipBtn.style.display = "block";
+            }
+            timer--;
+        }, 1000);
+    };
+
+    if (adLoaded) {
+        showAdAndStartCountdown();
+    } else {
+        const adLoadCheck = setInterval(() => {
+            if (adLoaded) {
+                clearInterval(adLoadCheck);
+                showAdAndStartCountdown();
+            }
+        }, 500);
+    }
 }
 
 function getMovieIdFromURL() {
