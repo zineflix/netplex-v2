@@ -843,11 +843,7 @@ iframe {
     max-height: 200px; /* Prevent oversized posters */
   }
 }
-@media (max-width: 480px) {
-  #tvModal iframe {
-    height: 180px;
-  }
-}
+
 
 /* Responsive adjustments for mobile */
 @media (max-width: 600px) {
@@ -861,7 +857,7 @@ iframe {
   #tvGallery {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   }
-  iframe {
+  #tvModal iframe {
     height: 180px;
   }  
 }
