@@ -273,7 +273,7 @@ fetchTvShows();
 
 // Fullscreen Button Start //
 document.getElementById("fullscreenButton").addEventListener("click", function () {
-    let iframe = document.getElementById("movieTrailer, tvTrailer");
+    let iframe = document.getElementById("movieTrailer", "tvTrailer");
 
     if (iframe.requestFullscreen) {
         iframe.requestFullscreen();
