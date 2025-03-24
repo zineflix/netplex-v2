@@ -37,8 +37,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // FOR TAGALOG DUB MOVIE SECTION START //
 const API_KEY = "a1e72fd93ed59f56e6332813b9f8dcae";
-const MOVIE_IDS = [18377, 597, 57627, 455714, 9470, 396535, 20453, 1001311, 11770, 41387, 16269, 57663, 53658, 570511, 200085, 433945, 184219, 11178, 15859, 158445, 851644, 9056, 10753, 11134, 9404, 11636, 52324, 58233];
-const MOVIE_VIDEOS = {
+        const MOVIE_IDS = [
+            18377, 597, 57627, 455714, 9470, 396535, 20453, 1001311, 11770, 41387, 16269, 57663, 
+            53658, 570511, 200085, 433945, 184219, 11178, 15859, 158445, 851644, 9056, 10753, 
+            11134, 9404, 11636, 52324, 58233, 219246,
+        ];
+        const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+        const movieGallery = document.getElementById("movieGallery");
+        const movieModal = document.getElementById("movieModal");
+        const moviePoster = document.getElementById("moviePoster");
+        const movieTitle = document.getElementById("movieTitle");
+        const movieGenres = document.getElementById("movieGenres");
+        const movieDescription = document.getElementById("movieDescription");
+        const movieTrailer = document.getElementById("movieTrailer");
+
+        // Custom video links for each movie
+        const MOVIE_VIDEOS = {
             18377: "https://short.icu/mMFEhpYrX",
             597: "//ok.ru/videoembed/9644046748238?nochat=1",
             57627: "//ok.ru/videoembed/9644096817742?nochat=1",
@@ -67,114 +81,68 @@ const MOVIE_VIDEOS = {
             11636: "https://short.icu/b4IONWrDS",
             52324: "//ok.ru/videoembed/9671939918414?nochat=1",
             58233: "//ok.ru/videoembed/9643975313998?nochat=1",
-       };
+        };
 
-async function fetchMovies() {
-  try {
-    const movieRequests = MOVIE_IDS.map(id => fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`).then(res => res.json()));
-    const movies = await Promise.all(movieRequests);
+        async function fetchMovies() {
+            try {
+                const movieRequests = MOVIE_IDS.map(id =>
+                    fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`)
+                        .then(response => response.json())
+                );
 
-    movies.forEach(movie => {
-      if (movie.poster_path) {
-        const movieCard = document.createElement("div");
-        movieCard.classList.add("movie-card");
-        movieCard.innerHTML = `<img src="${IMAGE_BASE_URL}${movie.poster_path}" alt="${movie.title}"><div class="play-button">▶</div>`;
-        movieCard.addEventListener("click", () => openMovieModal(movie));
-        document.getElementById("movieGallery").appendChild(movieCard);
-      }
-    });
-  } catch (error) {
-    console.error("Error loading movies:", error);
-  }
-}
+                const movies = await Promise.all(movieRequests);
 
-function openMovieModal(movie) {
-  moviePoster.src = `${IMAGE_BASE_URL}${movie.poster_path}`;
-  movieTitle.textContent = movie.title;
-  movieGenres.textContent = (movie.genres || []).map(g => g.name).join(", ") || "Unknown";
-  movieDescription.textContent = movie.overview || "No description available.";
+                movies.forEach(movie => {
+                    if (movie.poster_path) {
+                        const movieCard = document.createElement("div");
+                        movieCard.classList.add("movie-card");
 
-  const videoUrl = MOVIE_VIDEOS[movie.id] || "https://www.youtube.com/embed/defaultVideo";
-  document.getElementById("trailerContainer").innerHTML = `<iframe id="movieTrailer" src="${videoUrl}" allowfullscreen></iframe>`;
+                        movieCard.innerHTML = `
+                            <img src="${IMAGE_BASE_URL}${movie.poster_path}" alt="${movie.title}">
+                            <div class="play-button">▶</div>
+                        `;
+                        movieCard.addEventListener("click", () => openModal(movie));
+                        movieGallery.appendChild(movieCard);
+                    }
+                });
+            } catch (error) {
+                console.error("Error fetching movies:", error);
+                movieGallery.innerHTML = "<p>Failed to load movies. Please try again later.</p>";
+            }
+        }
 
-  movieModal.classList.add("show");
-}
+        function openModal(movie) {
+            moviePoster.src = `${IMAGE_BASE_URL}${movie.poster_path}`;
+            moviePoster.alt = movie.title;
+            movieTitle.textContent = movie.title;
+            movieGenres.textContent = movie.genres ? movie.genres.map(genre => genre.name).join(", ") : "Unknown";
+            movieDescription.textContent = movie.overview || "No description available.";
 
-// TV Show Section
-const TV_SHOW_IDS = [219246];
-const MOVIE_EPISODES = {
-  219246: [
-    { name: "Episode 1", link: "https://drive.google.com/file/d/1A3uH9QQ2aTaBA_EsDSSAEw1athH2ueY-/preview" },
-    { name: "Episode 2", link: "https://drive.google.com/file/d/19w2MZa_I6vbklXbI7Mxbz11geGppCjuU/preview" },
-    { name: "Episode 3", link: "https://drive.google.com/file/d/19u2iudJuxbBhysj2TMOIq1m2R6OLse5b/preview" },
-    { name: "Episode 4", link: "https://drive.google.com/file/d/19qmqs96tvEUNzVfbOZowG09C0pqeWqnL/preview" },
-    { name: "Episode 5", link: "https://drive.google.com/file/d/19nO1c0uiDQ_jmrXUrABmCScNr4SBcC0H/preview" },
-    { name: "Episode 6", link: "https://drive.google.com/file/d/19iOxU-eYZDyCTy6iik0-lA_Qggnugetf/preview" },
-    { name: "Episode 7", link: "https://drive.google.com/file/d/19ZXztXQMWRKYbNa1FOp-ROTdzuYmsU72/preview" },
-    { name: "Episode 8", link: "https://drive.google.com/file/d/19VF_JbX09856cmYA0_bQ6iVkqWeVyNwA/preview" },
-  ],
-};
+            // Get unique video link for the movie
+            const videoUrl = MOVIE_VIDEOS[movie.id] || "https://www.youtube.com/embed/defaultVideo";
 
-async function fetchTvShows() {
-  try {
-    const tvRequests = TV_SHOW_IDS.map(id => fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}`).then(res => res.json()));
-    const tvShows = await Promise.all(tvRequests);
+            // Set the iframe source
+            movieTrailer.src = videoUrl;
 
-    tvShows.forEach(show => {
-      if (show.poster_path) {
-        const showCard = document.createElement("div");
-        showCard.classList.add("movie-card");
-        showCard.innerHTML = `<img src="${IMAGE_BASE_URL}${show.poster_path}" alt="${show.name}"><div class="play-button">▶</div>`;
-        showCard.addEventListener("click", () => openTvModal(show));
-        document.getElementById("tvGallery").appendChild(showCard);
-      }
-    });
-  } catch (error) {
-    console.error("Error loading TV shows:", error);
-  }
-}
+            // Show the modal
+            movieModal.classList.add("show");
+        }
 
-function openTvModal(show) {
-  moviePoster.src = `${IMAGE_BASE_URL}${show.poster_path}`;
-  movieTitle.textContent = show.name;
-  movieGenres.textContent = (show.genres || []).map(g => g.name).join(", ") || "Unknown";
-  movieDescription.textContent = show.overview || "No description available.";
+        function closeModal() {
+            movieModal.classList.remove("show");
+            movieTrailer.src = ""; // Stop video playback
+        }
 
-  const trailerContainer = document.getElementById("trailerContainer");
-  trailerContainer.innerHTML = "";
+        // Close modal on outside click or Escape key
+        window.addEventListener("click", event => {
+            if (event.target === movieModal) closeModal();
+        });
 
-  if (MOVIE_EPISODES[show.id]) {
-    const select = document.createElement("select");
-    select.id = "episodeSelector";
+        document.addEventListener("keydown", event => {
+            if (event.key === "Escape") closeModal();
+        });
 
-    MOVIE_EPISODES[show.id].forEach((ep, index) => {
-      const option = document.createElement("option");
-      option.value = ep.link;
-      option.textContent = ep.name;
-      if (index === 0) option.selected = true;
-      select.appendChild(option);
-    });
-
-    const iframe = document.createElement("iframe");
-    iframe.src = MOVIE_EPISODES[show.id][0].link;
-    iframe.id = "movieTrailer";
-    iframe.setAttribute("allowfullscreen", "");
-
-    select.addEventListener("change", function () {
-      iframe.src = this.value;
-    });
-
-    trailerContainer.appendChild(select);
-    trailerContainer.appendChild(iframe);
-  } else {
-    trailerContainer.innerHTML = `<iframe id="movieTrailer" src="https://www.youtube.com/embed/defaultVideo" allowfullscreen></iframe>`;
-  }
-
-  movieModal.classList.add("show");
-}
-
-fetchMovies();
-fetchTvShows();
+        fetchMovies();
 // FOR TAGALOG DUB MOVIE SECTION END //
 
 // Fullscreen Button Start //
