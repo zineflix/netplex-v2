@@ -699,7 +699,13 @@ iframe {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 12px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px #0296cc; /* Soft shadow */
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+#tvGallery .movie-card:hover img {
+    box-shadow: 0 8px 20px #0296cc; /* Stronger shadow */
+    transform: scale(1.05); /* Slight zoom effect */
 }
 
 #tvGallery .movie-card .play-button {
