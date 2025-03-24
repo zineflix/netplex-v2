@@ -847,6 +847,11 @@ iframe {
 }
 
 /* Smaller modal iframe on smaller devices */
+@media (max-width: 768px) {
+  #tvModal iframe {
+    height: 200px;
+  }
+}
 @media (max-width: 480px) {
   #tvModal iframe {
     height: 180px;
