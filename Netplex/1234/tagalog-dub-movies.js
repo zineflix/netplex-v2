@@ -183,7 +183,7 @@ const TV_EPISODES = {
             "Episode 6",
             "Episode 7",
             "Episode 8",
-            "Episode 9-12",
+            "Episode 9 to 12",
         ]
     },
     
