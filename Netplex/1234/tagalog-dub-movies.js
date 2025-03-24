@@ -158,7 +158,82 @@ const API_KEY = "a1e72fd93ed59f56e6332813b9f8dcae";
             if (event.key === "Escape") closeModal();
         });
 
+
+// Separate TV Show Section
+const TV_SHOW_IDS = [219246];
+
+const MOVIE_EPISODES = {
+  219246: [
+    { name: "Episode 1", link: "https://drive.google.com/file/d/1A3uH9QQ2aTaBA_EsDSSAEw1athH2ueY-/preview" },
+    { name: "Episode 2", link: "https://drive.google.com/file/d/19w2MZa_I6vbklXbI7Mxbz11geGppCjuU/preview" },
+    { name: "Episode 3", link: "https://drive.google.com/file/d/19u2iudJuxbBhysj2TMOIq1m2R6OLse5b/preview" },
+    { name: "Episode 4", link: "https://drive.google.com/file/d/19qmqs96tvEUNzVfbOZowG09C0pqeWqnL/preview" },
+    { name: "Episode 5", link: "https://drive.google.com/file/d/19nO1c0uiDQ_jmrXUrABmCScNr4SBcC0H/preview" },
+    { name: "Episode 6", link: "https://drive.google.com/file/d/19iOxU-eYZDyCTy6iik0-lA_Qggnugetf/preview" },
+    { name: "Episode 7", link: "https://drive.google.com/file/d/19ZXztXQMWRKYbNa1FOp-ROTdzuYmsU72/preview" },
+    { name: "Episode 8", link: "https://drive.google.com/file/d/19VF_JbX09856cmYA0_bQ6iVkqWeVyNwA/preview" },
+  ],
+};
+
+async function fetchTvShows() {
+  try {
+    const tvRequests = TV_SHOW_IDS.map(id => fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}`).then(res => res.json()));
+    const tvShows = await Promise.all(tvRequests);
+
+    tvShows.forEach(show => {
+      if (show.poster_path) {
+        const showCard = document.createElement("div");
+        showCard.classList.add("movie-card");
+        showCard.innerHTML = `<img src="${IMAGE_BASE_URL}${show.poster_path}" alt="${show.name}"><div class="play-button">▶</div>`;
+        showCard.addEventListener("click", () => openTvModal(show));
+        document.getElementById("tvGallery").appendChild(showCard);
+      }
+    });
+  } catch (err) {
+    console.error("Error fetching TV shows:", err);
+  }
+}
+
+function openTvModal(show) {
+  moviePoster.src = `${IMAGE_BASE_URL}${show.poster_path}`;
+  movieTitle.textContent = show.name;
+  movieGenres.textContent = (show.genres || []).map(g => g.name).join(", ") || "Unknown";
+  movieDescription.textContent = show.overview || "No description available.";
+
+  const trailerContainer = document.getElementById("trailerContainer");
+  trailerContainer.innerHTML = "";
+
+  if (MOVIE_EPISODES[show.id]) {
+    const select = document.createElement("select");
+    select.id = "episodeSelector";
+
+    MOVIE_EPISODES[show.id].forEach((ep, index) => {
+      const option = document.createElement("option");
+      option.value = ep.link;
+      option.textContent = ep.name;
+      if (index === 0) option.selected = true;
+      select.appendChild(option);
+    });
+
+    const iframe = document.createElement("iframe");
+    iframe.src = MOVIE_EPISODES[show.id][0].link;
+    iframe.id = "movieTrailer";
+    iframe.setAttribute("allowfullscreen", "");
+
+    select.addEventListener("change", function () {
+      iframe.src = this.value;
+    });
+
+    trailerContainer.appendChild(select);
+    trailerContainer.appendChild(iframe);
+  } else {
+    trailerContainer.innerHTML = `<iframe id="movieTrailer" src="https://www.youtube.com/embed/defaultVideo" allowfullscreen></iframe>`;
+  }
+
+  movieModal.classList.add("show");
+}
         fetchMovies();
+        fetchTvShows();
 // FOR TAGALOG DUB MOVIE SECTION END //
 
 // Fullscreen Button Start //
