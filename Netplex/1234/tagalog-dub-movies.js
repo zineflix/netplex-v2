@@ -81,6 +81,8 @@ const API_KEY = "a1e72fd93ed59f56e6332813b9f8dcae";
             11636: "https://short.icu/b4IONWrDS",
             52324: "//ok.ru/videoembed/9671939918414?nochat=1",
             58233: "//ok.ru/videoembed/9643975313998?nochat=1",
+       };     
+       const MOVIE_EPISODES = {     
             219246: [
                   { name: "Episode 1", link: "https://drive.google.com/file/d/1A3uH9QQ2aTaBA_EsDSSAEw1athH2ueY-/preview" },
                   { name: "Episode 2", link: "https://drive.google.com/file/d/19w2MZa_I6vbklXbI7Mxbz11geGppCjuU/preview" },
