@@ -162,16 +162,16 @@ const episodeDropdown = document.getElementById("episodeDropdown");
 // Example structure for TV episodes streaming links:
 const TV_EPISODES = {
     219246: {
-        totalEpisodes: 5,
-        links: [
-            "https://drive.google.com/file/d/1A3uH9QQ2aTaBA_EsDSSAEw1athH2ueY-/preview",
-            "https://drive.google.com/file/d/19w2MZa_I6vbklXbI7Mxbz11geGppCjuU/preview",
-            "https://drive.google.com/file/d/19u2iudJuxbBhysj2TMOIq1m2R6OLse5b/preview",
-            "https://drive.google.com/file/d/19qmqs96tvEUNzVfbOZowG09C0pqeWqnL/preview",
-            "https://drive.google.com/file/d/19nO1c0uiDQ_jmrXUrABmCScNr4SBcC0H/preview",
-            "https://drive.google.com/file/d/19iOxU-eYZDyCTy6iik0-lA_Qggnugetf/preview",
-            "https://drive.google.com/file/d/19ZXztXQMWRKYbNa1FOp-ROTdzuYmsU72/preview",
-            "https://drive.google.com/file/d/19VF_JbX09856cmYA0_bQ6iVkqWeVyNwA/preview",
+        episodes: [
+            { title: "Episode 1", link: "https://drive.google.com/file/d/1A3uH9QQ2aTaBA_EsDSSAEw1athH2ueY-/preview" },
+            { title: "Episode 2", link: "https://drive.google.com/file/d/19w2MZa_I6vbklXbI7Mxbz11geGppCjuU/preview" },
+            { title: "Episode 3", link: "https://drive.google.com/file/d/19u2iudJuxbBhysj2TMOIq1m2R6OLse5b/preview" },
+            { title: "Episode 4", link: "https://drive.google.com/file/d/19qmqs96tvEUNzVfbOZowG09C0pqeWqnL/preview" },
+            { title: "Episode 5", link: "https://drive.google.com/file/d/19nO1c0uiDQ_jmrXUrABmCScNr4SBcC0H/preview" },
+            { title: "Episode 6", link: "https://drive.google.com/file/d/19iOxU-eYZDyCTy6iik0-lA_Qggnugetf/preview" },
+            { title: "Episode 7", link: "https://drive.google.com/file/d/19ZXztXQMWRKYbNa1FOp-ROTdzuYmsU72/preview" },
+            { title: "Episode 8", link: "https://drive.google.com/file/d/19VF_JbX09856cmYA0_bQ6iVkqWeVyNwA/preview" },
+            { title: "Episode 9-12", link:"https://drive.google.com/file/d/1B4jqZOOqQ-fIr1P91arsIa_dNRWXdT9L/preview" },
         ]
     },
     
