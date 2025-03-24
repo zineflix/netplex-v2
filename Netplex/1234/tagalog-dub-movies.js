@@ -145,6 +145,118 @@ const API_KEY = "a1e72fd93ed59f56e6332813b9f8dcae";
         fetchMovies();
 // FOR TAGALOG DUB MOVIE SECTION END //
 
+// === FOR TV SHOW SECTION START === //
+const TV_SHOW_IDS = [
+    219246, // When Life Gives You Tangerines
+    
+];
+const tvGallery = document.getElementById("tvGallery");
+const tvModal = document.getElementById("tvModal");
+const tvPoster = document.getElementById("tvPoster");
+const tvTitle = document.getElementById("tvTitle");
+const tvDescription = document.getElementById("tvDescription");
+const tvTrailer = document.getElementById("tvTrailer");
+const episodeDropdown = document.getElementById("episodeDropdown");
+
+// Example structure for TV episodes streaming links:
+const TV_EPISODES = {
+    219246: {
+        totalEpisodes: 5,
+        links: [
+            "https://drive.google.com/file/d/1A3uH9QQ2aTaBA_EsDSSAEw1athH2ueY-/preview",
+            "https://drive.google.com/file/d/19w2MZa_I6vbklXbI7Mxbz11geGppCjuU/preview",
+            "https://drive.google.com/file/d/19u2iudJuxbBhysj2TMOIq1m2R6OLse5b/preview",
+            "https://drive.google.com/file/d/19qmqs96tvEUNzVfbOZowG09C0pqeWqnL/preview",
+            "https://drive.google.com/file/d/19nO1c0uiDQ_jmrXUrABmCScNr4SBcC0H/preview",
+            "https://drive.google.com/file/d/19iOxU-eYZDyCTy6iik0-lA_Qggnugetf/preview",
+            "https://drive.google.com/file/d/19ZXztXQMWRKYbNa1FOp-ROTdzuYmsU72/preview",
+            "https://drive.google.com/file/d/19VF_JbX09856cmYA0_bQ6iVkqWeVyNwA/preview",
+        ]
+    },
+    
+    // Add more shows with episode links similarly
+};
+
+async function fetchTvShows() {
+    try {
+        const tvRequests = TV_SHOW_IDS.map(id =>
+            fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}`)
+                .then(response => response.json())
+        );
+
+        const shows = await Promise.all(tvRequests);
+
+        shows.forEach(show => {
+            if (show.poster_path) {
+                const showCard = document.createElement("div");
+                showCard.classList.add("movie-card");
+
+                showCard.innerHTML = `
+                    <img src="${IMAGE_BASE_URL}${show.poster_path}" alt="${show.name}">
+                    <div class="play-button">▶</div>
+                `;
+                showCard.addEventListener("click", () => openTvModal(show));
+                tvGallery.appendChild(showCard);
+            }
+        });
+    } catch (error) {
+        console.error("Error fetching TV shows:", error);
+        tvGallery.innerHTML = "<p>Failed to load TV shows. Please try again later.</p>";
+    }
+}
+
+function openTvModal(show) {
+    tvPoster.src = `${IMAGE_BASE_URL}${show.poster_path}`;
+    tvPoster.alt = show.name;
+    tvTitle.textContent = show.name;
+    tvDescription.textContent = show.overview || "No description available.";
+
+    // Clear dropdown options
+    episodeDropdown.innerHTML = "";
+
+    // Populate episode dropdown
+    const episodesInfo = TV_EPISODES[show.id];
+    if (episodesInfo) {
+        episodesInfo.links.forEach((link, index) => {
+            const option = document.createElement("option");
+            option.value = link;
+            option.textContent = `Episode ${index + 1}`;
+            episodeDropdown.appendChild(option);
+        });
+
+        // Load first episode by default
+        tvTrailer.src = episodesInfo.links[0];
+
+        // Change iframe source when episode selected
+        episodeDropdown.addEventListener("change", (e) => {
+            tvTrailer.src = e.target.value;
+        });
+    } else {
+        tvTrailer.src = "https://www.youtube.com/embed/defaultVideo"; // fallback
+    }
+
+    // Show TV modal
+    tvModal.classList.add("show");
+}
+
+function closeTvModal() {
+    tvModal.classList.remove("show");
+    tvTrailer.src = "";
+}
+
+window.addEventListener("click", event => {
+    if (event.target === tvModal) closeTvModal();
+});
+
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeTvModal();
+});
+
+fetchTvShows();
+// === FOR TV SHOW SECTION END === //
+
+
+
 // Fullscreen Button Start //
 document.getElementById("fullscreenButton").addEventListener("click", function () {
     let iframe = document.getElementById("movieTrailer");
