@@ -668,6 +668,83 @@ iframe {
 
 
 /* TAGALOG TV SHOWS/SERIES START */
+#tvGallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 15px;
+  padding: 20px 0;
+}
+
+#tvGallery .movie-card {
+  position: relative;
+  cursor: pointer;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#tvGallery .movie-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+#tvGallery .movie-card .play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 30px;
+  color: rgba(255, 255, 255, 0.9);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#tvGallery .movie-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+#tvGallery .movie-card:hover .play-button {
+  opacity: 1;
+}
+
+/* Modal responsiveness */
+#tvModal .modal-content {
+  background-color: #111;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 600px;
+  width: 90%;
+  margin: auto;
+}
+
+#tvModal img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+#tvModal iframe {
+  width: 100%;
+  height: 250px;
+  border-radius: 8px;
+}
+
+@media (max-width: 480px) {
+  #tvModal iframe {
+    height: 200px;
+  }
+  #tvGallery {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+  }
+}
+
+
+
+
+
 #episodeDropdown {
   display: block;
   width: 100%;
