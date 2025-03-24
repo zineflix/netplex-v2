@@ -232,10 +232,11 @@ function openTvModal(show) {
     if (episodesInfo) {
         episodesInfo.links.forEach((link, index) => {
             const option = document.createElement("option");
+            const epTitle = episodesInfo.titles ? episodesInfo.titles[index] : `Episode ${index + 1}`;
             option.value = link;
-            option.textContent = `Episode ${index + 1}`;
+            option.textContent = epTitle;
             episodeDropdown.appendChild(option);
-        });
+    });
 
         // Load first episode by default
         tvTrailer.src = episodesInfo.links[0];
