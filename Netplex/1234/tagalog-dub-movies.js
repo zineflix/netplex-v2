@@ -94,6 +94,7 @@ const API_KEY = "a1e72fd93ed59f56e6332813b9f8dcae";
                   { name: "Episode 10", link: "EP2_LINK_HERE" },
                   { name: "Episode 11", link: "EP2_LINK_HERE" },
                   { name: "Episode 12", link: "EP2_LINK_HERE" },
+            ],
         };
 
         async function fetchMovies() {
