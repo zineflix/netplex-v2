@@ -82,22 +82,6 @@ const API_KEY = "a1e72fd93ed59f56e6332813b9f8dcae";
             52324: "//ok.ru/videoembed/9671939918414?nochat=1",
             58233: "//ok.ru/videoembed/9643975313998?nochat=1",
        };     
-       const MOVIE_EPISODES = {     
-            219246: [
-                  { name: "Episode 1", link: "https://drive.google.com/file/d/1A3uH9QQ2aTaBA_EsDSSAEw1athH2ueY-/preview" },
-                  { name: "Episode 2", link: "https://drive.google.com/file/d/19w2MZa_I6vbklXbI7Mxbz11geGppCjuU/preview" },
-                  { name: "Episode 3", link: "https://drive.google.com/file/d/19u2iudJuxbBhysj2TMOIq1m2R6OLse5b/preview" },
-                  { name: "Episode 4", link: "https://drive.google.com/file/d/19qmqs96tvEUNzVfbOZowG09C0pqeWqnL/preview" },
-                  { name: "Episode 5", link: "https://drive.google.com/file/d/19nO1c0uiDQ_jmrXUrABmCScNr4SBcC0H/preview" },
-                  { name: "Episode 6", link: "https://drive.google.com/file/d/19iOxU-eYZDyCTy6iik0-lA_Qggnugetf/preview" },
-                  { name: "Episode 7", link: "https://drive.google.com/file/d/19ZXztXQMWRKYbNa1FOp-ROTdzuYmsU72/preview" },
-                  { name: "Episode 8", link: "https://drive.google.com/file/d/19VF_JbX09856cmYA0_bQ6iVkqWeVyNwA/preview" },
-                  { name: "Episode 9", link: "EP2_LINK_HERE" },
-                  { name: "Episode 10", link: "EP2_LINK_HERE" },
-                  { name: "Episode 11", link: "EP2_LINK_HERE" },
-                  { name: "Episode 12", link: "EP2_LINK_HERE" },
-            ],
-        };
 
         async function fetchMovies() {
             try {
