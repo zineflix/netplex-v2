@@ -63,17 +63,18 @@ async function fetchMoviesAndTVShows(contentType, genreId, year, sortBy, page = 
     try {
         let moviesData = [];
         let tvShowsData = [];
-        const yearQuery = year !== 'all' ? `&primary_release_year=${year}` : '';
         const genreQuery = genreId !== 'all' ? `&with_genres=${genreId}` : '';
         const sortQuery = `&sort_by=${sortBy}`;
 
         if (contentType === 'both' || contentType === 'movies') {
+            const yearQuery = year !== 'all' ? `&primary_release_year=${year}` : '';
             const moviesResponse = await fetch(`${baseUrl}/discover/movie?api_key=${apiKey}&language=en-US&page=${page}${yearQuery}${genreQuery}${sortQuery}`);
             const moviesDataResponse = await moviesResponse.json();
             moviesData = moviesDataResponse.results;
         }
 
         if (contentType === 'both' || contentType === 'tvShows') {
+            const yearQuery = year !== 'all' ? `&first_air_date_year=${year}` : '';
             const tvShowsResponse = await fetch(`${baseUrl}/discover/tv?api_key=${apiKey}&language=en-US&page=${page}${yearQuery}${genreQuery}${sortQuery}`);
             const tvShowsDataResponse = await tvShowsResponse.json();
             tvShowsData = tvShowsDataResponse.results;
@@ -94,6 +95,7 @@ async function fetchMoviesAndTVShows(contentType, genreId, year, sortBy, page = 
         console.error('Error fetching data:', error);
     }
 }
+
 
 function displayItems(items) {
     const validItems = items.filter(item => item.poster_path);
