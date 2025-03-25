@@ -1,4 +1,4 @@
-const apiKey = 'a1e72fd93ed59f56e6332813b9f8dcae'; // Your TMDB API key
+const apiKey = 'a1e72fd93ed59f56e6332813b9f8dcae';
 const baseUrl = 'https://api.themoviedb.org/3';
 const movieGrid = document.getElementById('movie-grid');
 const contentTypeSelect = document.getElementById('contentType');
@@ -7,7 +7,8 @@ const yearSelect = document.getElementById('yearSelect');
 const sortSelect = document.getElementById('sortSelect');
 const loadMoreBtn = document.getElementById('loadMoreBtn');
 
-let genres = [];
+let movieGenres = [];
+let tvGenres = [];
 let currentYear = new Date().getFullYear();
 let currentPage = 1;
 let currentContentType = 'both';
@@ -19,9 +20,10 @@ async function fetchGenres() {
     try {
         const movieGenresResponse = await fetch(`${baseUrl}/genre/movie/list?api_key=${apiKey}&language=en-US`);
         const tvGenresResponse = await fetch(`${baseUrl}/genre/tv/list?api_key=${apiKey}&language=en-US`);
-        const movieGenres = await movieGenresResponse.json();
-        const tvGenres = await tvGenresResponse.json();
-        genres = [...movieGenres.genres, ...tvGenres.genres];
+        const movieGenresData = await movieGenresResponse.json();
+        const tvGenresData = await tvGenresResponse.json();
+        movieGenres = movieGenresData.genres;
+        tvGenres = tvGenresData.genres;
         populateGenreDropdown();
     } catch (error) {
         console.error('Error fetching genres:', error);
@@ -30,7 +32,17 @@ async function fetchGenres() {
 
 function populateGenreDropdown() {
     genreSelect.innerHTML = '<option value="all">All Genres</option>';
-    genres.forEach(genre => {
+    let genresToShow = [];
+
+    if (currentContentType === 'movies') {
+        genresToShow = movieGenres;
+    } else if (currentContentType === 'tvShows') {
+        genresToShow = tvGenres;
+    } else {
+        genresToShow = [...movieGenres, ...tvGenres];
+    }
+
+    genresToShow.forEach(genre => {
         const option = document.createElement('option');
         option.value = genre.id;
         option.textContent = genre.name;
@@ -112,6 +124,10 @@ function updateAndFetch() {
     currentYearFilter = yearSelect.value;
     currentSort = sortSelect.value;
     currentPage = 1;
+
+    // Update genre dropdown based on current content type
+    populateGenreDropdown();
+
     fetchMoviesAndTVShows(currentContentType, currentGenre, currentYearFilter, currentSort, currentPage);
 }
 
@@ -130,6 +146,7 @@ window.onload = () => {
     populateYearDropdown();
     fetchMoviesAndTVShows(currentContentType, currentGenre, currentYearFilter, currentSort);
 };
+
 
 
 
