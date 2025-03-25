@@ -130,6 +130,8 @@ searchInput.addEventListener('input', (e) => {
   }
 });
 
+// Load More Button
+loadMoreButton.classList.add('load-more-button');
 
 
 
