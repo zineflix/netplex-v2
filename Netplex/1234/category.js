@@ -4,31 +4,32 @@ const movieGrid = document.getElementById('movie-grid');
 const contentTypeSelect = document.getElementById('contentType');
 const genreSelect = document.getElementById('genreSelect');
 const yearSelect = document.getElementById('yearSelect');
-const sortSelect = document.getElementById('sortSelect'); // The sort dropdown
+const sortSelect = document.getElementById('sortSelect');
+const loadMoreBtn = document.getElementById('loadMoreBtn');
 
-let genres = []; // To store the genres
-let currentYear = new Date().getFullYear(); // Get current year
+let genres = [];
+let currentYear = new Date().getFullYear();
+let currentPage = 1;
+let currentContentType = 'both';
+let currentGenre = 'all';
+let currentYearFilter = 'all';
+let currentSort = 'popularity.desc';
 
-// Fetching genres from TMDb API
 async function fetchGenres() {
     try {
         const movieGenresResponse = await fetch(`${baseUrl}/genre/movie/list?api_key=${apiKey}&language=en-US`);
         const tvGenresResponse = await fetch(`${baseUrl}/genre/tv/list?api_key=${apiKey}&language=en-US`);
-        
         const movieGenres = await movieGenresResponse.json();
         const tvGenres = await tvGenresResponse.json();
-        
-        genres = [...movieGenres.genres, ...tvGenres.genres]; // Combine genres from movies and TV shows
-
-        populateGenreDropdown(); // Populate genre dropdown after fetching genres
+        genres = [...movieGenres.genres, ...tvGenres.genres];
+        populateGenreDropdown();
     } catch (error) {
         console.error('Error fetching genres:', error);
     }
 }
 
-// Populate the genre dropdown
 function populateGenreDropdown() {
-    genreSelect.innerHTML = '<option value="all">All Genres</option>'; // Default option
+    genreSelect.innerHTML = '<option value="all">All Genres</option>';
     genres.forEach(genre => {
         const option = document.createElement('option');
         option.value = genre.id;
@@ -37,7 +38,6 @@ function populateGenreDropdown() {
     });
 }
 
-// Populate the year dropdown with years from 1900 to the current year
 function populateYearDropdown() {
     for (let year = currentYear; year >= 1900; year--) {
         const option = document.createElement('option');
@@ -47,16 +47,7 @@ function populateYearDropdown() {
     }
 }
 
-// Fetching movies and TV shows with genre, year filter, and sorting
-let currentPage = 1;
-let currentContentType = 'both';
-let currentGenre = 'all';
-let currentYear = 'all';
-let currentSort = 'popularity.desc';
-
-const loadMoreBtn = document.getElementById('loadMoreBtn');
-
-async function fetchMoviesAndTVShows(contentType = 'both', genreId = 'all', year = 'all', sortBy = 'popularity.desc', page = 1, append = false) {
+async function fetchMoviesAndTVShows(contentType, genreId, year, sortBy, page = 1, append = false) {
     try {
         let moviesData = [];
         let tvShowsData = [];
@@ -81,16 +72,11 @@ async function fetchMoviesAndTVShows(contentType = 'both', genreId = 'all', year
         if (append) {
             appendItems(combinedData);
         } else {
-            movieGrid.innerHTML = ''; 
+            movieGrid.innerHTML = '';
             displayItems(combinedData);
         }
 
-        // Show or hide Load More button
-        if (combinedData.length > 0) {
-            loadMoreBtn.style.display = 'block';
-        } else {
-            loadMoreBtn.style.display = 'none';
-        }
+        loadMoreBtn.style.display = combinedData.length > 0 ? 'block' : 'none';
 
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -99,12 +85,11 @@ async function fetchMoviesAndTVShows(contentType = 'both', genreId = 'all', year
 
 function displayItems(items) {
     const validItems = items.filter(item => item.poster_path);
-
     validItems.forEach(item => {
         const card = document.createElement('div');
         card.classList.add('card');
         const imgUrl = `https://image.tmdb.org/t/p/w500${item.poster_path}`;
-        const detailUrl = item.title 
+        const detailUrl = item.title
             ? `movie-details.html?movie_id=${item.id}`
             : `tvshows-details.html?id=${item.id}`;
 
@@ -118,36 +103,32 @@ function displayItems(items) {
 }
 
 function appendItems(items) {
-    displayItems(items); // Just call displayItems but without clearing the grid
+    displayItems(items);
 }
 
-// Event listeners for filters
 function updateAndFetch() {
     currentContentType = contentTypeSelect.value;
     currentGenre = genreSelect.value;
-    currentYear = yearSelect.value;
+    currentYearFilter = yearSelect.value;
     currentSort = sortSelect.value;
     currentPage = 1;
-    fetchMoviesAndTVShows(currentContentType, currentGenre, currentYear, currentSort, currentPage);
+    fetchMoviesAndTVShows(currentContentType, currentGenre, currentYearFilter, currentSort, currentPage);
 }
 
-// Load more button click event
-loadMoreBtn.addEventListener('click', () => {
-    currentPage++;
-    fetchMoviesAndTVShows(currentContentType, currentGenre, currentYear, currentSort, currentPage, true);
-});
-
-// Update event handlers
 contentTypeSelect.addEventListener('change', updateAndFetch);
 genreSelect.addEventListener('change', updateAndFetch);
 yearSelect.addEventListener('change', updateAndFetch);
 sortSelect.addEventListener('change', updateAndFetch);
 
-// Initial call on page load
+loadMoreBtn.addEventListener('click', () => {
+    currentPage++;
+    fetchMoviesAndTVShows(currentContentType, currentGenre, currentYearFilter, currentSort, currentPage, true);
+});
+
 window.onload = () => {
     fetchGenres();
     populateYearDropdown();
-    fetchMoviesAndTVShows();
+    fetchMoviesAndTVShows(currentContentType, currentGenre, currentYearFilter, currentSort);
 };
 
 
