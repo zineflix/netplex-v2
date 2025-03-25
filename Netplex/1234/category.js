@@ -120,7 +120,11 @@ function appendItems(items) {
 }
 
 function updateAndFetch() {
-    currentContentType = contentTypeSelect.value;
+    currentYearFilter = yearSelect.value;
+    currentSort = sortSelect.value;
+    currentPage = 1;
+    fetchMoviesAndTVShows(currentContentType, currentGenre, currentYearFilter, currentSort, currentPage);
+}
 
     // Repopulate genres based on selected content type
     populateGenreDropdown();
@@ -137,10 +141,20 @@ function updateAndFetch() {
 }
 
 
-contentTypeSelect.addEventListener('change', updateAndFetch);
-genreSelect.addEventListener('change', updateAndFetch);
+contentTypeSelect.addEventListener('change', () => {
+    currentContentType = contentTypeSelect.value;
+    populateGenreDropdown(); // Refresh the genre options
+    currentGenre = 'all';    // Reset genre filter
+    genreSelect.value = 'all';
+    updateAndFetch();
+});
+genreSelect.addEventListener('change', () => {
+    currentGenre = genreSelect.value;
+    updateAndFetch();
+});
 yearSelect.addEventListener('change', updateAndFetch);
 sortSelect.addEventListener('change', updateAndFetch);
+
 
 loadMoreBtn.addEventListener('click', () => {
     currentPage++;
