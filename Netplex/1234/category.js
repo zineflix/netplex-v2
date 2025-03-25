@@ -50,6 +50,7 @@ function populateGenreDropdown() {
     });
 }
 
+
 function populateYearDropdown() {
     for (let year = currentYear; year >= 1900; year--) {
         const option = document.createElement('option');
@@ -120,16 +121,21 @@ function appendItems(items) {
 
 function updateAndFetch() {
     currentContentType = contentTypeSelect.value;
-    currentGenre = genreSelect.value;
+
+    // Repopulate genres based on selected content type
+    populateGenreDropdown();
+
+    // Reset genre to 'all' when content type changes
+    currentGenre = 'all';
+    genreSelect.value = 'all';
+
     currentYearFilter = yearSelect.value;
     currentSort = sortSelect.value;
     currentPage = 1;
 
-    // Update genre dropdown based on current content type
-    populateGenreDropdown();
-
     fetchMoviesAndTVShows(currentContentType, currentGenre, currentYearFilter, currentSort, currentPage);
 }
+
 
 contentTypeSelect.addEventListener('change', updateAndFetch);
 genreSelect.addEventListener('change', updateAndFetch);
