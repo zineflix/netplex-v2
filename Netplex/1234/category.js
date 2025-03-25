@@ -50,7 +50,6 @@ function populateGenreDropdown() {
     });
 }
 
-
 function populateYearDropdown() {
     for (let year = currentYear; year >= 1900; year--) {
         const option = document.createElement('option');
@@ -126,36 +125,26 @@ function updateAndFetch() {
     fetchMoviesAndTVShows(currentContentType, currentGenre, currentYearFilter, currentSort, currentPage);
 }
 
-    // Repopulate genres based on selected content type
-    populateGenreDropdown();
-
-    // Reset genre to 'all' when content type changes
-    currentGenre = 'all';
-    genreSelect.value = 'all';
-
-    currentYearFilter = yearSelect.value;
-    currentSort = sortSelect.value;
-    currentPage = 1;
-
-    fetchMoviesAndTVShows(currentContentType, currentGenre, currentYearFilter, currentSort, currentPage);
-}
-
-
+// Content type changes — refresh genres and fetch
 contentTypeSelect.addEventListener('change', () => {
     currentContentType = contentTypeSelect.value;
-    populateGenreDropdown(); // Refresh the genre options
-    currentGenre = 'all';    // Reset genre filter
+    populateGenreDropdown();
+    currentGenre = 'all';
     genreSelect.value = 'all';
     updateAndFetch();
 });
+
+// Genre changes — update currentGenre and fetch
 genreSelect.addEventListener('change', () => {
     currentGenre = genreSelect.value;
     updateAndFetch();
 });
+
+// Year and sort changes
 yearSelect.addEventListener('change', updateAndFetch);
 sortSelect.addEventListener('change', updateAndFetch);
 
-
+// Load more button
 loadMoreBtn.addEventListener('click', () => {
     currentPage++;
     fetchMoviesAndTVShows(currentContentType, currentGenre, currentYearFilter, currentSort, currentPage, true);
@@ -166,6 +155,7 @@ window.onload = () => {
     populateYearDropdown();
     fetchMoviesAndTVShows(currentContentType, currentGenre, currentYearFilter, currentSort);
 };
+
 
 
 
