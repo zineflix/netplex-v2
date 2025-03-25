@@ -361,7 +361,7 @@ button {
   display: block;
   margin: 20px auto;
   padding: 12px 30px;
-  background-color: #ff4747;
+  background-color: #0275a6;
   color: #fff;
   border: none;
   border-radius: 30px;
@@ -372,7 +372,7 @@ button {
 }
 
 .load-more-button:hover {
-  background-color: #ff1c1c;
+  background-color: #0275a6;
   transform: scale(1.05);
 }
 
