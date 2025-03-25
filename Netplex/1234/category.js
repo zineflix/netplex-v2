@@ -48,117 +48,108 @@ function populateYearDropdown() {
 }
 
 // Fetching movies and TV shows with genre, year filter, and sorting
-async function fetchMoviesAndTVShows(contentType = 'both', genreId = 'all', year = 'all', sortBy = 'popularity.desc') {
+let currentPage = 1;
+let currentContentType = 'both';
+let currentGenre = 'all';
+let currentYear = 'all';
+let currentSort = 'popularity.desc';
+
+const loadMoreBtn = document.getElementById('loadMoreBtn');
+
+async function fetchMoviesAndTVShows(contentType = 'both', genreId = 'all', year = 'all', sortBy = 'popularity.desc', page = 1, append = false) {
     try {
         let moviesData = [];
         let tvShowsData = [];
-        let yearQuery = year !== 'all' ? `&primary_release_year=${year}` : ''; // Add year filter if selected
-        const genreQuery = genreId !== 'all' ? `&with_genres=${genreId}` : ''; // Add genre filter if selected
-        const sortQuery = `&sort_by=${sortBy}`; // Add sorting query
+        const yearQuery = year !== 'all' ? `&primary_release_year=${year}` : '';
+        const genreQuery = genreId !== 'all' ? `&with_genres=${genreId}` : '';
+        const sortQuery = `&sort_by=${sortBy}`;
 
-        // Fetch movies if contentType is 'both' or 'movies'
         if (contentType === 'both' || contentType === 'movies') {
-            const moviesResponse = await fetch(`${baseUrl}/discover/movie?api_key=${apiKey}&language=en-US&page=1${yearQuery}${genreQuery}${sortQuery}`);
+            const moviesResponse = await fetch(`${baseUrl}/discover/movie?api_key=${apiKey}&language=en-US&page=${page}${yearQuery}${genreQuery}${sortQuery}`);
             const moviesDataResponse = await moviesResponse.json();
             moviesData = moviesDataResponse.results;
         }
 
-        // Fetch TV shows if contentType is 'both' or 'tvShows'
         if (contentType === 'both' || contentType === 'tvShows') {
-            const tvShowsResponse = await fetch(`${baseUrl}/discover/tv?api_key=${apiKey}&language=en-US&page=1${yearQuery}${genreQuery}${sortQuery}`);
+            const tvShowsResponse = await fetch(`${baseUrl}/discover/tv?api_key=${apiKey}&language=en-US&page=${page}${yearQuery}${genreQuery}${sortQuery}`);
             const tvShowsDataResponse = await tvShowsResponse.json();
             tvShowsData = tvShowsDataResponse.results;
         }
 
-        // Combine the fetched data
         const combinedData = [...moviesData, ...tvShowsData];
-        displayItems(combinedData);
+
+        if (append) {
+            appendItems(combinedData);
+        } else {
+            movieGrid.innerHTML = ''; 
+            displayItems(combinedData);
+        }
+
+        // Show or hide Load More button
+        if (combinedData.length > 0) {
+            loadMoreBtn.style.display = 'block';
+        } else {
+            loadMoreBtn.style.display = 'none';
+        }
+
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 }
 
 function displayItems(items) {
-    movieGrid.innerHTML = ''; // Clear the grid before displaying new items
-
-    // Filter items to only include those that have a valid poster
     const validItems = items.filter(item => item.poster_path);
 
     validItems.forEach(item => {
         const card = document.createElement('div');
         card.classList.add('card');
-        
         const imgUrl = `https://image.tmdb.org/t/p/w500${item.poster_path}`;
-        let detailUrl = '';
+        const detailUrl = item.title 
+            ? `movie-details.html?movie_id=${item.id}`
+            : `tvshows-details.html?id=${item.id}`;
 
-        // Check if it's a movie or TV show and set the appropriate detail URL
-        if (item.title) {
-            detailUrl = `movie-details.html?movie_id=${item.id}`; // Movie details page
-        } else if (item.name) {
-            detailUrl = `tvshows-details.html?id=${item.id}`; // TV show details page
-        }
-
-        // Wrap the image with a link that directs to the detail page
         card.innerHTML = `
             <a href="${detailUrl}">
                 <img src="${imgUrl}" alt="${item.title || item.name}">
             </a>
-            <div class="info">
-                <!-- You can add more information here like title or rating if desired -->
-            </div>
         `;
-
         movieGrid.appendChild(card);
     });
-
-    // If no valid items are found, show a message indicating that no results are available
-    if (validItems.length === 0) {
-        movieGrid.innerHTML = '<p>No movies or TV shows found with a poster image.</p>';
-    }
 }
 
-// Handle content type change
-function onContentTypeChange() {
-    const selectedContentType = contentTypeSelect.value;
-    const selectedGenre = genreSelect.value;
-    const selectedYear = yearSelect.value;
-    const selectedSort = sortSelect.value;
-    fetchMoviesAndTVShows(selectedContentType, selectedGenre, selectedYear, selectedSort);
+function appendItems(items) {
+    displayItems(items); // Just call displayItems but without clearing the grid
 }
 
-// Handle genre change
-function onGenreChange() {
-    const selectedContentType = contentTypeSelect.value;
-    const selectedGenre = genreSelect.value;
-    const selectedYear = yearSelect.value;
-    const selectedSort = sortSelect.value;
-    fetchMoviesAndTVShows(selectedContentType, selectedGenre, selectedYear, selectedSort);
+// Event listeners for filters
+function updateAndFetch() {
+    currentContentType = contentTypeSelect.value;
+    currentGenre = genreSelect.value;
+    currentYear = yearSelect.value;
+    currentSort = sortSelect.value;
+    currentPage = 1;
+    fetchMoviesAndTVShows(currentContentType, currentGenre, currentYear, currentSort, currentPage);
 }
 
-// Handle year change
-function onYearChange() {
-    const selectedContentType = contentTypeSelect.value;
-    const selectedGenre = genreSelect.value;
-    const selectedYear = yearSelect.value;
-    const selectedSort = sortSelect.value;
-    fetchMoviesAndTVShows(selectedContentType, selectedGenre, selectedYear, selectedSort);
-}
+// Load more button click event
+loadMoreBtn.addEventListener('click', () => {
+    currentPage++;
+    fetchMoviesAndTVShows(currentContentType, currentGenre, currentYear, currentSort, currentPage, true);
+});
 
-// Handle sort change
-function onSortChange() {
-    const selectedContentType = contentTypeSelect.value;
-    const selectedGenre = genreSelect.value;
-    const selectedYear = yearSelect.value;
-    const selectedSort = sortSelect.value;
-    fetchMoviesAndTVShows(selectedContentType, selectedGenre, selectedYear, selectedSort);
-}
+// Update event handlers
+contentTypeSelect.addEventListener('change', updateAndFetch);
+genreSelect.addEventListener('change', updateAndFetch);
+yearSelect.addEventListener('change', updateAndFetch);
+sortSelect.addEventListener('change', updateAndFetch);
 
-// Call the fetch functions when the page loads
+// Initial call on page load
 window.onload = () => {
-    fetchGenres(); // Fetch genres first
-    populateYearDropdown(); // Populate the year dropdown
-    fetchMoviesAndTVShows('both', 'all', 'all', 'popularity.desc'); // Fetch both Movies and TV Shows initially, sorted by popularity
+    fetchGenres();
+    populateYearDropdown();
+    fetchMoviesAndTVShows();
 };
+
 
 
 /* FOR RESPONSIVE NAVIGATION BAR START */
