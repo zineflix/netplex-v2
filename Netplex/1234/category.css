@@ -463,7 +463,7 @@ h1 {
     display: block;
     margin: 30px auto;
     padding: 12px 30px;
-    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    background: #0296cc;
     border: none;
     color: white;
     font-size: 16px;
@@ -476,7 +476,7 @@ h1 {
 
 #loadMoreBtn:hover {
     transform: scale(1.05);
-    background: linear-gradient(135deg, #ff4b2b, #ff416c);
+    background: #0296cc;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 /* Load More Button End */
