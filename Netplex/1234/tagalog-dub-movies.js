@@ -168,9 +168,9 @@ const TV_EPISODES = {
             "https://drive.google.com/file/d/1MDbrNZz8N_Q1PBKxRbnZ4pGSWgERHP8k/preview",
             "https://drive.google.com/file/d/1sFFrEIApC25AzfjnXSDDV05K-W1-7Uoz/preview",
             "https://drive.google.com/file/d/12YOGBdgVYboi17jISnF4sHO4UvH97Svh/preview",
-            "link",
+            "https://drive.google.com/file/d/149mnHaRLqBp3Xi28FcxrPV9BL5k2qqQo/preview",
             "https://drive.google.com/file/d/1aC6lA84DiI3uoqPLZK8GRuQfLDhORPF9/preview",
-            "link",
+            "https://drive.google.com/file/d/1dAA0BrlHeS4aHqY0Yq1tkSJblMVyMgo5/preview",
             "https://drive.google.com/file/d/1B4jqZOOqQ-fIr1P91arsIa_dNRWXdT9L/preview",
         ],
         titles: [
