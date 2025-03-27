@@ -510,7 +510,7 @@ document.addEventListener('DOMContentLoaded', initArrowNavigation);
 const closeButton = document.getElementById('close-button');
 
 closeButton.addEventListener('click', () => {
-    window.location.href = 'tvshows_page.html'; // Redirects to the tvshows-details page
+    window.location.href = 'tv-show.html'; // Redirects to the tvshows-details page
 });
 
 window.addEventListener("load", function() {
