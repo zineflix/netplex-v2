@@ -24,13 +24,13 @@
     <meta property="og:image" content="img/Netplex.png">
     <meta property="og:url" content="https://netplex.site">
     <meta property="og:type" content="website">
-    <link rel="stylesheet" href="1234/style.css">
-    <link rel="preload" href="1234/style.css" as="style">
-    <link rel="preload" href="1234/movie.js" as="script">
+    <link rel="stylesheet" href="1234/home.css">
+    <link rel="preload" href="1234/home.css" as="style">
+    <link rel="preload" href="1234/home.js" as="script">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="canonical" href="https://netplex.site">
-    <script defer src="1234/movie.js"></script>
+    <script defer src="1234/home.js"></script>
     <script src="security.js"></script>
     
     <!-- Google Adsense Start -->
@@ -39,18 +39,21 @@
     <!-- Google Adsense End -->
 
     <!-- PopAds Start -->
-    <!-- NO ADS
+    <script type="text/javascript" data-cfasync="false">
+/*<![CDATA[/* */
+(function(){var u=window,e="f5c59d4630999a54c1e8443b661c3330",s=[["siteId",316*378-5*164+70+5061965],["minBid",0],["popundersPerIP","8"],["delayBetween",10800],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],b=["d3d3LnByZW1pdW12ZXJ0aXNpbmcuY29tL3dwUS9janNmYWNlLm1pbi5qcw==","ZDJqMDQyY2oxNDIxd2kuY2xvdWRmcm9udC5uZXQvcS9qbmF1WkkvZ2R5bmFtaWNzLm1pbi5jc3M=","d3d3LmVxZ21ubXFsei5jb20vdS96anNmYWNlLm1pbi5qcw==","d3d3LmF2ZWd1aWpkd3AuY29tL0JOaWIvWEpiL2xkeW5hbWljcy5taW4uY3Nz"],g=-1,l,n,h=function(){clearTimeout(n);g++;if(b[g]&&!(1767662252000<(new Date).getTime()&&1<g)){l=u.document.createElement("script");l.type="text/javascript";l.async=!0;var a=u.document.getElementsByTagName("script")[0];l.src="https://"+atob(b[g]);l.crossOrigin="anonymous";l.onerror=h;l.onload=function(){clearTimeout(n);u[e.slice(0,16)+e.slice(0,16)]||h()};n=setTimeout(h,5E3);a.parentNode.insertBefore(l,a)}};if(!u[e]){try{Object.freeze(u[e]=s)}catch(e){}h()}})();
+/*]]>/* */
+</script>
     <!-- PopAds End -->
     
-</head> 
+</head>
     
 <body>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQKKBS33"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-  
-
+    
 <!-- FOR RESPONSIVE NAVIGATION BAR START -->  
 <nav>
     <!-- Logo -->
@@ -80,186 +83,101 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
 </nav>  
 <!-- FOR RESPONSIVE NAVIGATION BAR END -->
-    
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const menuBtn = document.getElementById("menu-btn");
-    const menu = document.getElementById("menu");
 
-    menuBtn.addEventListener("click", function () {
-        menu.classList.toggle("active");
-    });
-});
-    // For Dropdown More Button Function Start
-document.addEventListener("DOMContentLoaded", function () {
-    const dropdown = document.querySelector(".dropdown");
-
-    if (dropdown) {
-        dropdown.addEventListener("click", function (event) {
-            event.stopPropagation(); // Prevents the document click from firing immediately
-            this.classList.toggle("active");
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener("click", function (event) {
-            if (!dropdown.contains(event.target) && dropdown.classList.contains("active")) {
-                dropdown.classList.remove("active");
-            }
-        });
-    }
-});
-
-        // For Dropdown More Button Function End
-</script>
-
-
-    
-<!-- For Banner -->    
-  <header class="banner">
-        <div class="banner__contents">
-            <h1 class="banner__title">Loading...</h1> <!-- This will be replaced dynamically -->
-            <h1 class="banner__description">
-                Loading description...
-            </h1> <!-- This will be replaced dynamically -->
+    <!-- Banner -->
+    <header class="banner">
+        <div class="banner-content">
+            <h1 id="banner-title"></h1>
+            <p id="banner-genre"></p>
+            <p1 id="banner-description"></p1>
         </div>
+      
+    <!-- Floating Message -->
+  <div id="floating-message">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    <h2>Disclaimer!</h2><br>
+    <h>
+        This site does not host any files on its server. All content displayed on this site is provided by third-party sites and services. We don't have control over any content or services provided by their sites. If you have any questions or concerns about the content hosted by third-party sites, please contact the site owner directly!
+    </h>
+    <button onclick="closeMessage()">OK</button>      
+</div>  
+    </header>
+    
+    <!-- Popular Movies -->
+    <section class="section">
+        <h2>Popular Movies</h2>
+        <div class="scroll-container">
+            <button class="scroll-left" onclick="scrollLeft('popular-movies')"><i class="fas fa-chevron-left"></i></button>
+            <div class="media-row" id="popular-movies"></div>
+            <button class="scroll-right" onclick="scrollRight('popular-movies')"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+  
+    <!-- Trending Now -->
+    <section class="section">
+        <h2>Teending Now</h2>
+        <div class="scroll-container">
+            <button class="scroll-left" onclick="scrollLeft('trending-now')"><i class="fas fa-chevron-left"></i></button>
+            <div class="media-row" id="trending-now"></div>
+            <button class="scroll-right" onclick="scrollRight('trending-now')"><i class="fas fa-chevron-right"></i></button>
         
+    </section>
+  
+    <!-- Top Rated -->
+    <section class="section">
+        <h2>Top Rated</h2>
+        <div class="scroll-container">
+            <button class="scroll-left" onclick="scrollLeft('top-rated')"><i class="fas fa-chevron-left"></i></button>
+            <div class="media-row" id="top-rated"></div>
+            <button class="scroll-right" onclick="scrollRight('top-rated')"><i class="fas fa-chevron-right"></i></button>
+    </section>
 
-        <div class="banner--fadeBottom"></div>
-</header> 
+    <!-- Action Movies -->
+    <section class="section">
+        <h2>Action Movies</h2>
+            <div class="scroll-container">
+            <button class="scroll-left" onclick="scrollLeft('action-movies')"><i class="fas fa-chevron-left"></i></button>
+            <div class="media-row" id="action-movies"></div>
+            <button class="scroll-right" onclick="scrollRight('action-movies')"><i class="fas fa-chevron-right"></i></button>
+    </section>
 
+    <!-- Comedy Movies -->
+    <section class="section">
+        <h2>Comedy Movies</h2>
+            <div class="scroll-container">
+            <button class="scroll-left" onclick="scrollLeft('comedy-movies')"><i class="fas fa-chevron-left"></i></button>
+            <div class="media-row" id="comedy-movies"></div>
+            <button class="scroll-right" onclick="scrollRight('comedy-movies')"><i class="fas fa-chevron-right"></i></button>
+    </section>
+     
+    <!-- Horror Movies -->
+    <section class="section">
+        <h2>Horror Movies</h2>
+            <div class="scroll-container">
+            <button class="scroll-left" onclick="scrollLeft('horror-movies')"><i class="fas fa-chevron-left"></i></button>
+            <div class="media-row" id="horror-movies"></div>
+            <button class="scroll-right" onclick="scrollRight('horror-movies')"><i class="fas fa-chevron-right"></i></button>
+    </section>
+     
+    <!-- Romance Movies -->
+    <section class="section">
+        <h2>Romance Movies</h2>
+            <div class="scroll-container">
+            <button class="scroll-left" onclick="scrollLeft('romance-movies')"><i class="fas fa-chevron-left"></i></button>
+            <div class="media-row" id="romance-movies"></div>
+            <button class="scroll-right" onclick="scrollRight('romance-movies')"><i class="fas fa-chevron-right"></i></button>
+    </section>
+     
+    <!-- Animation Movies -->
+    <section class="section">
+        <h2>Animation Movies</h2>
+            <div class="scroll-container">
+            <button class="scroll-left" onclick="scrollLeft('animation-movies')"><i class="fas fa-chevron-left"></i></button>
+            <div class="media-row" id="animation-movies"></div>
+            <button class="scroll-right" onclick="scrollRight('animation-movies')"><i class="fas fa-chevron-right"></i></button>
+    </section>
 
-<!-- For Movie Poster -->    
-      <div class="row">
-        <h4>POPULAR<span class="movies">M O V I E S</span></h4> 
-            <div class="row__posters" id="popularMovies">
-            <!-- Movie posters will be added here dynamically -->
-          </div>
-          <div class="arrow-buttons">
-            <button class="arrow-button prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="arrow-button next"><i class="fas fa-chevron-right"></i></button>
-          </div>
-        </div>       
-
-      <!-- Trending Now -->
-      <div class="row">
-          <h2>Trending Now</h2>
-          <div class="row__posters" id="trendingNow">
-              <!-- Movie posters will be populated here -->
-          </div>
-          <div class="arrow-buttons">
-            <button class="arrow-button prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="arrow-button next"><i class="fas fa-chevron-right"></i></button>
-          </div>
-        </div>    
-
-      <!-- Top Rated -->
-      <div class="row">
-          <h2>Top Rated</h2>
-          <div class="row__posters" id="topRated">
-              <!-- Movie posters will be populated here -->
-          </div>
-          <div class="arrow-buttons">
-            <button class="arrow-button prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="arrow-button next"><i class="fas fa-chevron-right"></i></button>
-          </div>
-        </div>    
-
-      <!-- Action Movies -->
-      <div class="row">
-          <h2>Action Movies</h2>
-          <div class="row__posters" id="actionMovies">
-              <!-- Movie posters will be populated here -->
-        </div>
-        <div class="arrow-buttons">
-          <button class="arrow-button prev"><i class="fas fa-chevron-left"></i></button>
-          <button class="arrow-button next"><i class="fas fa-chevron-right"></i></button>
-        </div>
-      </div>   
-
-      <!-- Comedy Movies -->
-      <div class="row">
-          <h2>Comedy Movies</h2>
-          <div class="row__posters" id="comedyMovies">
-              <!-- Movie posters will be populated here -->
-          </div>
-          <div class="arrow-buttons">
-            <button class="arrow-button prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="arrow-button next"><i class="fas fa-chevron-right"></i></button>
-          </div>
-        </div>    
-
-      <!-- Horror Movies -->
-      <div class="row">
-          <h2>Horror Movies</h2>
-          <div class="row__posters" id="horrorMovies">
-              <!-- Movie posters will be populated here -->
-          </div>
-          <div class="arrow-buttons">
-            <button class="arrow-button prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="arrow-button next"><i class="fas fa-chevron-right"></i></button>
-          </div>
-        </div>    
-
-      <!-- Romance Movies -->
-      <div class="row">
-          <h2>Romance Movies</h2>
-          <div class="row__posters" id="romanceMovies">
-              <!-- Movie posters will be populated here -->
-          </div>
-          <div class="arrow-buttons">
-            <button class="arrow-button prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="arrow-button next"><i class="fas fa-chevron-right"></i></button>
-          </div>
-        </div>    
-
-      <!-- Documentaries -->
-      <div class="row">
-          <h2>Animation</h2>
-          <div class="row__posters" id="animation">
-              <!-- Movie posters will be populated here -->
-          </div>
-          <div class="arrow-buttons">
-            <button class="arrow-button prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="arrow-button next"><i class="fas fa-chevron-right"></i></button>
-          </div>
-        </div>    
-
-
-<!--For Navigation Header Mobile-->    
-
-    
-    
-<!-- For Other Content-->    
-<script>
-      // Function to close the message and save the state to localStorage
-      function closeMessage() {
-          document.getElementById("floating-message").style.display = "none"; // Hide the message
-          const currentTime = new Date().getTime(); // Get the current timestamp in milliseconds
-          localStorage.setItem("messageClosed", "true"); // Save "true" to localStorage
-          localStorage.setItem("messageClosedTime", currentTime); // Save the timestamp of when the message was closed
-      }
-
-      // Check if the message has already been closed and if 30 minutes have passed
-      window.onload = function() {
-          const messageClosed = localStorage.getItem("messageClosed");
-          const closedTime = localStorage.getItem("messageClosedTime");
-
-          if (messageClosed === "true") {
-              const currentTime = new Date().getTime();
-              const timeDifference = currentTime - closedTime; // Get the difference in milliseconds
-
-              // If more than 30 minutes (1800000 ms) have passed, show the message again
-              if (timeDifference >= 1800000) {
-                  document.getElementById("floating-message").style.display = "block";
-                  localStorage.removeItem("messageClosed"); // Reset the messageClosed flag
-                  localStorage.removeItem("messageClosedTime"); // Reset the timestamp
-              } else {
-                  document.getElementById("floating-message").style.display = "none"; // Hide the message if less than 30 minutes have passed
-              }
-          }
-      }
-</script>
-
+     
 
 <!--For Chat With Us Function Start-->
     <div id="chat-container">
@@ -323,9 +241,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
+
+
 <!--For Chat With Us Function End-->
     
-  
 <!-- Footer Start -->  
 <footer class="site-footer">
   <p>© 2025 Netplex.site — All Rights Reserved.</p>
@@ -336,11 +255,8 @@ document.addEventListener("DOMContentLoaded", function () {
     <a href="disclaimer.html">Disclaimer</a>
   </div>
 </footer>
-<!-- Footer End -->  
+<!-- Footer End -->    
 </body>
-
+  
 </html>
-
-
-
-
+     
