@@ -39,17 +39,21 @@
     <!-- Google Adsense End -->
 
     <!-- PopAds Start -->
-    <!-- NO ADS
+    <script type="text/javascript" data-cfasync="false">
+/*<![CDATA[/* */
+(function(){var u=window,e="f5c59d4630999a54c1e8443b661c3330",s=[["siteId",316*378-5*164+70+5061965],["minBid",0],["popundersPerIP","8"],["delayBetween",10800],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],b=["d3d3LnByZW1pdW12ZXJ0aXNpbmcuY29tL3dwUS9janNmYWNlLm1pbi5qcw==","ZDJqMDQyY2oxNDIxd2kuY2xvdWRmcm9udC5uZXQvcS9qbmF1WkkvZ2R5bmFtaWNzLm1pbi5jc3M=","d3d3LmVxZ21ubXFsei5jb20vdS96anNmYWNlLm1pbi5qcw==","d3d3LmF2ZWd1aWpkd3AuY29tL0JOaWIvWEpiL2xkeW5hbWljcy5taW4uY3Nz"],g=-1,l,n,h=function(){clearTimeout(n);g++;if(b[g]&&!(1767662252000<(new Date).getTime()&&1<g)){l=u.document.createElement("script");l.type="text/javascript";l.async=!0;var a=u.document.getElementsByTagName("script")[0];l.src="https://"+atob(b[g]);l.crossOrigin="anonymous";l.onerror=h;l.onload=function(){clearTimeout(n);u[e.slice(0,16)+e.slice(0,16)]||h()};n=setTimeout(h,5E3);a.parentNode.insertBefore(l,a)}};if(!u[e]){try{Object.freeze(u[e]=s)}catch(e){}h()}})();
+/*]]>/* */
+</script>
     <!-- PopAds End -->
     
-</head>      
+</head>
     
 <body>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQKKBS33"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-
+    
 <!-- FOR RESPONSIVE NAVIGATION BAR START -->  
 <nav>
     <!-- Logo -->
@@ -62,7 +66,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <ul id="menu">
       <li><a href="index.html">HOME <i class="fa-solid fa-house" style="color: #0296cc;"></i></a></li>
       <li><a href="movies.html">MOVIES <i class="fa-solid fa-film" style="color: #0296cc;"></i></a></li>
-      <li><a href="tv-show.html">TV-SHOWS <i class="fa-solid fa-tv" style="color: #0296cc;"></i></a></li>
+      <li><a href="tvshows_page.html">TV-SHOWS <i class="fa-solid fa-tv" style="color: #0296cc;"></i></a></li>
       <li><a href="category.html">CATEGORY <i class="fa-solid fa-layer-group" style="color: #0296cc;"></i></a></li>
       <li><a href="search.html">SEARCH <i class="fa-solid fa-magnifying-glass" style="color: #0296cc;"></i></a></li>
       <li><a href="/download/Netplex.apk">DOWNLOAD APP <i class="fa-solid fa-download" style="color: #0296cc;"></i></a></li>
@@ -70,156 +74,110 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <button class="dropbtn">MORE <i class="fa-solid fa-square-caret-down" style="color: #0296cc;"></i></button>
         <ul class="dropdown-content">
             <li><a href="tagalog-dub-movies.html">Tagalog Dub Movies</a></li>
-            <li><a href="tv-live-streaming.html">Live TV Streaming</a></li> 
+            <li><a href="tv-live-streaming.html">Live TV Streaming</a></li>
             <li><a href="about-us.html">About Us</a></li>
-            <li><a href="contact-us.html">Contact Us</a></li>     
+            <li><a href="contact-us.html">Contact Us</a></li>
         </ul>
     </li>
     </ul>
     
 </nav>  
-<!-- FOR RESPONSIVE NAVIGATION BAR END --> 
-    
-<!-- For Banner -->
-<header class="banner">
-        <div class="banner__contents">
-            <h1 class="banner__title">Loading...</h1>
-            <h1 class="banner__description">Loading description...</h1>
-        </div>
-        <!-- Banner Background Image will be updated by JS -->
-        <div class="banner--fadeBottom"></div>
-</header>    
+<!-- FOR RESPONSIVE NAVIGATION BAR END -->
 
+    <!-- Banner -->
+    <header class="banner">
+        <div class="banner-content">
+            <h1 id="banner-title"></h1>
+            <p id="banner-genre"></p>
+            <p1 id="banner-description"></p1>
+        </div>
       
-<!-- For Tv Shows Poster -->
-    <!-- Popular TV Shows Section -->
-    <div class="row">
-        <h4>POPULAR<span class="tv-shows">T V  S H O W S</span></h4> 
-        <div class="row__posters" id="popularTVShows">
-            <!-- Trending TV show posters will be added dynamically -->
-        </div>
-        <div class="arrow-buttons">
-            <button class="arrow-button prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="arrow-button next"><i class="fas fa-chevron-right"></i></button>
-        </div>
-    </div>
-
-        <!-- Trending TV Shows Section -->
-        <div class="row">
-            <h2>Trending TV Shows</h2>
-            <div class="row__posters" id="trendingTVShows">
-                <!-- Popular TV show posters will be added dynamically -->
-            </div>
-            <div class="arrow-buttons">
-                <button class="arrow-button prev"><i class="fas fa-chevron-left"></i></button>
-                <button class="arrow-button next"><i class="fas fa-chevron-right"></i></button>
-        </div>
-    </div>
+    <!-- Floating Message -->
+  <div id="floating-message">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    <h2>Disclaimer!</h2><br>
+    <h>
+        This site does not host any files on its server. All content displayed on this site is provided by third-party sites and services. We don't have control over any content or services provided by their sites. If you have any questions or concerns about the content hosted by third-party sites, please contact the site owner directly!
+    </h>
+    <button onclick="closeMessage()">OK</button>      
+</div>  
+    </header>
     
-    <!-- Top Rated TV Shows Section -->
-    <div class="row">
-        <h2>Top Rated TV Shows</h2>
-        <div class="row__posters" id="topRatedTVShows">
-            <!-- Top rated TV show posters will be added dynamically -->
+    <!-- Popular Tv Series -->
+    <section class="section">
+        <h2>Popular Tv Series</h2>
+        <div class="scroll-container">
+            <button class="scroll-left" onclick="scrollLeft('popular-tv-series')"><i class="fas fa-chevron-left"></i></button>
+            <div class="media-row" id="popular-tv-series"></div>
+            <button class="scroll-right" onclick="scrollRight('popular-tv-series')"><i class="fas fa-chevron-right"></i></button>
         </div>
-        <div class="arrow-buttons">
-            <button class="arrow-button prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="arrow-button next"><i class="fas fa-chevron-right"></i></button>
-        </div>
-    </div>
-
-    <!-- Mystery TV Shows Section -->
-    <div class="row">
-        <h2>Mystery TV Shows</h2>
-        <div class="row__posters" id="mysteryTVShows">
-            <!-- Mystery TV show posters will be added dynamically -->
-        </div>
-        <div class="arrow-buttons">
-            <button class="arrow-button prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="arrow-button next"><i class="fas fa-chevron-right"></i></button>
-        </div>
-    </div>
+    </section>
   
-    <!-- Romance TV Shows Section -->
-    <div class="row">
-        <h2>Romance TV Shows</h2>
-        <div class="row__posters" id="romanceTVShows">
-            <!-- Romance TV show posters will be added dynamically -->
-        </div>
-        <div class="arrow-buttons">
-            <button class="arrow-button prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="arrow-button next"><i class="fas fa-chevron-right"></i></button>
-        </div>
-    </div>
+    <!-- Trending Tv Series -->
+    <section class="section">
+        <h2>Trending Tv Series</h2>
+        <div class="scroll-container">
+            <button class="scroll-left" onclick="scrollLeft('trending-tv-series')"><i class="fas fa-chevron-left"></i></button>
+            <div class="media-row" id="trending-tv-series"></div>
+            <button class="scroll-right" onclick="scrollRight('trending-tv-series')"><i class="fas fa-chevron-right"></i></button>
+        
+    </section>
   
-    <!-- Drama TV Shows Section -->
-    <div class="row">
-        <h2>Drama TV Shows</h2>
-        <div class="row__posters" id="dramaTVShows">
-            <!-- Drama TV show posters will be added dynamically -->
-        </div>
-        <div class="arrow-buttons">
-            <button class="arrow-button prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="arrow-button next"><i class="fas fa-chevron-right"></i></button>
-        </div>
-    </div>
+    <!-- Top Rated Tv Series -->
+    <section class="section">
+        <h2>Top Rated Tv Series</h2>
+        <div class="scroll-container">
+            <button class="scroll-left" onclick="scrollLeft('top-rated-tv-series')"><i class="fas fa-chevron-left"></i></button>
+            <div class="media-row" id="top-rated-tv-series"></div>
+            <button class="scroll-right" onclick="scrollRight('top-rated-tv-series')"><i class="fas fa-chevron-right"></i></button>
+    </section>
 
-    <!-- Comedy TV Shows Section -->
-    <div class="row">
-        <h2>Comedy TV Shows</h2>
-        <div class="row__posters" id="comedyTVShows">
-            <!-- Comedy TV show posters will be added dynamically -->
-        </div>
-        <div class="arrow-buttons">
-            <button class="arrow-button prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="arrow-button next"><i class="fas fa-chevron-right"></i></button>
-        </div>
-    </div>
+    <!-- Mystery Tv Series -->
+    <section class="section">
+        <h2>Mystery Tv Series</h2>
+            <div class="scroll-container">
+            <button class="scroll-left" onclick="scrollLeft('mystery-tv-series')"><i class="fas fa-chevron-left"></i></button>
+            <div class="media-row" id="mystery-tv-series"></div>
+            <button class="scroll-right" onclick="scrollRight('mystery-tv-series')"><i class="fas fa-chevron-right"></i></button>
+    </section>
 
-    <!-- Crime TV Shows Section -->
-    <div class="row">
-        <h2>Crime TV Shows</h2>
-        <div class="row__posters" id="crimeTVShows">
-            <!-- Crime TV show posters will be added dynamically -->
-        </div>
-        <div class="arrow-buttons">
-            <button class="arrow-button prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="arrow-button next"><i class="fas fa-chevron-right"></i></button>
-        </div>
-    </div>
+    <!-- Romance Tv Series -->
+    <section class="section">
+        <h2>Romance Tv Series</h2>
+            <div class="scroll-container">
+            <button class="scroll-left" onclick="scrollLeft('romance-tv-series')"><i class="fas fa-chevron-left"></i></button>
+            <div class="media-row" id="romance-tv-series"></div>
+            <button class="scroll-right" onclick="scrollRight('romance-tv-series')"><i class="fas fa-chevron-right"></i></button>
+    </section>
+     
+    <!-- Drama Tv Series -->
+    <section class="section">
+        <h2>Drama Tv Series</h2>
+            <div class="scroll-container">
+            <button class="scroll-left" onclick="scrollLeft('drama-tv-series')"><i class="fas fa-chevron-left"></i></button>
+            <div class="media-row" id="drama-tv-series"></div>
+            <button class="scroll-right" onclick="scrollRight('drama-tv-series')"><i class="fas fa-chevron-right"></i></button>
+    </section>
+     
+    <!-- Comedy Tv Series -->
+    <section class="section">
+        <h2>Comedy Tv Series</h2>
+            <div class="scroll-container">
+            <button class="scroll-left" onclick="scrollLeft('comedy-tv-series')"><i class="fas fa-chevron-left"></i></button>
+            <div class="media-row" id="comedy-tv-series"></div>
+            <button class="scroll-right" onclick="scrollRight('comedy-tv-series')"><i class="fas fa-chevron-right"></i></button>
+    </section>
+     
+    <!-- Crime Tv Series -->
+    <section class="section">
+        <h2>Crime Tv Series</h2>
+            <div class="scroll-container">
+            <button class="scroll-left" onclick="scrollLeft('crime-tv-series')"><i class="fas fa-chevron-left"></i></button>
+            <div class="media-row" id="crime-tv-series"></div>
+            <button class="scroll-right" onclick="scrollRight('crime-tv-series')"><i class="fas fa-chevron-right"></i></button>
+    </section>
 
-    
-<!--For Navigation Header Mobile-->    
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const menuBtn = document.getElementById("menu-btn");
-    const menu = document.getElementById("menu");
-
-    menuBtn.addEventListener("click", function () {
-        menu.classList.toggle("active");
-    });
-});
-  // For Dropdown More Button Function Start
-document.addEventListener("DOMContentLoaded", function () {
-    const dropdown = document.querySelector(".dropdown");
-
-    if (dropdown) {
-        dropdown.addEventListener("click", function (event) {
-            event.stopPropagation(); // Prevents the document click from firing immediately
-            this.classList.toggle("active");
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener("click", function (event) {
-            if (!dropdown.contains(event.target) && dropdown.classList.contains("active")) {
-                dropdown.classList.remove("active");
-            }
-        });
-    }
-});
-// For Dropdown More Button Function End  
-</script>
-
+     
 
 <!--For Chat With Us Function Start-->
     <div id="chat-container">
@@ -233,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </div>
 
 
-<!--Script for Chat With Us-->
+    <!--Script for Chat With Us-->
     <script>
 document.addEventListener("DOMContentLoaded", function () {
     const chatButton = document.getElementById("chat-button");
@@ -283,8 +241,22 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
+
+
 <!--For Chat With Us Function End-->
     
+<!-- Footer Start -->  
+<footer class="site-footer">
+  <p>© 2025 Netplex.site — All Rights Reserved.</p>
+  <p>Made with ❤️ for movie lovers worldwide.</p>
+  <div class="footer-links">
+    <a href="contact-us.html">Contact Us</a> |
+    <a href="about-us.html">About Us</a> |
+    <a href="disclaimer.html">Disclaimer</a>
+  </div>
+</footer>
+<!-- Footer End -->    
 </body>
-
+  
 </html>
+      
